@@ -10,8 +10,10 @@ namespace std{
 		string description;
 
 	public:
-		void setDescription();
+		System();
+		~System();
+		void setDescription(string);
 		string getDescription();
 	};
 };
-#endif /* INCLUDE_SYSTEM_H_ */
+#endif

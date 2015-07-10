@@ -31,6 +31,24 @@
     <ClInclude Include="include\use_case.h" />
     <ClInclude Include="include\use_case_list.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="component.cpp" />
+    <ClCompile Include="component_list.cpp" />
+    <ClCompile Include="condition_list.cpp" />
+    <ClCompile Include="criteria.cpp" />
+    <ClCompile Include="criteria_list.cpp" />
+    <ClCompile Include="flow_action.cpp" />
+    <ClCompile Include="flow_action_list.cpp" />
+    <ClCompile Include="flow_condition.cpp" />
+    <ClCompile Include="functional_requirement.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="non_functional_requirement.cpp" />
+    <ClCompile Include="requirement.cpp" />
+    <ClCompile Include="system.cpp" />
+    <ClCompile Include="system_list.cpp" />
+    <ClCompile Include="use_case.cpp" />
+    <ClCompile Include="use_case_list.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F6E6219B-D4A3-4C31-9E43-56DD4719594D}</ProjectGuid>
     <RootNamespace>easycase</RootNamespace>
@@ -59,7 +77,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\solano\Documents\Visual Studio 2013\Projects\easycase\easycase\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

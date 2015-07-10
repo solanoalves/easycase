@@ -9,8 +9,11 @@ using std::vector;
 namespace std{
 	class ComponentList{
 	private:
-		vector<Component> components;
-
+		vector<Component*> components;
+	public:
+		ComponentList();
+		~ComponentList();
+		void addComponent(Component*);
 	};
 };
-#endif /* INCLUDE_COMPONENT_LIST_H_ */
+#endif

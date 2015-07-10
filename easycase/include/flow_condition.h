@@ -2,21 +2,23 @@
 #define INCLUDE_FLOW_CONDITION_H_
 
 #include "condition.h"
+using std::Condition;
 #include <string>
 using std::string;
 
 namespace std{
 	class FlowCondition{
 	private:
-		Condition::ConditionType& conditionType;
+		Condition::ConditionType* conditionType;
 		string description;
 
 	public:
-		void setConditionType(Condition::ConditionType& conditionType);
-		string getConditionType();
-
-		void setDescription(string description);
+		FlowCondition();
+		~FlowCondition();
+		void setConditionType(Condition::ConditionType*);
+		Condition::ConditionType* getConditionType();
+		void setDescription(string);
 		string getDescription();
 	};
 };
-#endif /* INCLUDE_FLOW_CONDITION_H_ */
+#endif

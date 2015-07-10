@@ -6,8 +6,14 @@ using std::Criteria;
 #include <vector>
 using std::vector;
 
-class CriteriaList{
-	vector<Criteria> criteria;
-};
-
-#endif /* INCLUDE_CRITERIA_LIST_H_ */
+namespace std{
+	class CriteriaList{
+	private:
+		vector<Criteria*> criteria;
+	public:
+		CriteriaList();
+		~CriteriaList();
+		void addCriteria(Criteria*);
+	};
+}
+#endif

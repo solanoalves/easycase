@@ -12,4 +12,4 @@ namespace std{
 		} StatusType;
 	};
 };
-#endif /* INCLUDE_STATUS_H_ */
+#endif

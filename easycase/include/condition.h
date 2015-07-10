@@ -9,4 +9,4 @@ namespace std{
 		} ConditionType;
 	};
 };
-#endif /* INCLUDE_CONDITION_H_ */
+#endif

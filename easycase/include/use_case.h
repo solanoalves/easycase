@@ -1,46 +1,43 @@
 #ifndef INCLUDE_USE_CASE_H_
 #define INCLUDE_USE_CASE_H_
 
-#include "condition.h"
+#include "flow_condition.h"
+using std::FlowCondition;
 #include "flow_action_list.h"
+using std::FlowActionList;
 #include "condition_list.h"
+using std::ConditionList;
 #include "status.h"
-#include <vector>
-using std::vector;
+using std::Status;
 #include <string>
 using std::string;
 
 namespace std{
 	class UseCase{
+	private:
 		unsigned int id;
 		string name;
 		string description;
-		FlowActionList& actions;
-		ConditionList& preConditions;
-		ConditionList& posConditions;
-		Status status;
+		FlowActionList* flowActionList;
+		ConditionList* preConditionList;
+		ConditionList* posConditionList;
+		Status* status;
 
-
-		void setId(unsigned int id);
+	public:
+		UseCase();
+		~UseCase();
+		void setId(unsigned int);
 		unsigned int getId();
-
-		void setDescription(string description);
+		void setDescription(string);
 		string getDescription();
-
-		void setFlowActionList(FlowActionList& flowActionList);
-		void addAction(FlowAction& action);
-		vector<FlowAction> getActions();
-
-		void setPreConditionList(ConditionList& preConditionList);
-		void addPreCondition(Condition& preCondition);
-		vector<Condition> getPreConditions();
-
-		void setPosConditionList(ConditionList& posConditionList);
-		void addPosCondition(Condition& posCondition);
-		vector<Condition> getPosConditions();
-
-		void setStatus(Status& status);
-		Status getStatus();
+		void setFlowActionList(FlowActionList*);
+		void addFlowAction(FlowAction*);
+		void setPreConditionList(ConditionList*);
+		void addPreCondition(FlowCondition*);
+		void setPosConditionList(ConditionList*);
+		void addPosCondition(FlowCondition*);
+		void setStatus(Status*);
+		Status* getStatus();
 	};
 };
-#endif /* INCLUDE_USE_CASE_H_ */
+#endif

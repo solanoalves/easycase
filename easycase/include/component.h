@@ -9,8 +9,10 @@ namespace std{
 	private:
 		string description;
 	public:
-		void setDescription(string description);
+		Component();
+		~Component();
+		void setDescription(string);
 		string getDescription();
 	};
 };
-#endif /* INCLUDE_COMPONENT_H_ */
+#endif

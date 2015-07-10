@@ -9,4 +9,4 @@ namespace std{
 		} FlowType;
 	};
 };
-#endif /* INCLUDE_FLOW_H_ */
+#endif

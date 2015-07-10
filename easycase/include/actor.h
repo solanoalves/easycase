@@ -9,4 +9,4 @@ namespace std{
 		} ActorType;
 	};
 }
-#endif /* INCLUDE_ACTOR_H_ */
+#endif
