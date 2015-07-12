@@ -11,43 +11,98 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\actor.h" />
-    <ClInclude Include="include\component.h" />
-    <ClInclude Include="include\component_list.h" />
-    <ClInclude Include="include\condition.h" />
-    <ClInclude Include="include\condition_list.h" />
-    <ClInclude Include="include\criteria.h" />
-    <ClInclude Include="include\criteria_list.h" />
-    <ClInclude Include="include\flow.h" />
-    <ClInclude Include="include\flow_action.h" />
-    <ClInclude Include="include\flow_action_list.h" />
-    <ClInclude Include="include\flow_condition.h" />
-    <ClInclude Include="include\functional_requirement.h" />
-    <ClInclude Include="include\non_functional_requirement.h" />
-    <ClInclude Include="include\requirement.h" />
-    <ClInclude Include="include\status.h" />
-    <ClInclude Include="include\system.h" />
-    <ClInclude Include="include\system_list.h" />
-    <ClInclude Include="include\use_case.h" />
-    <ClInclude Include="include\use_case_list.h" />
+    <ClInclude Include="ContentWin.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="include\core\actor.h" />
+    <ClInclude Include="include\core\component.h" />
+    <ClInclude Include="include\core\component_list.h" />
+    <ClInclude Include="include\core\condition.h" />
+    <ClInclude Include="include\core\condition_list.h" />
+    <ClInclude Include="include\core\criteria.h" />
+    <ClInclude Include="include\core\criteria_list.h" />
+    <ClInclude Include="include\core\flow.h" />
+    <ClInclude Include="include\core\flow_action.h" />
+    <ClInclude Include="include\core\flow_action_list.h" />
+    <ClInclude Include="include\core\flow_condition.h" />
+    <ClInclude Include="include\core\functional_requirement.h" />
+    <ClInclude Include="include\core\non_functional_requirement.h" />
+    <ClInclude Include="include\core\requirement.h" />
+    <ClInclude Include="include\core\status.h" />
+    <ClInclude Include="include\core\system.h" />
+    <ClInclude Include="include\core\system_list.h" />
+    <ClInclude Include="include\core\use_case.h" />
+    <ClInclude Include="include\core\use_case_list.h" />
+    <ClInclude Include="MainWin.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="component.cpp" />
-    <ClCompile Include="component_list.cpp" />
-    <ClCompile Include="condition_list.cpp" />
-    <ClCompile Include="criteria.cpp" />
-    <ClCompile Include="criteria_list.cpp" />
-    <ClCompile Include="flow_action.cpp" />
-    <ClCompile Include="flow_action_list.cpp" />
-    <ClCompile Include="flow_condition.cpp" />
-    <ClCompile Include="functional_requirement.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="non_functional_requirement.cpp" />
-    <ClCompile Include="requirement.cpp" />
-    <ClCompile Include="system.cpp" />
-    <ClCompile Include="system_list.cpp" />
-    <ClCompile Include="use_case.cpp" />
-    <ClCompile Include="use_case_list.cpp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ContentWin.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <MinimalRebuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MinimalRebuild>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</BasicRuntimeChecks>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Async</ExceptionHandling>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <MinimalRebuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MinimalRebuild>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Default</BasicRuntimeChecks>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Async</ExceptionHandling>
+    </ClCompile>
+    <ClCompile Include="core\component.cpp" />
+    <ClCompile Include="core\component_list.cpp" />
+    <ClCompile Include="core\condition_list.cpp" />
+    <ClCompile Include="core\criteria.cpp" />
+    <ClCompile Include="core\criteria_list.cpp" />
+    <ClCompile Include="core\flow_action.cpp" />
+    <ClCompile Include="core\flow_action_list.cpp" />
+    <ClCompile Include="core\flow_condition.cpp" />
+    <ClCompile Include="core\functional_requirement.cpp" />
+    <ClCompile Include="core\non_functional_requirement.cpp" />
+    <ClCompile Include="core\requirement.cpp" />
+    <ClCompile Include="core\system.cpp" />
+    <ClCompile Include="core\system_list.cpp" />
+    <ClCompile Include="core\use_case.cpp" />
+    <ClCompile Include="core\use_case_list.cpp" />
+    <ClCompile Include="MainWin.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <MinimalRebuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MinimalRebuild>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</BasicRuntimeChecks>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Async</ExceptionHandling>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <MinimalRebuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MinimalRebuild>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Default</BasicRuntimeChecks>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Async</ExceptionHandling>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ContentWin.resx">
+      <DependentUpon>ContentWin.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWin.resx">
+      <DependentUpon>MainWin.h</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\easycase.PNG" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F6E6219B-D4A3-4C31-9E43-56DD4719594D}</ProjectGuid>
@@ -78,16 +133,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\solano\Documents\Visual Studio 2013\Projects\easycase\easycase\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\solano\Documents\Visual Studio 2013\Projects\easycase\easycase\include\core\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>Main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
