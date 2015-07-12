@@ -1,5 +1,4 @@
-#ifndef INCLUDE_NON_FUNCTIONAL_REQUIREMENT_H_
-#define INCLUDE_NON_FUNCTIONAL_REQUIREMENT_H_
+#pragma once
 
 #include "criteria_list.h"
 using std::CriteriaList;
@@ -16,4 +15,3 @@ namespace std{
 		void setCriteriaList(CriteriaList*);
 	};
 };
-#endif

@@ -1,5 +1,4 @@
-#ifndef INCLUDE_CRITERIA_LIST_H_
-#define INCLUDE_CRITERIA_LIST_H_
+#pragma once
 
 #include "criteria.h"
 using std::Criteria;
@@ -9,11 +8,10 @@ using std::vector;
 namespace std{
 	class CriteriaList{
 	private:
-		vector<Criteria*> criteria;
+		vector<Criteria*>* criteria;
 	public:
 		CriteriaList();
 		~CriteriaList();
 		void addCriteria(Criteria*);
 	};
 }
-#endif

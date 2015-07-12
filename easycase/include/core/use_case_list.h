@@ -1,5 +1,4 @@
-#ifndef INCLUDE_USE_CASE_LIST_H_
-#define INCLUDE_USE_CASE_LIST_H_
+#pragma once
 
 #include "use_case.h"
 using std::UseCase;
@@ -9,11 +8,10 @@ using std::vector;
 namespace std{
 	class UseCaseList{
 	private:
-		vector<UseCase*> useCaseList;
+		vector<UseCase*>* useCaseList;
 	public:
 		UseCaseList();
 		~UseCaseList();
 		void addUseCase(UseCase*);
 	};
 };
-#endif

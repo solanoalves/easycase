@@ -10,5 +10,5 @@ FlowActionList::~FlowActionList(){
 }
 
 void FlowActionList::addFlowAction(FlowAction* fAction){
-	actions.push_back(fAction);
+	actions->push_back(fAction);
 }

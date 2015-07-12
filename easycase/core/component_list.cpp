@@ -10,5 +10,5 @@ ComponentList::~ComponentList(){
 }
 
 void ComponentList::addComponent(Component* component){
-	components.push_back(component);
+	components->push_back(component);
 }

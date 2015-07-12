@@ -1,5 +1,4 @@
-#ifndef INCLUDE_FLOW_H_
-#define INCLUDE_FLOW_H_
+#pragma once
 
 namespace std{
 	struct Flow{
@@ -9,4 +8,3 @@ namespace std{
 		} FlowType;
 	};
 };
-#endif

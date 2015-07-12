@@ -1,5 +1,4 @@
-#ifndef INCLUDE_COMPONENT_LIST_H_
-#define INCLUDE_COMPONENT_LIST_H_
+#pragma once
 
 #include "component.h"
 using std::Component;
@@ -9,11 +8,10 @@ using std::vector;
 namespace std{
 	class ComponentList{
 	private:
-		vector<Component*> components;
+		vector<Component*>* components;
 	public:
 		ComponentList();
 		~ComponentList();
 		void addComponent(Component*);
 	};
 };
-#endif

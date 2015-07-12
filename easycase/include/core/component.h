@@ -1,18 +1,15 @@
-#ifndef INCLUDE_COMPONENT_H_
-#define INCLUDE_COMPONENT_H_
+#pragma once
 
+#include "basic_info.h"
+using std::BasicInfo;
 #include <string>
 using std::string;
 
 namespace std{
-	class Component{
-	private:
-		string description;
+	class Component : public BasicInfo{
 	public:
 		Component();
 		~Component();
-		void setDescription(string);
-		string getDescription();
 	};
 };
-#endif
+

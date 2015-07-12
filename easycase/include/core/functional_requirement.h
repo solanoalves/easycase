@@ -1,5 +1,4 @@
-#ifndef INCLUDE_FUNCTIONAL_REQUIREMENT_H_
-#define INCLUDE_FUNCTIONAL_REQUIREMENT_H_
+#pragma once
 
 #include "requirement.h"
 using std::Requirement;
@@ -16,4 +15,3 @@ namespace std{
 		void setSystemList(SystemList*);
 	};
 };
-#endif

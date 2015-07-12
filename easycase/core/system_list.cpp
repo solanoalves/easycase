@@ -10,5 +10,5 @@ SystemList::~SystemList(){
 }
 
 void SystemList::addSystem(System* system){
-	systems.push_back(system);
+	systems->push_back(system);
 }

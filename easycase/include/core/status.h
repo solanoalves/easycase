@@ -1,5 +1,4 @@
-#ifndef INCLUDE_STATUS_H_
-#define INCLUDE_STATUS_H_
+#pragma once
 
 namespace std{
 	struct Status{
@@ -12,4 +11,3 @@ namespace std{
 		} StatusType;
 	};
 };
-#endif

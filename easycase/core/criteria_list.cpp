@@ -10,5 +10,5 @@ CriteriaList::~CriteriaList(){
 }
 
 void CriteriaList::addCriteria(Criteria* crit){
-	criteria.push_back(crit);
+	criteria->push_back(crit);
 }

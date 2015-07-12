@@ -1,6 +1,7 @@
-#ifndef INCLUDE_USE_CASE_H_
-#define INCLUDE_USE_CASE_H_
+#pragma once
 
+#include "basic_info.h"
+using std::BasicInfo;
 #include "flow_condition.h"
 using std::FlowCondition;
 #include "flow_action_list.h"
@@ -13,11 +14,8 @@ using std::Status;
 using std::string;
 
 namespace std{
-	class UseCase{
+	class UseCase : public BasicInfo{
 	private:
-		unsigned int id;
-		string name;
-		string description;
 		FlowActionList* flowActionList;
 		ConditionList* preConditionList;
 		ConditionList* posConditionList;
@@ -26,10 +24,6 @@ namespace std{
 	public:
 		UseCase();
 		~UseCase();
-		void setId(unsigned int);
-		unsigned int getId();
-		void setDescription(string);
-		string getDescription();
 		void setFlowActionList(FlowActionList*);
 		void addFlowAction(FlowAction*);
 		void setPreConditionList(ConditionList*);
@@ -40,4 +34,4 @@ namespace std{
 		Status* getStatus();
 	};
 };
-#endif
+

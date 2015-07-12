@@ -1,6 +1,7 @@
-#ifndef INCLUDE_REQUIREMENT_H_
-#define INCLUDE_REQUIREMENT_H_
+#pragma once
 
+#include "basic_info.h"
+using std::BasicInfo;
 #include "use_case_list.h"
 using std::UseCaseList;
 #include <string>
@@ -9,16 +10,12 @@ using std::string;
 using std::vector;
 
 namespace std{
-	class Requirement{
+	class Requirement : public BasicInfo{
 	private:
-		string description;
 		UseCaseList* useCaseList;
 	public:
 		Requirement();
 		~Requirement();
-		void setDescription(string);
-		string getDescription();
 		void setUseCaseList(UseCaseList*);
 	};
 };
-#endif

@@ -10,5 +10,5 @@ UseCaseList::~UseCaseList(){
 }
 
 void UseCaseList::addUseCase(UseCase* useCase){
-	useCaseList.push_back(useCase);
+	useCaseList->push_back(useCase);
 }

@@ -1,5 +1,4 @@
-#ifndef INCLUDE_SYSTEM_LIST_H_
-#define INCLUDE_SYSTEM_LIST_H_
+#pragma once
 
 #include "system.h"
 using std::System;
@@ -9,11 +8,10 @@ using std::vector;
 namespace std{
 	class SystemList{
 	private:
-		vector<System*> systems;
+		vector<System*>* systems;
 	public:
 		SystemList();
 		~SystemList();
 		void addSystem(System*);
 	};
 };
-#endif

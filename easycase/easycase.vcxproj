@@ -14,7 +14,9 @@
     <ClInclude Include="ContentWin.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="core_handler.h" />
     <ClInclude Include="include\core\actor.h" />
+    <ClInclude Include="include\core\basic_info.h" />
     <ClInclude Include="include\core\component.h" />
     <ClInclude Include="include\core\component_list.h" />
     <ClInclude Include="include\core\condition.h" />
@@ -27,7 +29,9 @@
     <ClInclude Include="include\core\flow_condition.h" />
     <ClInclude Include="include\core\functional_requirement.h" />
     <ClInclude Include="include\core\non_functional_requirement.h" />
+    <ClInclude Include="include\core\project.h" />
     <ClInclude Include="include\core\requirement.h" />
+    <ClInclude Include="include\core\requirement_list.h" />
     <ClInclude Include="include\core\status.h" />
     <ClInclude Include="include\core\system.h" />
     <ClInclude Include="include\core\system_list.h" />
@@ -61,6 +65,7 @@
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Async</ExceptionHandling>
     </ClCompile>
+    <ClCompile Include="core\basic_info.cpp" />
     <ClCompile Include="core\component.cpp" />
     <ClCompile Include="core\component_list.cpp" />
     <ClCompile Include="core\condition_list.cpp" />
@@ -71,7 +76,9 @@
     <ClCompile Include="core\flow_condition.cpp" />
     <ClCompile Include="core\functional_requirement.cpp" />
     <ClCompile Include="core\non_functional_requirement.cpp" />
+    <ClCompile Include="core\project.cpp" />
     <ClCompile Include="core\requirement.cpp" />
+    <ClCompile Include="core\requirement_list.cpp" />
     <ClCompile Include="core\system.cpp" />
     <ClCompile Include="core\system_list.cpp" />
     <ClCompile Include="core\use_case.cpp" />

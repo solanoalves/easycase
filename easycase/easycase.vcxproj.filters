@@ -84,6 +84,18 @@
     <ClInclude Include="ContentWin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\core\requirement_list.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="core_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\project.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\basic_info.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="core\component.cpp">
@@ -137,6 +149,15 @@
     <ClCompile Include="ContentWin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\requirement_list.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\project.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\basic_info.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\easycase.PNG">
@@ -148,9 +169,6 @@
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWin.resx">
-      <Filter>Resource Files</Filter>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RequirementWin.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>

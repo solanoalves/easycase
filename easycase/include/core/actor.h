@@ -1,5 +1,4 @@
-#ifndef INCLUDE_ACTOR_H_
-#define INCLUDE_ACTOR_H_
+#pragma once
 
 namespace std{
 	struct Actor{
@@ -9,4 +8,3 @@ namespace std{
 		} ActorType;
 	};
 }
-#endif

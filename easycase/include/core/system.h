@@ -1,19 +1,14 @@
-#ifndef INCLUDE_SYSTEM_H_
-#define INCLUDE_SYSTEM_H_
+#pragma once
 
+#include "basic_info.h"
+using std::BasicInfo;
 #include <string>
 using std::string;
 
 namespace std{
-	class System{
-	private:
-		string description;
-
+	class System : public BasicInfo{
 	public:
 		System();
 		~System();
-		void setDescription(string);
-		string getDescription();
 	};
 };
-#endif

@@ -1,5 +1,4 @@
-#ifndef INCLUDE_CONDITION_H_
-#define INCLUDE_CONDITION_H_
+#pragma once
 
 namespace std{
 	struct Condition {
@@ -9,4 +8,3 @@ namespace std{
 		} ConditionType;
 	};
 };
-#endif

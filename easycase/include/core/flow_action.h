@@ -1,6 +1,7 @@
-#ifndef INCLUDE_FLOW_ACTION_H_
-#define INCLUDE_FLOW_ACTION_H_
+#pragma once
 
+#include "basic_info.h"
+using std::BasicInfo;
 #include "flow.h"
 using std::Flow;
 #include "actor.h"
@@ -9,10 +10,9 @@ using std::Actor;
 using std::string;
 
 namespace std{
-	class FlowAction{
+	class FlowAction : public BasicInfo{
 	private:
 		Actor::ActorType* actorType;
-		string description;
 		Flow::FlowType* flowType;
 		int sequence;
 	public:
@@ -20,12 +20,9 @@ namespace std{
 		~FlowAction();
 		void setActorType(Actor::ActorType* actorType);
 		Actor::ActorType* getActorType();
-		void setDescription(string);
-		string getDescription();
 		void setFlowType(Flow::FlowType* flowType);
 		Flow::FlowType* getFlowType();
 		void setSequence(int sequence);
 		int getSequence();
 	};
 }
-#endif

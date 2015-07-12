@@ -10,5 +10,5 @@ ConditionList::~ConditionList(){
 }
 
 void ConditionList::addFlowCondition(FlowCondition* flowCondition){
-	conditions.push_back(flowCondition);
+	conditions->push_back(flowCondition);
 }
