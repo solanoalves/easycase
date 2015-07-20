@@ -17,14 +17,6 @@ Actor::ActorType* FlowAction::getActorType(){
 	return actorType;
 }
 
-void FlowAction::setDescription(string desc){
-	description = desc;
-}
-
-string FlowAction::getDescription(){
-	return description;
-}
-
 void FlowAction::setFlowType(Flow::FlowType* fType){
 	flowType = fType;
 }

@@ -32,3 +32,7 @@ void BasicInfo::setDescription(string* desc){
 string* BasicInfo::getDescription(){
 	return description;
 }
+
+bool BasicInfo::operator==(BasicInfo& basicInfo){
+	return (basicInfo.getId() == this->getId());
+}

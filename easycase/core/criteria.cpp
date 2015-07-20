@@ -9,14 +9,6 @@ Criteria::~Criteria(){
 
 }
 
-void Criteria::setDescription(string desc){
-	description = desc;
-}
-
-string Criteria::getDescription(){
-	return description;
-}
-
 void Criteria::setValue(int v){
 	value = v;
 }

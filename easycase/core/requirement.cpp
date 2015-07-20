@@ -9,14 +9,6 @@ Requirement::~Requirement(){
 
 }
 
-void Requirement::setDescription(string desc){
-	description = desc;
-}
-
-string Requirement::getDescription(){
-	return description;
-}
-
 void Requirement::setUseCaseList(UseCaseList* ucList){
 	useCaseList = ucList;
 }

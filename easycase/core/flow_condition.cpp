@@ -16,11 +16,3 @@ void FlowCondition::setConditionType(Condition::ConditionType* condType){
 Condition::ConditionType* FlowCondition::getConditionType(){
 	return conditionType;
 }
-
-void FlowCondition::setDescription(string desc){
-	description = desc;
-}
-
-string FlowCondition::getDescription(){
-	return description;
-}

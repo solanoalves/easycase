@@ -20,7 +20,6 @@ namespace std{
 		ConditionList* preConditionList;
 		ConditionList* posConditionList;
 		Status* status;
-
 	public:
 		UseCase();
 		~UseCase();

@@ -9,22 +9,6 @@ UseCase::~UseCase(){
 
 }
 
-void UseCase::setId(unsigned int uid){
-	id = uid;
-}
-
-unsigned int UseCase::getId(){
-	return id;
-}
-
-void UseCase::setDescription(string desc){
-	description = desc;
-}
-
-string UseCase::getDescription(){
-	return description;
-}
-
 void UseCase::setFlowActionList(FlowActionList* faList){
 	flowActionList = faList;
 }

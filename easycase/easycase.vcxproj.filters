@@ -19,6 +19,9 @@
     <Filter Include="Header Files\core">
       <UniqueIdentifier>{652177da-2f92-48bc-98c6-f2976216d56f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\util">
+      <UniqueIdentifier>{2cdacd3c-9fc8-4554-9895-950cad13059f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\actor.h">
@@ -96,6 +99,12 @@
     <ClInclude Include="include\core\basic_info.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
+    <ClInclude Include="include\util\easy_list.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="include\core\basic_info_list.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="core\component.cpp">
@@ -156,6 +165,9 @@
       <Filter>Source Files\core</Filter>
     </ClCompile>
     <ClCompile Include="core\basic_info.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\basic_info_list.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
   </ItemGroup>

@@ -18,5 +18,6 @@ namespace std{
 		string* getName();
 		virtual void setDescription(string*);
 		virtual string* getDescription();
+		bool operator==(BasicInfo&);		
 	};
 };
