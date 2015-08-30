@@ -9,27 +9,27 @@ BasicInfo::~BasicInfo(){
 
 }
 
-void BasicInfo::setId(unsigned int uid){
+void BasicInfo::setId(const unsigned int uid){
 	id = uid;
 }
 
-unsigned int BasicInfo::getId(){
+unsigned int BasicInfo::getId() const{
 	return id;
 }
 
-void BasicInfo::setName(string* uname){
+void BasicInfo::setName(const string uname){
 	name = uname;
 }
 
-string* BasicInfo::getName(){
+string BasicInfo::getName() const{
 	return name;
 }
 
-void BasicInfo::setDescription(string* desc){
+void BasicInfo::setDescription(const string desc){
 	description = desc;
 }
 
-string* BasicInfo::getDescription(){
+string BasicInfo::getDescription() const{
 	return description;
 }
 

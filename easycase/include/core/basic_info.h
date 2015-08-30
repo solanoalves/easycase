@@ -7,17 +7,17 @@ namespace std{
 	class BasicInfo{
 	private:
 		unsigned int id;
-		string* name;
-		string* description;
+		string name;
+		string description;
 	public:
 		BasicInfo();
 		~BasicInfo();
-		void setId(unsigned int);
-		unsigned int getId();
-		void setName(string*);
-		string* getName();
-		virtual void setDescription(string*);
-		virtual string* getDescription();
-		bool operator==(BasicInfo&);		
+		void setId(const unsigned int);
+		unsigned int getId() const;
+		void setName(const string);
+		string getName() const;
+		virtual void setDescription(const string);
+		virtual string getDescription() const;
+		bool operator==(BasicInfo&);
 	};
 };

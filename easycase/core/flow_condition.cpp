@@ -9,10 +9,10 @@ FlowCondition::~FlowCondition(){
 
 }
 
-void FlowCondition::setConditionType(Condition::ConditionType* condType){
-	conditionType = condType;
+void FlowCondition::setSequence(const int& seq){
+	sequence = seq;
 }
 
-Condition::ConditionType* FlowCondition::getConditionType(){
-	return conditionType;
+int FlowCondition::getSequence() const{
+	return sequence;
 }

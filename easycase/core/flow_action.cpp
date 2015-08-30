@@ -9,19 +9,19 @@ FlowAction::~FlowAction(){
 
 }
 
-void FlowAction::setActorType(Actor::ActorType* actType){
+void FlowAction::setActorType(const Actor::ActorType actType){
 	actorType = actType;
 }
 
-Actor::ActorType* FlowAction::getActorType(){
+Actor::ActorType FlowAction::getActorType() const{
 	return actorType;
 }
 
-void FlowAction::setFlowType(Flow::FlowType* fType){
+void FlowAction::setFlowType(const Flow::FlowType fType){
 	flowType = fType;
 }
 
-Flow::FlowType* FlowAction::getFlowType(){
+Flow::FlowType FlowAction::getFlowType() const{
 	return flowType;
 }
 
@@ -29,6 +29,6 @@ void FlowAction::setSequence(int seq){
 	sequence = seq;
 }
 
-int FlowAction::getSequence(){
+int FlowAction::getSequence() const{
 	return sequence;
 }

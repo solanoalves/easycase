@@ -4,7 +4,8 @@ namespace std{
 	struct Flow{
 		typedef enum{
 			MainFlow,
-			AlternativeFlow
+			AlternativeFlow,
+			UnknownFlow
 		} FlowType;
 	};
 };

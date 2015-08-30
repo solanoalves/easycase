@@ -6,15 +6,19 @@ using std::BasicInfo;
 using std::Condition;
 #include <string>
 using std::string;
+#include <vector>
+using std::vector;
 
 namespace std{
 	class FlowCondition : public BasicInfo{
 	private:
-		Condition::ConditionType* conditionType;
+		int sequence;
 	public:
 		FlowCondition();
 		~FlowCondition();
-		void setConditionType(Condition::ConditionType*);
-		Condition::ConditionType* getConditionType();
+		void setSequence(const int&);
+		int getSequence() const;
+		virtual vector<string>::const_iterator firstArtifact() const = 0;
+		virtual vector<string>::const_iterator lastArtifact() const = 0;
 	};
 };

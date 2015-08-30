@@ -4,7 +4,8 @@ namespace std{
 	struct Actor{
 		typedef enum{
 			Persona,
-			System
+			System,
+			Unknown
 		} ActorType;
 	};
 }

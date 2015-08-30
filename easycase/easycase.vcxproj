@@ -24,12 +24,15 @@
     <ClInclude Include="include\core\condition_list.h" />
     <ClInclude Include="include\core\criteria.h" />
     <ClInclude Include="include\core\criteria_list.h" />
+    <ClInclude Include="include\core\easycase_facade.h" />
     <ClInclude Include="include\core\flow.h" />
     <ClInclude Include="include\core\flow_action.h" />
     <ClInclude Include="include\core\flow_action_list.h" />
     <ClInclude Include="include\core\flow_condition.h" />
     <ClInclude Include="include\core\functional_requirement.h" />
     <ClInclude Include="include\core\non_functional_requirement.h" />
+    <ClInclude Include="include\core\pos_condition.h" />
+    <ClInclude Include="include\core\pre_condition.h" />
     <ClInclude Include="include\core\project.h" />
     <ClInclude Include="include\core\requirement.h" />
     <ClInclude Include="include\core\requirement_list.h" />
@@ -40,6 +43,9 @@
     <ClInclude Include="include\core\use_case_list.h" />
     <ClInclude Include="include\util\easy_list.h" />
     <ClInclude Include="MainWin.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="UseCaseWin.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
@@ -74,11 +80,14 @@
     <ClCompile Include="core\condition_list.cpp" />
     <ClCompile Include="core\criteria.cpp" />
     <ClCompile Include="core\criteria_list.cpp" />
+    <ClCompile Include="core\easycase_facade.cpp" />
     <ClCompile Include="core\flow_action.cpp" />
     <ClCompile Include="core\flow_action_list.cpp" />
     <ClCompile Include="core\flow_condition.cpp" />
     <ClCompile Include="core\functional_requirement.cpp" />
     <ClCompile Include="core\non_functional_requirement.cpp" />
+    <ClCompile Include="core\pos_condition.cpp" />
+    <ClCompile Include="core\pre_condition.cpp" />
     <ClCompile Include="core\project.cpp" />
     <ClCompile Include="core\requirement.cpp" />
     <ClCompile Include="core\requirement_list.cpp" />
@@ -102,6 +111,22 @@
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Async</ExceptionHandling>
     </ClCompile>
+    <ClCompile Include="UseCaseWin.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <MinimalRebuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MinimalRebuild>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</BasicRuntimeChecks>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Async</ExceptionHandling>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <MinimalRebuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MinimalRebuild>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Default</BasicRuntimeChecks>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Async</ExceptionHandling>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ContentWin.resx">
@@ -109,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainWin.resx">
       <DependentUpon>MainWin.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UseCaseWin.resx">
+      <DependentUpon>UseCaseWin.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
