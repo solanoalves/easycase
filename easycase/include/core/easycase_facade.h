@@ -22,6 +22,6 @@ namespace std{
 		static PreCondition* createPreCondition(const string, const vector<string>);
 		static PosCondition* createPosCondition(const string, const vector<string>);
 		static FlowAction* createFlowAction(string, int, int);
-		static UseCase* createUseCase(string, string, vector<PreCondition*>, vector<FlowAction*>, vector<PosCondition*>);
+		static UseCase* createUseCase(unsigned int, string, string, string, vector<PreCondition*>, vector<FlowAction*>, vector<PosCondition*>);
 	};
 }

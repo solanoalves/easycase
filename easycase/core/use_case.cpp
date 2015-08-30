@@ -2,41 +2,31 @@
 using std::UseCase;
 
 UseCase::UseCase(){
-
+	flowActionList = new FlowActionList;
+	preConditionList = new ConditionList;
+	posConditionList = new ConditionList;
 }
 
 UseCase::~UseCase(){
 
 }
 
-void UseCase::setFlowActionList(FlowActionList* faList){
-	flowActionList = faList;
-}
-
-void UseCase::addFlowAction(FlowAction* fAction){
+void UseCase::addFlowAction(const FlowAction* fAction){
 	flowActionList->addFlowAction(fAction);
 }
 
-void UseCase::setPreConditionList(ConditionList* condList){
-	preConditionList = condList;
-}
-
-void UseCase::addPreCondition(FlowCondition* fCond){
+void UseCase::addPreCondition(const FlowCondition* fCond){
 	preConditionList->addFlowCondition(fCond);
 }
 
-void UseCase::setPosConditionList(ConditionList* condList){
-	posConditionList = condList;
-}
-
-void UseCase::addPosCondition(FlowCondition* fCond){
+void UseCase::addPosCondition(const FlowCondition* fCond){
 	posConditionList->addFlowCondition(fCond);
 }
 
-void UseCase::setStatus(Status* stat){
+void UseCase::setStatus(const Status::StatusType stat){
 	status = stat;
 }
 
-Status* UseCase::getStatus(){
+Status::StatusType UseCase::getStatus() const{
 	return status;
 }

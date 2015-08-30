@@ -49,8 +49,25 @@ FlowAction* EasyCaseFacade::createFlowAction(const string description, const int
 	return fa;
 }
 
-UseCase* EasyCaseFacade::createUseCase(string nome, string descricao, vector<PreCondition*> preConditions, vector<FlowAction*> flows, vector<PosCondition*> posConditions){
+UseCase* EasyCaseFacade::createUseCase(unsigned int id, string status, string nome, string descricao, vector<PreCondition*> preConditions, vector<FlowAction*> flows, vector<PosCondition*> posConditions){
 	UseCase* uc = new UseCase;
+	uc->setId(id);
+	Status stat;
+	if (status.compare(stat.isIncomplete)){
+		uc->setStatus(Status::Incomplete);
+	}
+	else if (status.compare(stat.isCreated)){
+		uc->setStatus(Status::Created);
+	}
+	else if (status.compare(stat.isWorking)){
+		uc->setStatus(Status::Working);
+	}
+	else if (status.compare(stat.isRevision)){
+		uc->setStatus(Status::Revision);
+	}
+	else if (status.compare(stat.isDone)){
+		uc->setStatus(Status::Done);
+	}
 	uc->setName(nome);
 	uc->setDescription(descricao);
 	for (vector<PreCondition*>::iterator it = preConditions.begin(); it != preConditions.end(); ++it){

@@ -43,7 +43,7 @@ namespace easycase {
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::TextBox^  textBox1;
-	private: System::Windows::Forms::TextBox^  ucStatus;
+
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::TabControl^  tabControl1;
 	private: System::Windows::Forms::TabPage^  tabPage1;
@@ -80,6 +80,7 @@ namespace easycase {
 	private: System::Windows::Forms::ListBox^  listBox1;
 	private: System::Windows::Forms::Label^  label14;
 	private: System::Windows::Forms::ListBox^  listBox2;
+	private: System::Windows::Forms::ComboBox^  comboBox1;
 	protected:
 
 	private:
@@ -102,17 +103,20 @@ namespace easycase {
 			this->ucName = (gcnew System::Windows::Forms::TextBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->ucStatus = (gcnew System::Windows::Forms::TextBox());
 			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
+			this->label13 = (gcnew System::Windows::Forms::Label());
+			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
@@ -120,24 +124,21 @@ namespace easycase {
 			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->tabPage4 = (gcnew System::Windows::Forms::TabPage());
+			this->label14 = (gcnew System::Windows::Forms::Label());
+			this->listBox2 = (gcnew System::Windows::Forms::ListBox());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->textBox7 = (gcnew System::Windows::Forms::TextBox());
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->tabPage5 = (gcnew System::Windows::Forms::TabPage());
+			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
+			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->textBox8 = (gcnew System::Windows::Forms::TextBox());
 			this->label11 = (gcnew System::Windows::Forms::Label());
 			this->textBox9 = (gcnew System::Windows::Forms::TextBox());
 			this->label12 = (gcnew System::Windows::Forms::Label());
-			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
-			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
-			this->label13 = (gcnew System::Windows::Forms::Label());
-			this->label14 = (gcnew System::Windows::Forms::Label());
-			this->listBox2 = (gcnew System::Windows::Forms::ListBox());
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
@@ -205,13 +206,6 @@ namespace easycase {
 			this->label4->TabIndex = 6;
 			this->label4->Text = L"Status";
 			// 
-			// ucStatus
-			// 
-			this->ucStatus->Location = System::Drawing::Point(174, 19);
-			this->ucStatus->Name = L"ucStatus";
-			this->ucStatus->Size = System::Drawing::Size(129, 20);
-			this->ucStatus->TabIndex = 7;
-			// 
 			// tabControl1
 			// 
 			this->tabControl1->Controls->Add(this->tabPage1);
@@ -227,9 +221,9 @@ namespace easycase {
 			// 
 			// tabPage1
 			// 
+			this->tabPage1->Controls->Add(this->comboBox1);
 			this->tabPage1->Controls->Add(this->button5);
 			this->tabPage1->Controls->Add(this->textBox1);
-			this->tabPage1->Controls->Add(this->ucStatus);
 			this->tabPage1->Controls->Add(this->label3);
 			this->tabPage1->Controls->Add(this->ucName);
 			this->tabPage1->Controls->Add(this->label2);
@@ -243,6 +237,18 @@ namespace easycase {
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Basic";
 			this->tabPage1->UseVisualStyleBackColor = true;
+			// 
+			// comboBox1
+			// 
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(5) {
+				L"Incomplete", L"Created", L"Working", L"Revision",
+					L"Done"
+			});
+			this->comboBox1->Location = System::Drawing::Point(174, 20);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(142, 21);
+			this->comboBox1->TabIndex = 9;
 			// 
 			// button5
 			// 
@@ -269,6 +275,23 @@ namespace easycase {
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Pre-Conditions";
 			this->tabPage2->UseVisualStyleBackColor = true;
+			// 
+			// label13
+			// 
+			this->label13->AutoSize = true;
+			this->label13->Location = System::Drawing::Point(43, 92);
+			this->label13->Name = L"label13";
+			this->label13->Size = System::Drawing::Size(85, 13);
+			this->label13->TabIndex = 6;
+			this->label13->Text = L"Existent Artifacts";
+			// 
+			// listBox1
+			// 
+			this->listBox1->FormattingEnabled = true;
+			this->listBox1->Location = System::Drawing::Point(134, 69);
+			this->listBox1->Name = L"listBox1";
+			this->listBox1->Size = System::Drawing::Size(254, 56);
+			this->listBox1->TabIndex = 5;
 			// 
 			// button1
 			// 
@@ -327,6 +350,17 @@ namespace easycase {
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"Flow";
 			this->tabPage3->UseVisualStyleBackColor = true;
+			// 
+			// radioButton2
+			// 
+			this->radioButton2->AutoSize = true;
+			this->radioButton2->Location = System::Drawing::Point(112, 87);
+			this->radioButton2->Name = L"radioButton2";
+			this->radioButton2->Size = System::Drawing::Size(75, 17);
+			this->radioButton2->TabIndex = 10;
+			this->radioButton2->TabStop = true;
+			this->radioButton2->Text = L"User Actor";
+			this->radioButton2->UseVisualStyleBackColor = true;
 			// 
 			// radioButton1
 			// 
@@ -398,6 +432,23 @@ namespace easycase {
 			this->tabPage4->Text = L"Pos-Conditions";
 			this->tabPage4->UseVisualStyleBackColor = true;
 			// 
+			// label14
+			// 
+			this->label14->AutoSize = true;
+			this->label14->Location = System::Drawing::Point(65, 96);
+			this->label14->Name = L"label14";
+			this->label14->Size = System::Drawing::Size(85, 13);
+			this->label14->TabIndex = 14;
+			this->label14->Text = L"Existent Artifacts";
+			// 
+			// listBox2
+			// 
+			this->listBox2->FormattingEnabled = true;
+			this->listBox2->Location = System::Drawing::Point(156, 73);
+			this->listBox2->Name = L"listBox2";
+			this->listBox2->Size = System::Drawing::Size(254, 56);
+			this->listBox2->TabIndex = 13;
+			// 
 			// button3
 			// 
 			this->button3->Location = System::Drawing::Point(18, 152);
@@ -456,6 +507,28 @@ namespace easycase {
 			this->tabPage5->Text = L"Alternate Flow";
 			this->tabPage5->UseVisualStyleBackColor = true;
 			// 
+			// radioButton3
+			// 
+			this->radioButton3->AutoSize = true;
+			this->radioButton3->Location = System::Drawing::Point(112, 90);
+			this->radioButton3->Name = L"radioButton3";
+			this->radioButton3->Size = System::Drawing::Size(75, 17);
+			this->radioButton3->TabIndex = 14;
+			this->radioButton3->TabStop = true;
+			this->radioButton3->Text = L"User Actor";
+			this->radioButton3->UseVisualStyleBackColor = true;
+			// 
+			// radioButton4
+			// 
+			this->radioButton4->AutoSize = true;
+			this->radioButton4->Location = System::Drawing::Point(19, 90);
+			this->radioButton4->Name = L"radioButton4";
+			this->radioButton4->Size = System::Drawing::Size(87, 17);
+			this->radioButton4->TabIndex = 13;
+			this->radioButton4->TabStop = true;
+			this->radioButton4->Text = L"System Actor";
+			this->radioButton4->UseVisualStyleBackColor = true;
+			// 
 			// button4
 			// 
 			this->button4->Location = System::Drawing::Point(468, 84);
@@ -497,73 +570,6 @@ namespace easycase {
 			this->label12->Size = System::Drawing::Size(49, 13);
 			this->label12->TabIndex = 8;
 			this->label12->Text = L"Add/Edit";
-			// 
-			// radioButton2
-			// 
-			this->radioButton2->AutoSize = true;
-			this->radioButton2->Location = System::Drawing::Point(112, 87);
-			this->radioButton2->Name = L"radioButton2";
-			this->radioButton2->Size = System::Drawing::Size(75, 17);
-			this->radioButton2->TabIndex = 10;
-			this->radioButton2->TabStop = true;
-			this->radioButton2->Text = L"User Actor";
-			this->radioButton2->UseVisualStyleBackColor = true;
-			// 
-			// radioButton3
-			// 
-			this->radioButton3->AutoSize = true;
-			this->radioButton3->Location = System::Drawing::Point(112, 90);
-			this->radioButton3->Name = L"radioButton3";
-			this->radioButton3->Size = System::Drawing::Size(75, 17);
-			this->radioButton3->TabIndex = 14;
-			this->radioButton3->TabStop = true;
-			this->radioButton3->Text = L"User Actor";
-			this->radioButton3->UseVisualStyleBackColor = true;
-			// 
-			// radioButton4
-			// 
-			this->radioButton4->AutoSize = true;
-			this->radioButton4->Location = System::Drawing::Point(19, 90);
-			this->radioButton4->Name = L"radioButton4";
-			this->radioButton4->Size = System::Drawing::Size(87, 17);
-			this->radioButton4->TabIndex = 13;
-			this->radioButton4->TabStop = true;
-			this->radioButton4->Text = L"System Actor";
-			this->radioButton4->UseVisualStyleBackColor = true;
-			// 
-			// listBox1
-			// 
-			this->listBox1->FormattingEnabled = true;
-			this->listBox1->Location = System::Drawing::Point(134, 69);
-			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(254, 56);
-			this->listBox1->TabIndex = 5;
-			// 
-			// label13
-			// 
-			this->label13->AutoSize = true;
-			this->label13->Location = System::Drawing::Point(43, 92);
-			this->label13->Name = L"label13";
-			this->label13->Size = System::Drawing::Size(85, 13);
-			this->label13->TabIndex = 6;
-			this->label13->Text = L"Existent Artifacts";
-			// 
-			// label14
-			// 
-			this->label14->AutoSize = true;
-			this->label14->Location = System::Drawing::Point(65, 96);
-			this->label14->Name = L"label14";
-			this->label14->Size = System::Drawing::Size(85, 13);
-			this->label14->TabIndex = 14;
-			this->label14->Text = L"Existent Artifacts";
-			// 
-			// listBox2
-			// 
-			this->listBox2->FormattingEnabled = true;
-			this->listBox2->Location = System::Drawing::Point(156, 73);
-			this->listBox2->Name = L"listBox2";
-			this->listBox2->Size = System::Drawing::Size(254, 56);
-			this->listBox2->TabIndex = 13;
 			// 
 			// UseCaseWin
 			// 

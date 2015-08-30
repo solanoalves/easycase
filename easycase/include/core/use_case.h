@@ -19,18 +19,15 @@ namespace std{
 		FlowActionList* flowActionList;
 		ConditionList* preConditionList;
 		ConditionList* posConditionList;
-		Status* status;
+		Status::StatusType status;
 	public:
 		UseCase();
 		~UseCase();
-		void setFlowActionList(FlowActionList*);
-		void addFlowAction(FlowAction*);
-		void setPreConditionList(ConditionList*);
-		void addPreCondition(FlowCondition*);
-		void setPosConditionList(ConditionList*);
-		void addPosCondition(FlowCondition*);
-		void setStatus(Status*);
-		Status* getStatus();
+		void addFlowAction(const FlowAction*);
+		void addPreCondition(const FlowCondition*);
+		void addPosCondition(const FlowCondition*);
+		void setStatus(const Status::StatusType);
+		Status::StatusType getStatus() const;
 	};
 };
 

@@ -2,13 +2,13 @@
 using std::ConditionList;
 
 ConditionList::ConditionList(){
-
+	conditions = new vector < const FlowCondition* > ;
 }
 
 ConditionList::~ConditionList(){
 
 }
 
-void ConditionList::addFlowCondition(FlowCondition* flowCondition){
+void ConditionList::addFlowCondition(const FlowCondition* flowCondition){
 	conditions->push_back(flowCondition);
 }

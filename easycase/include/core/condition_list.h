@@ -8,10 +8,10 @@ using std::vector;
 namespace std{
 	class ConditionList{
 	private:
-		vector<FlowCondition*>* conditions;
+		vector<const FlowCondition*>* conditions;
 	public:
 		ConditionList();
 		~ConditionList();
-		void addFlowCondition(FlowCondition*);
+		void addFlowCondition(const FlowCondition*);
 	};
 };
