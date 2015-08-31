@@ -31,6 +31,7 @@ namespace easycase {
 		}
 
 		System::Windows::Forms::TabControl^ GetContent();
+		System::Windows::Forms::TabControl^ GetContent(int useCaseId);
 
 	protected:
 		/// <summary>
@@ -553,7 +554,7 @@ private: System::Windows::Forms::ListBox^  afList;
 			this->poscList->Name = L"poscList";
 			this->poscList->Size = System::Drawing::Size(549, 244);
 			this->poscList->TabIndex = 18;
-			this->poscList->SelectedIndexChanged += gcnew System::EventHandler(this, &UseCaseWin::poscList_SelectedIndexChanged);
+			this->poscList->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &UseCaseWin::listBox_DrawItem);
 			// 
 			// delPoscArtifact
 			// 
@@ -752,13 +753,15 @@ private: System::Void addPrecArtifact_Click(System::Object^  sender, System::Eve
 	}
 }
 
-private: System::Void setPreConditionData(System::Windows::Forms::ListBox::ObjectCollection^ objCol){
+private: int setPreConditionData(System::Windows::Forms::ListBox::ObjectCollection^ objCol){
 	std::string str;
 	string::size_type ini, fim, tki = 0, tkf;
 	string desc, pc;
 	vector<string> tokens;
+	int cont = 0;
 	for each (System::String^ var in objCol)
 	{
+		cont++;
 		str = marshal_as<std::string>(var);
 		ini = str.find("PRE-CONDITIONS:(") + 16;
 		fim = str.find("). DESCRIPTION:");
@@ -778,15 +781,25 @@ private: System::Void setPreConditionData(System::Windows::Forms::ListBox::Objec
 		desc = str.substr(fim + 15, str.size() - (fim + 15));
 		EasyCaseFacade::createPreCondition(desc, tokens);
 	}
+	if (cont == 0){
+		MessageBox::Show(
+			"Nenhuma Pre-Condição criada",
+			"Atenção", MessageBoxButtons::OK,
+			MessageBoxIcon::Warning);
+		return 1;
+	}
+	return 0;
 }
 
-private: System::Void setPosConditionData(System::Windows::Forms::ListBox::ObjectCollection^ objCol){
+private: int setPosConditionData(System::Windows::Forms::ListBox::ObjectCollection^ objCol){
 	std::string str;
 	string::size_type ini, fim, tki = 0, tkf;
 	string desc, pc;
 	vector<string> tokens;
+	int cont = 0;
 	for each (System::String^ var in objCol)
 	{
+		cont++;
 		str = marshal_as<std::string>(var);
 		ini = str.find("POS-CONDITIONS:(") + 16;
 		fim = str.find("). DESCRIPTION:");
@@ -806,13 +819,23 @@ private: System::Void setPosConditionData(System::Windows::Forms::ListBox::Objec
 		desc = str.substr(fim + 15, str.size() - (fim + 15));
 		EasyCaseFacade::createPosCondition(desc, tokens);
 	}
+	if (cont == 0){
+		MessageBox::Show(
+			"Nenhuma Pos-Condição criada",
+			"Atenção", MessageBoxButtons::OK,
+			MessageBoxIcon::Warning);
+		return 1;
+	}
+	return 0;
 }
-private: System::Void setFlowParameters(System::Windows::Forms::ListBox::ObjectCollection^ objCol, int type){
+private: int setFlowParameters(System::Windows::Forms::ListBox::ObjectCollection^ objCol, int type){
 	std::string str;
 	string::size_type tk;
 	int actor = -1;
 	string description;
+	int cont = 0;
 	for each(System::String^ var in objCol){
+		cont++;
 		str = marshal_as<std::string>(var);
 		tk = str.find("SYSTEM: ");
 		if (tk != string::npos && tk == 0){
@@ -828,9 +851,17 @@ private: System::Void setFlowParameters(System::Windows::Forms::ListBox::ObjectC
 		}
 		EasyCaseFacade::createFlowAction(description, actor, type);
 	}
+	if (cont == 0){
+		MessageBox::Show(
+			"Nenhuma Fluxo "+ (type==0?"Principal":"Alternativo") +" criado",
+			"Atenção", MessageBoxButtons::OK,
+			MessageBoxIcon::Warning);
+		return 1;
+	}
+	return 0;
 }
 
-private: System::Void makeMyUseCase(){
+private: int makeMyUseCase(){
 	unsigned int id = -1;
 	std::string status, nome, descricao;
 	if (String::IsNullOrEmpty(this->ucId->Text)){
@@ -838,7 +869,7 @@ private: System::Void makeMyUseCase(){
 			"Preencha o ID do UseCase",
 			"Atenção", MessageBoxButtons::OK,
 			MessageBoxIcon::Warning);
-		return;
+		return 1;
 	}
 	else{
 		id = std::stoi(marshal_as<std::string>(this->ucId->Text));
@@ -848,7 +879,7 @@ private: System::Void makeMyUseCase(){
 			"Preencha o Status do UseCase",
 			"Atenção", MessageBoxButtons::OK,
 			MessageBoxIcon::Warning);
-		return;
+		return 1;
 	}
 	else{
 		status = marshal_as<std::string>(this->ucStatus->SelectedItem->ToString());
@@ -858,7 +889,7 @@ private: System::Void makeMyUseCase(){
 			"Preencha o Nome do UseCase",
 			"Atenção", MessageBoxButtons::OK,
 			MessageBoxIcon::Warning);
-		return;
+		return 1;
 	}
 	else{
 		nome = marshal_as<std::string>(this->ucName->Text);
@@ -868,27 +899,43 @@ private: System::Void makeMyUseCase(){
 			"Preencha a Descrição do UseCase",
 			"Atenção", MessageBoxButtons::OK,
 			MessageBoxIcon::Warning);
-		return;
+		return 1;
 	}
 	else{
 		descricao = marshal_as<std::string>(this->ucDescription->Text);
 	}
 	EasyCaseFacade::createUseCase(id, status, nome, descricao);
+	return 0;
 }
 
-private: System::Void pleaseDoTheInterfaceJob(){
-	this->setPreConditionData(this->precList->Items);
-	this->setPosConditionData(this->poscList->Items);
-	this->setFlowParameters(this->flowList->Items, 0);
-	this->setFlowParameters(this->afList->Items, 1);
-	
+private: int pleaseDoTheInterfaceJob(){
+	if (this->setPreConditionData(this->precList->Items) == 0){
+		if (this->setPosConditionData(this->poscList->Items) == 0){
+			if (this->setFlowParameters(this->flowList->Items, 0) == 0){
+				if (this->setFlowParameters(this->afList->Items, 1) == 0){
+					if (this->makeMyUseCase() == 0){
+						return 0;
+					}
+				}
+
+			}
+		}
+	}
+	return 1;
 }
 
 private: System::Void doneUc_Click(System::Object^  sender, System::EventArgs^  e) {
-	this->pleaseDoTheInterfaceJob();
+	int job = this->pleaseDoTheInterfaceJob();
 	this->SuspendLayout();
 	System::Object^ control = this->parentWin->Controls->Find(L"contentWinPanel", false)->GetValue(0);
-	(cli::safe_cast<System::Windows::Forms::TabControl^>(control))->BringToFront();
+	System::Windows::Forms::TabControl^ tabControl = cli::safe_cast<System::Windows::Forms::TabControl^>(control);
+	tabControl->BringToFront();
+	System::Object^ uclistBox = tabControl->Controls->Find(L"useCaseListBox", true)->GetValue(0);
+	ListBox^ listBox = cli::safe_cast<System::Windows::Forms::ListBox^>(uclistBox);
+	for each (string var in EasyCaseFacade::getUseCases())
+	{
+		listBox->Items->Add(marshal_as<String^>(var));
+	}
 	this->useCasePanel->SendToBack();
 	this->ResumeLayout(false);
 	this->PerformLayout();
@@ -928,8 +975,6 @@ private: System::Void confirmPrec_Click(System::Object^  sender, System::EventAr
 		this->precDescription->Text->Concat(precItems, ". DESCRIPTION: ", this->precDescription->Text)
 	);
 }
-private: System::Void poscList_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
-}
 private: System::Void poscConfirm_Click(System::Object^  sender, System::EventArgs^  e) {
 	System::Collections::ArrayList^ al = gcnew System::Collections::ArrayList(this->poscGeneratedArtifacts->Items);
 	System::String^ poscItems = gcnew System::String("POS-CONDITIONS:(");
@@ -941,7 +986,7 @@ private: System::Void poscConfirm_Click(System::Object^  sender, System::EventAr
 	poscItems = poscItems->Concat(poscItems, ")");
 	this->poscList->Items->Add(
 		this->poscDescription->Text->Concat(poscItems, ". DESCRIPTION: ", this->poscDescription->Text)
-		);
+	);
 }
 private: System::Void flowConfirm_Click(System::Object^  sender, System::EventArgs^  e) {
 	this->flowList->Items->Add(

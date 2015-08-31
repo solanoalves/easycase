@@ -8,10 +8,11 @@ using std::vector;
 namespace std{
 	class FlowActionList{
 	private:
-		vector<const FlowAction*>* actions;
+		vector<const FlowAction*> actions;
 	public:
 		FlowActionList();
 		~FlowActionList();
 		void addFlowAction(const FlowAction*);
+		vector<const FlowAction*> getFlowActionList() const;
 	};
 };

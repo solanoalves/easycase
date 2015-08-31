@@ -1,6 +1,10 @@
 #pragma once
 
 #include "UseCaseWin.h"
+#include <msclr\marshal_cppstd.h>
+#include <string>
+#include "easycase_facade.h"
+using std::EasyCaseFacade;
 
 namespace easycase {
 
@@ -10,6 +14,7 @@ namespace easycase {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace msclr::interop;
 
 	/// <summary>
 	/// Summary for ContentWin
@@ -73,7 +78,8 @@ namespace easycase {
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::ComboBox^  comboBox1;
 	private: System::Windows::Forms::Label^  label5;
-	private: System::Windows::Forms::TextBox^  comboLabel;
+	private: System::Windows::Forms::TextBox^  comboRequirement;
+
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::TextBox^  projectLeader;
@@ -129,7 +135,7 @@ namespace easycase {
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			this->useCaseListBox = (gcnew System::Windows::Forms::ListBox());
 			this->addUseCase = (gcnew System::Windows::Forms::Button());
-			this->comboLabel = (gcnew System::Windows::Forms::TextBox());
+			this->comboRequirement = (gcnew System::Windows::Forms::TextBox());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->contentWinPanel->SuspendLayout();
@@ -343,7 +349,7 @@ namespace easycase {
 			this->tabPage3->Controls->Add(this->label9);
 			this->tabPage3->Controls->Add(this->useCaseListBox);
 			this->tabPage3->Controls->Add(this->addUseCase);
-			this->tabPage3->Controls->Add(this->comboLabel);
+			this->tabPage3->Controls->Add(this->comboRequirement);
 			this->tabPage3->Controls->Add(this->comboBox1);
 			this->tabPage3->Controls->Add(this->label5);
 			this->tabPage3->Location = System::Drawing::Point(4, 22);
@@ -370,6 +376,7 @@ namespace easycase {
 			this->button5->TabIndex = 6;
 			this->button5->Text = L"Edit";
 			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &ContentWin::button5_Click);
 			// 
 			// label9
 			// 
@@ -382,11 +389,14 @@ namespace easycase {
 			// 
 			// useCaseListBox
 			// 
+			this->useCaseListBox->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawFixed;
 			this->useCaseListBox->FormattingEnabled = true;
+			this->useCaseListBox->ItemHeight = 60;
 			this->useCaseListBox->Location = System::Drawing::Point(12, 180);
 			this->useCaseListBox->Name = L"useCaseListBox";
-			this->useCaseListBox->Size = System::Drawing::Size(535, 264);
+			this->useCaseListBox->Size = System::Drawing::Size(535, 244);
 			this->useCaseListBox->TabIndex = 4;
+			this->useCaseListBox->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &ContentWin::useCaseListBox_DrawItem);
 			// 
 			// addUseCase
 			// 
@@ -398,15 +408,15 @@ namespace easycase {
 			this->addUseCase->UseVisualStyleBackColor = true;
 			this->addUseCase->Click += gcnew System::EventHandler(this, &ContentWin::addUseCase_Click);
 			// 
-			// comboLabel
+			// comboRequirement
 			// 
-			this->comboLabel->BackColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->comboLabel->Location = System::Drawing::Point(15, 29);
-			this->comboLabel->Multiline = true;
-			this->comboLabel->Name = L"comboLabel";
-			this->comboLabel->ReadOnly = true;
-			this->comboLabel->Size = System::Drawing::Size(517, 66);
-			this->comboLabel->TabIndex = 2;
+			this->comboRequirement->BackColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->comboRequirement->Location = System::Drawing::Point(15, 29);
+			this->comboRequirement->Multiline = true;
+			this->comboRequirement->Name = L"comboRequirement";
+			this->comboRequirement->ReadOnly = true;
+			this->comboRequirement->Size = System::Drawing::Size(517, 66);
+			this->comboRequirement->TabIndex = 2;
 			// 
 			// comboBox1
 			// 
@@ -454,6 +464,17 @@ namespace easycase {
 		}
 #pragma endregion
 
+	private: System::Void customUCListItem(System::Object^  sender, System::Windows::Forms::DrawItemEventArgs^  e){
+		e->DrawBackground();
+		Brush^ myBrush = Brushes::Black;
+		e->Graphics->DrawString(useCaseListBox->Items[e->Index]->ToString(),
+			e->Font, myBrush, e->Bounds, StringFormat::GenericDefault);
+		Pen^ p = gcnew Pen(Brushes::Gainsboro, 1);
+		e->Graphics->DrawLine(p, Point(e->Bounds.Left, e->Bounds.Bottom - 1), Point(e->Bounds.Right, e->Bounds.Bottom - 1));
+		delete p;
+		e->DrawFocusRectangle();
+	}
+
 	private: System::Void customListItem(System::Object^  sender, System::Windows::Forms::DrawItemEventArgs^  e){
 		e->DrawBackground();
 		Brush^ myBrush = Brushes::Black;
@@ -477,19 +498,47 @@ namespace easycase {
 		System::Windows::Forms::ComboBox^ cb = cli::safe_cast<System::Windows::Forms::ComboBox^>(sender);
 		System::Object^ obj = cb->SelectedItem;
 		if (obj == nullptr) return;
-		this->comboLabel->Text = "R" + (cb->SelectedIndex).ToString("D3") + ": " + (cli::safe_cast<System::String^>(obj));
+		this->comboRequirement->Text = "R" + (cb->SelectedIndex).ToString("D3") + ": " + (cli::safe_cast<System::String^>(obj));
 	}
 private: System::Void addUseCase_Click(System::Object^  sender, System::EventArgs^  e) {
-	this->SuspendLayout();
-	if (this->useCaseWin == nullptr){
-		this->useCaseWin = gcnew UseCaseWin(this->parentWin);
-		this->parentWin->Controls->Add(this->useCaseWin->GetContent());
+	if (String::IsNullOrEmpty(this->comboRequirement->Text)){
+		MessageBox::Show(
+			"Selecione um requisito",
+			"Atenção", MessageBoxButtons::OK,
+			MessageBoxIcon::Warning);
+	} 
+	else{
+		this->SuspendLayout();
+		if (this->useCaseWin == nullptr){
+			this->useCaseWin = gcnew UseCaseWin(this->parentWin);
+			this->parentWin->Controls->Add(this->useCaseWin->GetContent());
+		}
+		System::Object^ control = this->parentWin->Controls->Find(L"contentWinPanel", false)->GetValue(0);
+		(cli::safe_cast<System::Windows::Forms::TabControl^>(control))->SendToBack();
+		this->useCaseWin->GetContent()->BringToFront();
+		this->ResumeLayout(false);
+		this->PerformLayout();
 	}
-	System::Object^ control = this->parentWin->Controls->Find(L"contentWinPanel", false)->GetValue(0);
-	(cli::safe_cast<System::Windows::Forms::TabControl^>(control))->SendToBack();
-	this->useCaseWin->GetContent()->BringToFront();
-	this->ResumeLayout(false);
-	this->PerformLayout();
+}
+private: System::Void useCaseListBox_DrawItem(System::Object^  sender, System::Windows::Forms::DrawItemEventArgs^  e) {
+	this->customUCListItem(sender, e);
+}
+private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (this->useCaseListBox->SelectedItem != nullptr){
+		String^ str = cli::safe_cast<String^>(this->useCaseListBox->SelectedItem);
+		int idx = str->IndexOf(" ");
+		idx = std::stoi(marshal_as<std::string>(str->Substring(2, idx - 2)));
+		this->SuspendLayout();
+		if (this->useCaseWin == nullptr){
+			this->useCaseWin = gcnew UseCaseWin(this->parentWin);
+			this->parentWin->Controls->Add(this->useCaseWin->GetContent(idx));
+		}
+		System::Object^ control = this->parentWin->Controls->Find(L"contentWinPanel", false)->GetValue(0);
+		(cli::safe_cast<System::Windows::Forms::TabControl^>(control))->SendToBack();
+		this->useCaseWin->GetContent(idx)->BringToFront();
+		this->ResumeLayout(false);
+		this->PerformLayout();
+	}
 }
 };
 }

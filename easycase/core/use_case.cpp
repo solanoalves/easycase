@@ -30,3 +30,15 @@ void UseCase::setStatus(const Status::StatusType stat){
 Status::StatusType UseCase::getStatus() const{
 	return status;
 }
+
+ConditionList* UseCase::getPreConditionList() const{
+	return preConditionList;
+}
+
+ConditionList* UseCase::getPosConditionList() const{
+	return posConditionList;
+}
+
+FlowActionList* UseCase::getFlowActionList() const{
+	return flowActionList;
+}

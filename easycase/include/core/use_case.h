@@ -27,6 +27,9 @@ namespace std{
 		void addPreCondition(const FlowCondition*);
 		void addPosCondition(const FlowCondition*);
 		void setStatus(const Status::StatusType);
+		ConditionList* getPreConditionList() const;
+		ConditionList* getPosConditionList() const;
+		FlowActionList* getFlowActionList() const;
 		Status::StatusType getStatus() const;
 	};
 };

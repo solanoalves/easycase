@@ -8,8 +8,15 @@ using std::PreCondition;
 using std::PosCondition;
 #include "flow_action.h"
 using std::FlowAction;
+#include "status.h"
+using std::Status;
+#include "condition_list.h"
+using std::ConditionList;
+#include "actor.h"
+using std::Actor;
 
-static UseCase* useCase;
+static UseCase* selectedUC;
+static vector<UseCase*> useCaseList;
 static vector<PreCondition*> preConditionList;
 static vector<FlowAction*> flowActionList;
 static vector<PosCondition*> posConditionList;
@@ -92,5 +99,116 @@ void EasyCaseFacade::createUseCase(unsigned int id, string status, string nome, 
 	for (vector<PosCondition*>::iterator it = posConditionList.begin(); it != posConditionList.end(); ++it){
 		uc->addPosCondition(*it);
 	}
-	useCase = uc;
+	useCaseList.push_back(uc);
+}
+
+vector<string> EasyCaseFacade::getUseCases(){
+	vector<string> retorno;
+	for each (UseCase* var in useCaseList)
+	{		
+		retorno.push_back("UC" + std::to_string(var->getId())+". Descrição: "+var->getName());
+	}
+	return retorno;
+}
+
+void EasyCaseFacade::loadUseCase(unsigned int ucid){
+	for each (UseCase* var in useCaseList)
+	{
+		if (var->getId() == ucid){
+			selectedUC = var;
+			break;
+		}
+	}
+}
+
+unsigned int EasyCaseFacade::ucId(){
+	return selectedUC->getId();
+}
+
+string EasyCaseFacade::ucStatus(){
+	Status stat;
+	if (selectedUC->getStatus() == Status::Incomplete){
+		return stat.isIncomplete;
+	}
+	else if (selectedUC->getStatus() == Status::Created){
+		return stat.isCreated;
+	}
+	else if (selectedUC->getStatus() == Status::Working){
+		return stat.isWorking;
+	}
+	else if (selectedUC->getStatus() == Status::Revision){
+		return stat.isRevision;
+	}
+	else if (selectedUC->getStatus() == Status::Done){
+		return stat.isDone;
+	}
+	return stat.isIncomplete;
+}
+
+string EasyCaseFacade::ucName(){
+	return selectedUC->getName();
+}
+
+string EasyCaseFacade::ucDescription(){
+	return selectedUC->getDescription();
+}
+
+vector<string> EasyCaseFacade::ucPreCondition(){
+	ConditionList* conditionList = selectedUC->getPreConditionList();
+	vector<string> ret;
+	string entry;
+	for each (const PreCondition* var in conditionList->getConditions())
+	{
+		entry = "PRE-CONDITIONS:(";
+		for (vector<string>::const_iterator it = var->firstArtifact(); it != var->lastArtifact(); ++it){
+			entry = entry + *it + ", ";
+		}
+		entry.substr(0, entry.size() - 2);
+		entry = "). DESCRIPTION: " + var->getDescription();
+		ret.push_back(entry);
+	}
+	return ret;
+}
+
+vector<string> EasyCaseFacade::ucPosCondition(){
+	ConditionList* conditionList = selectedUC->getPosConditionList();
+	vector<string> ret;
+	string entry;
+	for each (const PosCondition* var in conditionList->getConditions())
+	{
+		entry = "POS-CONDITIONS:(";
+		for (vector<string>::const_iterator it = var->firstArtifact(); it != var->lastArtifact(); ++it){
+			entry = entry + *it + ", ";
+		}
+		entry.substr(0, entry.size() - 2);
+		entry = "). DESCRIPTION: " + var->getDescription();
+		ret.push_back(entry);
+	}
+	return ret;
+}
+
+vector<string> EasyCaseFacade::ucMainFlow(){
+	FlowActionList* flowActionList = selectedUC->getFlowActionList();
+	vector<string> ret;
+	string entry;
+	for each(const FlowAction* var in flowActionList->getFlowActionList()){
+		if (var->getFlowType() == Flow::MainFlow){
+			entry = (var->getActorType() == Actor::System ? "SYSTEM: " : "USER: ") + var->getDescription();
+			ret.push_back(entry);
+		}
+	}
+	return ret;
+}
+
+vector<string> EasyCaseFacade::ucAlternativeFlow(){
+	FlowActionList* flowActionList = selectedUC->getFlowActionList();
+	vector<string> ret;
+	string entry;
+	for each(const FlowAction* var in flowActionList->getFlowActionList()){
+		if (var->getFlowType() == Flow::AlternativeFlow){
+			entry = (var->getActorType() == Actor::System ? "SYSTEM: " : "USER: ") + var->getDescription();
+			ret.push_back(entry);
+		}
+	}
+	return ret;
 }
