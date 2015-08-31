@@ -1,5 +1,10 @@
 #pragma once
 
+#include "easycase_facade.h"
+using std::EasyCaseFacade;
+#include <msclr\marshal_cppstd.h>
+#include <string>
+
 namespace easycase {
 
 	using namespace System;
@@ -8,6 +13,7 @@ namespace easycase {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace msclr::interop;
 
 	/// <summary>
 	/// Summary for UseCaseWin
@@ -740,10 +746,146 @@ private: System::Windows::Forms::ListBox^  afList;
 #pragma endregion
 
 private: System::Void addPrecArtifact_Click(System::Object^  sender, System::EventArgs^  e) {
-	this->precExistentArtifacts->Items->Add(this->precArtifact->Text);
-	this->precArtifact->Text = "";
+	if (!System::String::IsNullOrEmpty(this->precArtifact->Text) && !System::String::IsNullOrWhiteSpace(this->precArtifact->Text)){
+		this->precExistentArtifacts->Items->Add(this->precArtifact->Text);
+		this->precArtifact->Text = "";
+	}
 }
+
+private: System::Void setPreConditionData(System::Windows::Forms::ListBox::ObjectCollection^ objCol){
+	std::string str;
+	string::size_type ini, fim, tki = 0, tkf;
+	string desc, pc;
+	vector<string> tokens;
+	for each (System::String^ var in objCol)
+	{
+		str = marshal_as<std::string>(var);
+		ini = str.find("PRE-CONDITIONS:(") + 16;
+		fim = str.find("). DESCRIPTION:");
+		pc = str.substr(ini, fim - ini);
+		tkf = pc.find(",");
+		if (tkf == string::npos){
+			tokens.push_back(pc);
+		}
+		else{
+			while (tkf != string::npos){
+				tokens.push_back(pc.substr(tki, tkf - tki));
+				tki = tkf + 2;
+				tkf = pc.find(",", tki);
+			}
+			tokens.push_back(pc.substr(tki, pc.size() - tki));
+		}
+		desc = str.substr(fim + 15, str.size() - (fim + 15));
+		EasyCaseFacade::createPreCondition(desc, tokens);
+	}
+}
+
+private: System::Void setPosConditionData(System::Windows::Forms::ListBox::ObjectCollection^ objCol){
+	std::string str;
+	string::size_type ini, fim, tki = 0, tkf;
+	string desc, pc;
+	vector<string> tokens;
+	for each (System::String^ var in objCol)
+	{
+		str = marshal_as<std::string>(var);
+		ini = str.find("POS-CONDITIONS:(") + 16;
+		fim = str.find("). DESCRIPTION:");
+		pc = str.substr(ini, fim - ini);
+		tkf = pc.find(",");
+		if (tkf == string::npos){
+			tokens.push_back(pc);
+		}
+		else{
+			while (tkf != string::npos){
+				tokens.push_back(pc.substr(tki, tkf - tki));
+				tki = tkf + 2;
+				tkf = pc.find(",", tki);
+			}
+			tokens.push_back(pc.substr(tki, pc.size() - tki));
+		}
+		desc = str.substr(fim + 15, str.size() - (fim + 15));
+		EasyCaseFacade::createPosCondition(desc, tokens);
+	}
+}
+private: System::Void setFlowParameters(System::Windows::Forms::ListBox::ObjectCollection^ objCol, int type){
+	std::string str;
+	string::size_type tk;
+	int actor = -1;
+	string description;
+	for each(System::String^ var in objCol){
+		str = marshal_as<std::string>(var);
+		tk = str.find("SYSTEM: ");
+		if (tk != string::npos && tk == 0){
+			actor = 0;
+			description = str.substr(9, str.size() - 9);
+		}
+		else{
+			tk = str.find("USER: ");
+			if (tk != string::npos && tk == 0){
+				actor = 1;
+				description = str.substr(7, str.size() - 7);
+			}
+		}
+		EasyCaseFacade::createFlowAction(description, actor, type);
+	}
+}
+
+private: System::Void makeMyUseCase(){
+	unsigned int id = -1;
+	std::string status, nome, descricao;
+	if (String::IsNullOrEmpty(this->ucId->Text)){
+		MessageBox::Show(
+			"Preencha o ID do UseCase",
+			"Atenção", MessageBoxButtons::OK,
+			MessageBoxIcon::Warning);
+		return;
+	}
+	else{
+		id = std::stoi(marshal_as<std::string>(this->ucId->Text));
+	}
+	if (String::IsNullOrEmpty(this->ucStatus->SelectedItem->ToString())){
+		MessageBox::Show(
+			"Preencha o Status do UseCase",
+			"Atenção", MessageBoxButtons::OK,
+			MessageBoxIcon::Warning);
+		return;
+	}
+	else{
+		status = marshal_as<std::string>(this->ucStatus->SelectedItem->ToString());
+	}
+	if (String::IsNullOrEmpty(this->ucName->Text)){
+		MessageBox::Show(
+			"Preencha o Nome do UseCase",
+			"Atenção", MessageBoxButtons::OK,
+			MessageBoxIcon::Warning);
+		return;
+	}
+	else{
+		nome = marshal_as<std::string>(this->ucName->Text);
+	}
+	if (String::IsNullOrEmpty(this->ucDescription->Text)){
+		MessageBox::Show(
+			"Preencha a Descrição do UseCase",
+			"Atenção", MessageBoxButtons::OK,
+			MessageBoxIcon::Warning);
+		return;
+	}
+	else{
+		descricao = marshal_as<std::string>(this->ucDescription->Text);
+	}
+	EasyCaseFacade::createUseCase(id, status, nome, descricao);
+}
+
+private: System::Void pleaseDoTheInterfaceJob(){
+	this->setPreConditionData(this->precList->Items);
+	this->setPosConditionData(this->poscList->Items);
+	this->setFlowParameters(this->flowList->Items, 0);
+	this->setFlowParameters(this->afList->Items, 1);
+	
+}
+
 private: System::Void doneUc_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->pleaseDoTheInterfaceJob();
 	this->SuspendLayout();
 	System::Object^ control = this->parentWin->Controls->Find(L"contentWinPanel", false)->GetValue(0);
 	(cli::safe_cast<System::Windows::Forms::TabControl^>(control))->BringToFront();
@@ -760,8 +902,10 @@ private: System::Void precExistentArtifacts_SelectedIndexChanged(System::Object^
 	this->precArtifact->Text = cli::safe_cast<System::String^>(this->precExistentArtifacts->SelectedItem);
 }
 private: System::Void addPoscArtifact_Click(System::Object^  sender, System::EventArgs^  e) {
-	this->poscGeneratedArtifacts->Items->Add(this->poscArtifact->Text);
-	this->poscArtifact->Text = "";
+	if (!System::String::IsNullOrEmpty(this->poscArtifact->Text) && !System::String::IsNullOrWhiteSpace(this->poscArtifact->Text)){
+		this->poscGeneratedArtifacts->Items->Add(this->poscArtifact->Text);
+		this->poscArtifact->Text = "";
+	}
 }
 private: System::Void delPoscArtifact_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (this->poscGeneratedArtifacts->Items->Contains(this->poscArtifact->Text)){
@@ -801,7 +945,7 @@ private: System::Void poscConfirm_Click(System::Object^  sender, System::EventAr
 }
 private: System::Void flowConfirm_Click(System::Object^  sender, System::EventArgs^  e) {
 	this->flowList->Items->Add(
-		this->fSystemActor->Checked ? "Sistema: " : this->fUserActor->Checked ? "Usuário: " : "" +
+		(this->fSystemActor->Checked ? "SYSTEM: " : this->fUserActor->Checked ? "USER: " : "") +
 		this->flowDescription->Text
 	);
 }
@@ -817,7 +961,7 @@ private: System::Void fUserActor_CheckedChanged(System::Object^  sender, System:
 }
 private: System::Void afConfirm_Click(System::Object^  sender, System::EventArgs^  e) {
 	this->afList->Items->Add(
-		this->afSystemActor->Checked ? "Sistema: " : this->afUserActor->Checked ? "Usuário: " : "" +
+		(this->afSystemActor->Checked ? "SYSTEM: " : this->afUserActor->Checked ? "USER: " : "") +
 		this->afDescription->Text
 	);
 }
