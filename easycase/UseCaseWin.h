@@ -932,6 +932,7 @@ private: System::Void doneUc_Click(System::Object^  sender, System::EventArgs^  
 	tabControl->BringToFront();
 	System::Object^ uclistBox = tabControl->Controls->Find(L"useCaseListBox", true)->GetValue(0);
 	ListBox^ listBox = cli::safe_cast<System::Windows::Forms::ListBox^>(uclistBox);
+	listBox->Items->Clear();
 	for each (string var in EasyCaseFacade::getUseCases())
 	{
 		listBox->Items->Add(marshal_as<String^>(var));

@@ -69,19 +69,22 @@ namespace easycase {
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::TabPage^  tabPage2;
 	private: System::Windows::Forms::TabPage^  tabPage3;
-	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::TextBox^  requirement;
+
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::ListBox^  requirementListBox;
 
 
 	private: System::Windows::Forms::Button^  button1;
-	private: System::Windows::Forms::ComboBox^  comboBox1;
+	private: System::Windows::Forms::ComboBox^  requirementHide;
+
+
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::TextBox^  comboRequirement;
 
-	private: System::Windows::Forms::Button^  button3;
-	private: System::Windows::Forms::Button^  button2;
+
+
 	private: System::Windows::Forms::TextBox^  projectLeader;
 	private: System::Windows::Forms::Label^  label6;
 	private: System::Windows::Forms::DateTimePicker^  endDate;
@@ -122,12 +125,10 @@ namespace easycase {
 			this->projectName = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->requirementListBox = (gcnew System::Windows::Forms::ListBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->requirement = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
 			this->button6 = (gcnew System::Windows::Forms::Button());
@@ -136,7 +137,7 @@ namespace easycase {
 			this->useCaseListBox = (gcnew System::Windows::Forms::ListBox());
 			this->addUseCase = (gcnew System::Windows::Forms::Button());
 			this->comboRequirement = (gcnew System::Windows::Forms::TextBox());
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->requirementHide = (gcnew System::Windows::Forms::ComboBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->contentWinPanel->SuspendLayout();
 			this->tabPage1->SuspendLayout();
@@ -258,12 +259,10 @@ namespace easycase {
 			// 
 			// tabPage2
 			// 
-			this->tabPage2->Controls->Add(this->button3);
-			this->tabPage2->Controls->Add(this->button2);
 			this->tabPage2->Controls->Add(this->label4);
 			this->tabPage2->Controls->Add(this->requirementListBox);
 			this->tabPage2->Controls->Add(this->button1);
-			this->tabPage2->Controls->Add(this->textBox1);
+			this->tabPage2->Controls->Add(this->requirement);
 			this->tabPage2->Controls->Add(this->label3);
 			this->tabPage2->Location = System::Drawing::Point(4, 22);
 			this->tabPage2->Name = L"tabPage2";
@@ -272,24 +271,6 @@ namespace easycase {
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Requirements";
 			this->tabPage2->UseVisualStyleBackColor = true;
-			// 
-			// button3
-			// 
-			this->button3->Location = System::Drawing::Point(275, 430);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(53, 28);
-			this->button3->TabIndex = 6;
-			this->button3->Text = L"Down";
-			this->button3->UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(214, 430);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(51, 28);
-			this->button2->TabIndex = 5;
-			this->button2->Text = L"Up";
-			this->button2->UseVisualStyleBackColor = true;
 			// 
 			// label4
 			// 
@@ -305,11 +286,6 @@ namespace easycase {
 			this->requirementListBox->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawFixed;
 			this->requirementListBox->FormattingEnabled = true;
 			this->requirementListBox->ItemHeight = 60;
-			this->requirementListBox->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
-				L"um dois tres quatro cinco cinco seiz oa tudo bem um dois tres quatro cinco cinco "
-					L"seiz oa tudo bem um dois tres quatro cinco cinco seiz oa tudo bem ",
-					L"ble", L"bli", L"blo"
-			});
 			this->requirementListBox->Location = System::Drawing::Point(15, 180);
 			this->requirementListBox->Name = L"requirementListBox";
 			this->requirementListBox->Size = System::Drawing::Size(525, 244);
@@ -324,14 +300,15 @@ namespace easycase {
 			this->button1->TabIndex = 2;
 			this->button1->Text = L"Confirm Requirement";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &ContentWin::button1_Click);
 			// 
-			// textBox1
+			// requirement
 			// 
-			this->textBox1->Location = System::Drawing::Point(15, 38);
-			this->textBox1->Multiline = true;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(525, 60);
-			this->textBox1->TabIndex = 1;
+			this->requirement->Location = System::Drawing::Point(15, 38);
+			this->requirement->Multiline = true;
+			this->requirement->Name = L"requirement";
+			this->requirement->Size = System::Drawing::Size(525, 60);
+			this->requirement->TabIndex = 1;
 			// 
 			// label3
 			// 
@@ -350,7 +327,7 @@ namespace easycase {
 			this->tabPage3->Controls->Add(this->useCaseListBox);
 			this->tabPage3->Controls->Add(this->addUseCase);
 			this->tabPage3->Controls->Add(this->comboRequirement);
-			this->tabPage3->Controls->Add(this->comboBox1);
+			this->tabPage3->Controls->Add(this->requirementHide);
 			this->tabPage3->Controls->Add(this->label5);
 			this->tabPage3->Location = System::Drawing::Point(4, 22);
 			this->tabPage3->Name = L"tabPage3";
@@ -418,22 +395,17 @@ namespace easycase {
 			this->comboRequirement->Size = System::Drawing::Size(517, 66);
 			this->comboRequirement->TabIndex = 2;
 			// 
-			// comboBox1
+			// requirementHide
 			// 
-			this->comboBox1->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawVariable;
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->ItemHeight = 60;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
-				L"um dois tres quatro cinco cinco seiz oa tudo bem um dois tres quatro cinco cinco "
-					L"seiz oa tudo bem um dois tres quatro cinco cinco seiz oa tudo bem ",
-					L"ble", L"bli", L"blo"
-			});
-			this->comboBox1->Location = System::Drawing::Point(15, 29);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(535, 66);
-			this->comboBox1->TabIndex = 1;
-			this->comboBox1->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &ContentWin::comboBox1_DrawItem);
-			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &ContentWin::comboBox1_SelectedIndexChanged);
+			this->requirementHide->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawVariable;
+			this->requirementHide->FormattingEnabled = true;
+			this->requirementHide->ItemHeight = 60;
+			this->requirementHide->Location = System::Drawing::Point(15, 29);
+			this->requirementHide->Name = L"requirementHide";
+			this->requirementHide->Size = System::Drawing::Size(535, 66);
+			this->requirementHide->TabIndex = 1;
+			this->requirementHide->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &ContentWin::comboBox1_DrawItem);
+			this->requirementHide->SelectedIndexChanged += gcnew System::EventHandler(this, &ContentWin::comboBox1_SelectedIndexChanged);
 			// 
 			// label5
 			// 
@@ -538,6 +510,13 @@ private: System::Void button5_Click(System::Object^  sender, System::EventArgs^ 
 		this->useCaseWin->GetContent(idx)->BringToFront();
 		this->ResumeLayout(false);
 		this->PerformLayout();
+	}
+}
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->requirementListBox->Items->Add(this->requirement->Text);
+	this->requirementHide->Items->Clear();
+	for (int i = 0; i < this->requirementListBox->Items->Count; i++){
+		this->requirementHide->Items->Add(this->requirementListBox->Items[i]);
 	}
 }
 };

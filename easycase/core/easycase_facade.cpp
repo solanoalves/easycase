@@ -26,6 +26,7 @@ EasyCaseFacade::~EasyCaseFacade(){
 }
 
 void EasyCaseFacade::createPreCondition(const string description, const vector<string> artifacts){
+	preConditionList.clear();
 	PreCondition* pc = new PreCondition;
 	pc->setDescription(description);
 	for (vector<string>::const_iterator it = artifacts.begin(); it != artifacts.end(); ++it){
@@ -35,6 +36,7 @@ void EasyCaseFacade::createPreCondition(const string description, const vector<s
 }
 
 void EasyCaseFacade::createPosCondition(const string description, const vector<string> artifacts){
+	posConditionList.clear();
 	PosCondition* pc = new PosCondition;
 	pc->setDescription(description);
 	for (vector<string>::const_iterator it = artifacts.begin(); it != artifacts.end(); ++it){
@@ -44,6 +46,7 @@ void EasyCaseFacade::createPosCondition(const string description, const vector<s
 }
 
 void EasyCaseFacade::createFlowAction(const string description, const int actor, const int flow){
+	flowActionList.clear();
 	FlowAction* fa = new FlowAction;
 	fa->setDescription(description);
 	switch (actor){
@@ -70,7 +73,21 @@ void EasyCaseFacade::createFlowAction(const string description, const int actor,
 }
 
 void EasyCaseFacade::createUseCase(unsigned int id, string status, string nome, string descricao){
-	UseCase* uc = new UseCase;
+	UseCase* toChange = nullptr;
+	for each (UseCase* useCase in useCaseList)
+	{
+		if (useCase->getId() == id){
+			toChange = useCase;
+			break;
+		}
+	}
+	UseCase* uc;
+	if (toChange == nullptr){
+		uc = new UseCase;
+	}
+	else{
+		uc = toChange;
+	}
 	uc->setId(id);
 	Status stat;
 	if (status.compare(stat.isIncomplete)){
@@ -90,16 +107,21 @@ void EasyCaseFacade::createUseCase(unsigned int id, string status, string nome, 
 	}
 	uc->setName(nome);
 	uc->setDescription(descricao);
+	uc->getPreConditionList()->getConditions().clear();
 	for (vector<PreCondition*>::iterator it = preConditionList.begin(); it != preConditionList.end(); ++it){
 		uc->addPreCondition(*it);
 	}
+	uc->getFlowActionList()->getFlowActionList().clear();
 	for (vector<FlowAction*>::iterator it = flowActionList.begin(); it != flowActionList.end(); ++it){
 		uc->addFlowAction(*it);
 	}
+	uc->getPosConditionList()->getConditions().clear();
 	for (vector<PosCondition*>::iterator it = posConditionList.begin(); it != posConditionList.end(); ++it){
 		uc->addPosCondition(*it);
 	}
-	useCaseList.push_back(uc);
+	if (toChange == nullptr){
+		useCaseList.push_back(uc);
+	}
 }
 
 vector<string> EasyCaseFacade::getUseCases(){
