@@ -172,10 +172,11 @@ namespace easycase {
 	private: System::Void novoToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->SuspendLayout();
 		if (this->contentWin == nullptr){
-			this->contentWin = gcnew ContentWin();
+			this->contentWin = gcnew ContentWin(this);
+			this->Controls->Add(this->contentWin->GetContent());
 		}
-		(cli::safe_cast<System::Windows::Forms::Panel^>(this->Controls->Find(L"initialPanel", false)->GetValue(0)))->SendToBack();
-		this->Controls->Add(this->contentWin->GetContent());
+		System::Object^ control = this->Controls->Find(L"initialPanel", false)->GetValue(0);
+		(cli::safe_cast<System::Windows::Forms::Panel^>(control))->SendToBack();
 		this->contentWin->GetContent()->BringToFront();
 		this->ResumeLayout(false);
 		this->PerformLayout();

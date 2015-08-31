@@ -10,6 +10,6 @@ void Main(array<String^>^ args)
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 
-	easycase::MainWin form;
-	Application::Run(%form);
+	easycase::MainWin^ form = gcnew easycase::MainWin();
+	Application::Run(form);
 }

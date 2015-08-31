@@ -1,5 +1,7 @@
 #pragma once
 
+#include "UseCaseWin.h"
+
 namespace easycase {
 
 	using namespace System;
@@ -15,15 +17,17 @@ namespace easycase {
 	public ref class ContentWin : public System::Windows::Forms::Form
 	{
 	public:
-		ContentWin(void)
+		ContentWin(System::Windows::Forms::Form^ root)
 		{
 			InitializeComponent();
+			parentWin = root;
 			//
 			//TODO: Add the constructor code here
 			//
 		}
 
 		System::Windows::Forms::TabControl^ GetContent();
+		System::Windows::Forms::Form^ GetParentWin();
 
 	protected:
 		/// <summary>
@@ -35,8 +39,23 @@ namespace easycase {
 			{
 				delete components;
 			}
+			if (useCaseWin)
+			{
+				delete useCaseWin;
+			}
+			if (contentWinPanel)
+			{
+				delete contentWinPanel;
+			}
+			if (parentWin)
+			{
+				delete parentWin;
+			}
 		}
-	private: System::Windows::Forms::TabControl^  tabControl1;
+	private: System::Windows::Forms::Form^ parentWin;
+	private: UseCaseWin^ useCaseWin;
+	private: System::Windows::Forms::TabControl^  contentWinPanel;
+
 	protected:
 	private: System::Windows::Forms::TabPage^  tabPage1;
 	private: System::Windows::Forms::TextBox^  projectDescription;
@@ -64,8 +83,9 @@ namespace easycase {
 	private: System::Windows::Forms::Label^  label7;
 	private: System::Windows::Forms::DateTimePicker^  initialDate;
 	private: System::Windows::Forms::ListBox^  useCaseListBox;
+	private: System::Windows::Forms::Button^  addUseCase;
 
-	private: System::Windows::Forms::Button^  button4;
+
 	private: System::Windows::Forms::Label^  label9;
 	private: System::Windows::Forms::Button^  button6;
 	private: System::Windows::Forms::Button^  button5;
@@ -83,8 +103,14 @@ namespace easycase {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
+			this->contentWinPanel = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
+			this->endDate = (gcnew System::Windows::Forms::DateTimePicker());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->initialDate = (gcnew System::Windows::Forms::DateTimePicker());
+			this->projectLeader = (gcnew System::Windows::Forms::TextBox());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->projectDescription = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->projectName = (gcnew System::Windows::Forms::TextBox());
@@ -98,36 +124,30 @@ namespace easycase {
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
+			this->button6 = (gcnew System::Windows::Forms::Button());
+			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->label9 = (gcnew System::Windows::Forms::Label());
+			this->useCaseListBox = (gcnew System::Windows::Forms::ListBox());
+			this->addUseCase = (gcnew System::Windows::Forms::Button());
 			this->comboLabel = (gcnew System::Windows::Forms::TextBox());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->projectLeader = (gcnew System::Windows::Forms::TextBox());
-			this->initialDate = (gcnew System::Windows::Forms::DateTimePicker());
-			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->label8 = (gcnew System::Windows::Forms::Label());
-			this->endDate = (gcnew System::Windows::Forms::DateTimePicker());
-			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->useCaseListBox = (gcnew System::Windows::Forms::ListBox());
-			this->label9 = (gcnew System::Windows::Forms::Label());
-			this->button5 = (gcnew System::Windows::Forms::Button());
-			this->button6 = (gcnew System::Windows::Forms::Button());
-			this->tabControl1->SuspendLayout();
+			this->contentWinPanel->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
 			this->tabPage3->SuspendLayout();
 			this->SuspendLayout();
 			// 
-			// tabControl1
+			// contentWinPanel
 			// 
-			this->tabControl1->Controls->Add(this->tabPage1);
-			this->tabControl1->Controls->Add(this->tabPage2);
-			this->tabControl1->Controls->Add(this->tabPage3);
-			this->tabControl1->Location = System::Drawing::Point(0, 27);
-			this->tabControl1->Name = L"tabControl1";
-			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(566, 506);
-			this->tabControl1->TabIndex = 0;
+			this->contentWinPanel->Controls->Add(this->tabPage1);
+			this->contentWinPanel->Controls->Add(this->tabPage2);
+			this->contentWinPanel->Controls->Add(this->tabPage3);
+			this->contentWinPanel->Location = System::Drawing::Point(0, 27);
+			this->contentWinPanel->Name = L"contentWinPanel";
+			this->contentWinPanel->SelectedIndex = 0;
+			this->contentWinPanel->Size = System::Drawing::Size(566, 506);
+			this->contentWinPanel->TabIndex = 0;
 			// 
 			// tabPage1
 			// 
@@ -148,6 +168,54 @@ namespace easycase {
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Project Info";
 			this->tabPage1->UseVisualStyleBackColor = true;
+			// 
+			// endDate
+			// 
+			this->endDate->Location = System::Drawing::Point(18, 210);
+			this->endDate->Name = L"endDate";
+			this->endDate->Size = System::Drawing::Size(200, 20);
+			this->endDate->TabIndex = 9;
+			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->Location = System::Drawing::Point(15, 187);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(52, 13);
+			this->label8->TabIndex = 8;
+			this->label8->Text = L"End Date";
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(12, 132);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(57, 13);
+			this->label7->TabIndex = 7;
+			this->label7->Text = L"Initial Date";
+			// 
+			// initialDate
+			// 
+			this->initialDate->Location = System::Drawing::Point(15, 154);
+			this->initialDate->Name = L"initialDate";
+			this->initialDate->Size = System::Drawing::Size(200, 20);
+			this->initialDate->TabIndex = 6;
+			// 
+			// projectLeader
+			// 
+			this->projectLeader->Location = System::Drawing::Point(15, 93);
+			this->projectLeader->Name = L"projectLeader";
+			this->projectLeader->Size = System::Drawing::Size(229, 20);
+			this->projectLeader->TabIndex = 5;
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(12, 72);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(76, 13);
+			this->label6->TabIndex = 4;
+			this->label6->Text = L"Project Leader";
 			// 
 			// projectDescription
 			// 
@@ -274,7 +342,7 @@ namespace easycase {
 			this->tabPage3->Controls->Add(this->button5);
 			this->tabPage3->Controls->Add(this->label9);
 			this->tabPage3->Controls->Add(this->useCaseListBox);
-			this->tabPage3->Controls->Add(this->button4);
+			this->tabPage3->Controls->Add(this->addUseCase);
 			this->tabPage3->Controls->Add(this->comboLabel);
 			this->tabPage3->Controls->Add(this->comboBox1);
 			this->tabPage3->Controls->Add(this->label5);
@@ -284,6 +352,51 @@ namespace easycase {
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"Use Cases";
 			this->tabPage3->UseVisualStyleBackColor = true;
+			// 
+			// button6
+			// 
+			this->button6->Location = System::Drawing::Point(260, 450);
+			this->button6->Name = L"button6";
+			this->button6->Size = System::Drawing::Size(100, 24);
+			this->button6->TabIndex = 7;
+			this->button6->Text = L"Delete";
+			this->button6->UseVisualStyleBackColor = true;
+			// 
+			// button5
+			// 
+			this->button5->Location = System::Drawing::Point(156, 450);
+			this->button5->Name = L"button5";
+			this->button5->Size = System::Drawing::Size(98, 25);
+			this->button5->TabIndex = 6;
+			this->button5->Text = L"Edit";
+			this->button5->UseVisualStyleBackColor = true;
+			// 
+			// label9
+			// 
+			this->label9->AutoSize = true;
+			this->label9->Location = System::Drawing::Point(12, 155);
+			this->label9->Name = L"label9";
+			this->label9->Size = System::Drawing::Size(58, 13);
+			this->label9->TabIndex = 5;
+			this->label9->Text = L"Use Cases";
+			// 
+			// useCaseListBox
+			// 
+			this->useCaseListBox->FormattingEnabled = true;
+			this->useCaseListBox->Location = System::Drawing::Point(12, 180);
+			this->useCaseListBox->Name = L"useCaseListBox";
+			this->useCaseListBox->Size = System::Drawing::Size(535, 264);
+			this->useCaseListBox->TabIndex = 4;
+			// 
+			// addUseCase
+			// 
+			this->addUseCase->Location = System::Drawing::Point(215, 101);
+			this->addUseCase->Name = L"addUseCase";
+			this->addUseCase->Size = System::Drawing::Size(111, 23);
+			this->addUseCase->TabIndex = 3;
+			this->addUseCase->Text = L"Add Use Case";
+			this->addUseCase->UseVisualStyleBackColor = true;
+			this->addUseCase->Click += gcnew System::EventHandler(this, &ContentWin::addUseCase_Click);
 			// 
 			// comboLabel
 			// 
@@ -321,107 +434,15 @@ namespace easycase {
 			this->label5->TabIndex = 0;
 			this->label5->Text = L"Select a Requirement";
 			// 
-			// label6
-			// 
-			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(12, 72);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(76, 13);
-			this->label6->TabIndex = 4;
-			this->label6->Text = L"Project Leader";
-			// 
-			// projectLeader
-			// 
-			this->projectLeader->Location = System::Drawing::Point(15, 93);
-			this->projectLeader->Name = L"projectLeader";
-			this->projectLeader->Size = System::Drawing::Size(229, 20);
-			this->projectLeader->TabIndex = 5;
-			// 
-			// initialDate
-			// 
-			this->initialDate->Location = System::Drawing::Point(15, 154);
-			this->initialDate->Name = L"initialDate";
-			this->initialDate->Size = System::Drawing::Size(200, 20);
-			this->initialDate->TabIndex = 6;
-			// 
-			// label7
-			// 
-			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(12, 132);
-			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(57, 13);
-			this->label7->TabIndex = 7;
-			this->label7->Text = L"Initial Date";
-			// 
-			// label8
-			// 
-			this->label8->AutoSize = true;
-			this->label8->Location = System::Drawing::Point(15, 187);
-			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(52, 13);
-			this->label8->TabIndex = 8;
-			this->label8->Text = L"End Date";
-			// 
-			// endDate
-			// 
-			this->endDate->Location = System::Drawing::Point(18, 210);
-			this->endDate->Name = L"endDate";
-			this->endDate->Size = System::Drawing::Size(200, 20);
-			this->endDate->TabIndex = 9;
-			// 
-			// button4
-			// 
-			this->button4->Location = System::Drawing::Point(215, 101);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(111, 23);
-			this->button4->TabIndex = 3;
-			this->button4->Text = L"Add Use Case";
-			this->button4->UseVisualStyleBackColor = true;
-			// 
-			// useCaseListBox
-			// 
-			this->useCaseListBox->FormattingEnabled = true;
-			this->useCaseListBox->Location = System::Drawing::Point(12, 180);
-			this->useCaseListBox->Name = L"useCaseListBox";
-			this->useCaseListBox->Size = System::Drawing::Size(535, 264);
-			this->useCaseListBox->TabIndex = 4;
-			// 
-			// label9
-			// 
-			this->label9->AutoSize = true;
-			this->label9->Location = System::Drawing::Point(12, 155);
-			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(58, 13);
-			this->label9->TabIndex = 5;
-			this->label9->Text = L"Use Cases";
-			// 
-			// button5
-			// 
-			this->button5->Location = System::Drawing::Point(156, 450);
-			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(98, 25);
-			this->button5->TabIndex = 6;
-			this->button5->Text = L"Edit";
-			this->button5->UseVisualStyleBackColor = true;
-			// 
-			// button6
-			// 
-			this->button6->Location = System::Drawing::Point(260, 450);
-			this->button6->Name = L"button6";
-			this->button6->Size = System::Drawing::Size(100, 24);
-			this->button6->TabIndex = 7;
-			this->button6->Text = L"Delete";
-			this->button6->UseVisualStyleBackColor = true;
-			// 
 			// ContentWin
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(566, 531);
-			this->Controls->Add(this->tabControl1);
+			this->Controls->Add(this->contentWinPanel);
 			this->Name = L"ContentWin";
 			this->Text = L"ContentWin";
-			this->tabControl1->ResumeLayout(false);
+			this->contentWinPanel->ResumeLayout(false);
 			this->tabPage1->ResumeLayout(false);
 			this->tabPage1->PerformLayout();
 			this->tabPage2->ResumeLayout(false);
@@ -458,5 +479,17 @@ namespace easycase {
 		if (obj == nullptr) return;
 		this->comboLabel->Text = "R" + (cb->SelectedIndex).ToString("D3") + ": " + (cli::safe_cast<System::String^>(obj));
 	}
+private: System::Void addUseCase_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->SuspendLayout();
+	if (this->useCaseWin == nullptr){
+		this->useCaseWin = gcnew UseCaseWin(this->parentWin);
+		this->parentWin->Controls->Add(this->useCaseWin->GetContent());
+	}
+	System::Object^ control = this->parentWin->Controls->Find(L"contentWinPanel", false)->GetValue(0);
+	(cli::safe_cast<System::Windows::Forms::TabControl^>(control))->SendToBack();
+	this->useCaseWin->GetContent()->BringToFront();
+	this->ResumeLayout(false);
+	this->PerformLayout();
+}
 };
 }

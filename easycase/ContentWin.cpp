@@ -2,5 +2,9 @@
 using easycase::ContentWin;
 
 System::Windows::Forms::TabControl^ ContentWin::GetContent(){
-	return tabControl1;
+	return contentWinPanel;
+}
+
+System::Windows::Forms::Form^ ContentWin::GetParentWin(){
+	return parentWin;
 }

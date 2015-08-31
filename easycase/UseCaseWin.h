@@ -15,9 +15,10 @@ namespace easycase {
 	public ref class UseCaseWin : public System::Windows::Forms::Form
 	{
 	public:
-		UseCaseWin(void)
+		UseCaseWin(System::Windows::Forms::Form^ root)
 		{
 			InitializeComponent();
+			parentWin = root;
 			//
 			//TODO: Add the constructor code here
 			//
@@ -35,52 +36,106 @@ namespace easycase {
 			{
 				delete components;
 			}
+			if (parentWin)
+			{
+				delete parentWin;
+			}
 		}
 
+	private: System::Windows::Forms::Form^ parentWin;
+	
 	private: System::Windows::Forms::TextBox^  ucName;
 	private: System::Windows::Forms::TextBox^  ucId;
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::TextBox^  ucDescription;
+
 
 	private: System::Windows::Forms::Label^  label4;
-	private: System::Windows::Forms::TabControl^  tabControl1;
+	private: System::Windows::Forms::TabControl^  useCasePanel;
+
 	private: System::Windows::Forms::TabPage^  tabPage1;
 	private: System::Windows::Forms::TabPage^  tabPage2;
 	private: System::Windows::Forms::TabPage^  tabPage3;
 	private: System::Windows::Forms::TabPage^  tabPage4;
 	private: System::Windows::Forms::TabPage^  tabPage5;
-	private: System::Windows::Forms::TextBox^  textBox2;
+	private: System::Windows::Forms::TextBox^  precDescription;
+
+
 	private: System::Windows::Forms::Label^  label5;
-	private: System::Windows::Forms::TextBox^  textBox3;
+
+
+
 	private: System::Windows::Forms::Label^  label6;
-	private: System::Windows::Forms::TextBox^  textBox4;
+
+
 	private: System::Windows::Forms::Label^  label7;
-	private: System::Windows::Forms::TextBox^  textBox5;
+	private: System::Windows::Forms::TextBox^  flowDescription;
+
 	private: System::Windows::Forms::Label^  label8;
-	private: System::Windows::Forms::TextBox^  textBox6;
+
+
 	private: System::Windows::Forms::Label^  label9;
-	private: System::Windows::Forms::TextBox^  textBox7;
+	private: System::Windows::Forms::TextBox^  poscDescription;
+
 	private: System::Windows::Forms::Label^  label10;
-	private: System::Windows::Forms::TextBox^  textBox8;
+
+
 	private: System::Windows::Forms::Label^  label11;
-	private: System::Windows::Forms::TextBox^  textBox9;
+	private: System::Windows::Forms::TextBox^  afDescription;
+
 	private: System::Windows::Forms::Label^  label12;
-	private: System::Windows::Forms::Button^  button1;
-	private: System::Windows::Forms::Button^  button2;
-	private: System::Windows::Forms::Button^  button3;
-	private: System::Windows::Forms::Button^  button4;
-	private: System::Windows::Forms::Button^  button5;
-	private: System::Windows::Forms::RadioButton^  radioButton1;
-	private: System::Windows::Forms::RadioButton^  radioButton2;
-	private: System::Windows::Forms::RadioButton^  radioButton3;
-	private: System::Windows::Forms::RadioButton^  radioButton4;
+	private: System::Windows::Forms::Button^  confirmPrec;
+
+	private: System::Windows::Forms::Button^  flowConfirm;
+	private: System::Windows::Forms::Button^  poscConfirm;
+	private: System::Windows::Forms::Button^  afConfirm;
+
+
+
+
+	private: System::Windows::Forms::Button^  doneUc;
+	private: System::Windows::Forms::RadioButton^  fSystemActor;
+	private: System::Windows::Forms::RadioButton^  fUserActor;
+	private: System::Windows::Forms::RadioButton^  afUserActor;
+
+
+
+
+	private: System::Windows::Forms::RadioButton^  afSystemActor;
+
 	private: System::Windows::Forms::Label^  label13;
-	private: System::Windows::Forms::ListBox^  listBox1;
+	private: System::Windows::Forms::ListBox^  precExistentArtifacts;
+
+
 	private: System::Windows::Forms::Label^  label14;
-	private: System::Windows::Forms::ListBox^  listBox2;
-	private: System::Windows::Forms::ComboBox^  comboBox1;
+	private: System::Windows::Forms::ListBox^  poscGeneratedArtifacts;
+
+
+	private: System::Windows::Forms::ComboBox^  ucStatus;
+	private: System::Windows::Forms::Button^  addPrecArtifact;
+
+	private: System::Windows::Forms::TextBox^  precArtifact;
+private: System::Windows::Forms::Button^  addPoscArtifact;
+
+
+
+	private: System::Windows::Forms::TextBox^  poscArtifact;
+private: System::Windows::Forms::Button^  delPrecArtifact;
+private: System::Windows::Forms::Button^  delPoscArtifact;
+private: System::Windows::Forms::ListBox^  precList;
+private: System::Windows::Forms::ListBox^  flowList;
+private: System::Windows::Forms::ListBox^  poscList;
+private: System::Windows::Forms::ListBox^  afList;
+
+
+
+
+
+
+
+
 	protected:
 
 	private:
@@ -101,45 +156,51 @@ namespace easycase {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->ucId = (gcnew System::Windows::Forms::TextBox());
 			this->ucName = (gcnew System::Windows::Forms::TextBox());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->ucDescription = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->tabControl1 = (gcnew System::Windows::Forms::TabControl());
+			this->useCasePanel = (gcnew System::Windows::Forms::TabControl());
 			this->tabPage1 = (gcnew System::Windows::Forms::TabPage());
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
-			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->ucStatus = (gcnew System::Windows::Forms::ComboBox());
+			this->doneUc = (gcnew System::Windows::Forms::Button());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
+			this->precList = (gcnew System::Windows::Forms::ListBox());
+			this->delPrecArtifact = (gcnew System::Windows::Forms::Button());
+			this->addPrecArtifact = (gcnew System::Windows::Forms::Button());
+			this->precArtifact = (gcnew System::Windows::Forms::TextBox());
 			this->label13 = (gcnew System::Windows::Forms::Label());
-			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->precExistentArtifacts = (gcnew System::Windows::Forms::ListBox());
+			this->confirmPrec = (gcnew System::Windows::Forms::Button());
 			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->precDescription = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
-			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->flowList = (gcnew System::Windows::Forms::ListBox());
+			this->fUserActor = (gcnew System::Windows::Forms::RadioButton());
+			this->fSystemActor = (gcnew System::Windows::Forms::RadioButton());
+			this->flowConfirm = (gcnew System::Windows::Forms::Button());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+			this->flowDescription = (gcnew System::Windows::Forms::TextBox());
 			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->tabPage4 = (gcnew System::Windows::Forms::TabPage());
+			this->poscList = (gcnew System::Windows::Forms::ListBox());
+			this->delPoscArtifact = (gcnew System::Windows::Forms::Button());
+			this->addPoscArtifact = (gcnew System::Windows::Forms::Button());
+			this->poscArtifact = (gcnew System::Windows::Forms::TextBox());
 			this->label14 = (gcnew System::Windows::Forms::Label());
-			this->listBox2 = (gcnew System::Windows::Forms::ListBox());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
+			this->poscGeneratedArtifacts = (gcnew System::Windows::Forms::ListBox());
+			this->poscConfirm = (gcnew System::Windows::Forms::Button());
 			this->label9 = (gcnew System::Windows::Forms::Label());
-			this->textBox7 = (gcnew System::Windows::Forms::TextBox());
+			this->poscDescription = (gcnew System::Windows::Forms::TextBox());
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->tabPage5 = (gcnew System::Windows::Forms::TabPage());
-			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
-			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->textBox8 = (gcnew System::Windows::Forms::TextBox());
+			this->afList = (gcnew System::Windows::Forms::ListBox());
+			this->afUserActor = (gcnew System::Windows::Forms::RadioButton());
+			this->afSystemActor = (gcnew System::Windows::Forms::RadioButton());
+			this->afConfirm = (gcnew System::Windows::Forms::Button());
 			this->label11 = (gcnew System::Windows::Forms::Label());
-			this->textBox9 = (gcnew System::Windows::Forms::TextBox());
+			this->afDescription = (gcnew System::Windows::Forms::TextBox());
 			this->label12 = (gcnew System::Windows::Forms::Label());
-			this->tabControl1->SuspendLayout();
+			this->useCasePanel->SuspendLayout();
 			this->tabPage1->SuspendLayout();
 			this->tabPage2->SuspendLayout();
 			this->tabPage3->SuspendLayout();
@@ -189,13 +250,13 @@ namespace easycase {
 			this->ucName->Size = System::Drawing::Size(536, 45);
 			this->ucName->TabIndex = 4;
 			// 
-			// textBox1
+			// ucDescription
 			// 
-			this->textBox1->Location = System::Drawing::Point(11, 171);
-			this->textBox1->Multiline = true;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(536, 89);
-			this->textBox1->TabIndex = 5;
+			this->ucDescription->Location = System::Drawing::Point(11, 171);
+			this->ucDescription->Multiline = true;
+			this->ucDescription->Name = L"ucDescription";
+			this->ucDescription->Size = System::Drawing::Size(536, 89);
+			this->ucDescription->TabIndex = 5;
 			// 
 			// label4
 			// 
@@ -206,24 +267,25 @@ namespace easycase {
 			this->label4->TabIndex = 6;
 			this->label4->Text = L"Status";
 			// 
-			// tabControl1
+			// useCasePanel
 			// 
-			this->tabControl1->Controls->Add(this->tabPage1);
-			this->tabControl1->Controls->Add(this->tabPage2);
-			this->tabControl1->Controls->Add(this->tabPage3);
-			this->tabControl1->Controls->Add(this->tabPage4);
-			this->tabControl1->Controls->Add(this->tabPage5);
-			this->tabControl1->Location = System::Drawing::Point(0, 27);
-			this->tabControl1->Name = L"tabControl1";
-			this->tabControl1->SelectedIndex = 0;
-			this->tabControl1->Size = System::Drawing::Size(566, 503);
-			this->tabControl1->TabIndex = 1;
+			this->useCasePanel->Controls->Add(this->tabPage1);
+			this->useCasePanel->Controls->Add(this->tabPage2);
+			this->useCasePanel->Controls->Add(this->tabPage3);
+			this->useCasePanel->Controls->Add(this->tabPage4);
+			this->useCasePanel->Controls->Add(this->tabPage5);
+			this->useCasePanel->Location = System::Drawing::Point(0, 27);
+			this->useCasePanel->Name = L"useCasePanel";
+			this->useCasePanel->SelectedIndex = 0;
+			this->useCasePanel->Size = System::Drawing::Size(566, 503);
+			this->useCasePanel->TabIndex = 1;
+			this->useCasePanel->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &UseCaseWin::listBox_DrawItem);
 			// 
 			// tabPage1
 			// 
-			this->tabPage1->Controls->Add(this->comboBox1);
-			this->tabPage1->Controls->Add(this->button5);
-			this->tabPage1->Controls->Add(this->textBox1);
+			this->tabPage1->Controls->Add(this->ucStatus);
+			this->tabPage1->Controls->Add(this->doneUc);
+			this->tabPage1->Controls->Add(this->ucDescription);
 			this->tabPage1->Controls->Add(this->label3);
 			this->tabPage1->Controls->Add(this->ucName);
 			this->tabPage1->Controls->Add(this->label2);
@@ -238,35 +300,39 @@ namespace easycase {
 			this->tabPage1->Text = L"Basic";
 			this->tabPage1->UseVisualStyleBackColor = true;
 			// 
-			// comboBox1
+			// ucStatus
 			// 
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(5) {
+			this->ucStatus->FormattingEnabled = true;
+			this->ucStatus->Items->AddRange(gcnew cli::array< System::Object^  >(5) {
 				L"Incomplete", L"Created", L"Working", L"Revision",
 					L"Done"
 			});
-			this->comboBox1->Location = System::Drawing::Point(174, 20);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(142, 21);
-			this->comboBox1->TabIndex = 9;
+			this->ucStatus->Location = System::Drawing::Point(174, 20);
+			this->ucStatus->Name = L"ucStatus";
+			this->ucStatus->Size = System::Drawing::Size(142, 21);
+			this->ucStatus->TabIndex = 9;
 			// 
-			// button5
+			// doneUc
 			// 
-			this->button5->Location = System::Drawing::Point(241, 282);
-			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(75, 23);
-			this->button5->TabIndex = 8;
-			this->button5->Text = L"Done";
-			this->button5->UseVisualStyleBackColor = true;
+			this->doneUc->Location = System::Drawing::Point(241, 282);
+			this->doneUc->Name = L"doneUc";
+			this->doneUc->Size = System::Drawing::Size(75, 23);
+			this->doneUc->TabIndex = 8;
+			this->doneUc->Text = L"Done";
+			this->doneUc->UseVisualStyleBackColor = true;
+			this->doneUc->Click += gcnew System::EventHandler(this, &UseCaseWin::doneUc_Click);
 			// 
 			// tabPage2
 			// 
+			this->tabPage2->Controls->Add(this->precList);
+			this->tabPage2->Controls->Add(this->delPrecArtifact);
+			this->tabPage2->Controls->Add(this->addPrecArtifact);
+			this->tabPage2->Controls->Add(this->precArtifact);
 			this->tabPage2->Controls->Add(this->label13);
-			this->tabPage2->Controls->Add(this->listBox1);
-			this->tabPage2->Controls->Add(this->button1);
-			this->tabPage2->Controls->Add(this->textBox3);
+			this->tabPage2->Controls->Add(this->precExistentArtifacts);
+			this->tabPage2->Controls->Add(this->confirmPrec);
 			this->tabPage2->Controls->Add(this->label6);
-			this->tabPage2->Controls->Add(this->textBox2);
+			this->tabPage2->Controls->Add(this->precDescription);
 			this->tabPage2->Controls->Add(this->label5);
 			this->tabPage2->Location = System::Drawing::Point(4, 22);
 			this->tabPage2->Name = L"tabPage2";
@@ -276,39 +342,71 @@ namespace easycase {
 			this->tabPage2->Text = L"Pre-Conditions";
 			this->tabPage2->UseVisualStyleBackColor = true;
 			// 
+			// precList
+			// 
+			this->precList->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawFixed;
+			this->precList->FormattingEnabled = true;
+			this->precList->ItemHeight = 60;
+			this->precList->Location = System::Drawing::Point(6, 183);
+			this->precList->Name = L"precList";
+			this->precList->Size = System::Drawing::Size(551, 244);
+			this->precList->TabIndex = 10;
+			this->precList->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &UseCaseWin::listBox_DrawItem);
+			// 
+			// delPrecArtifact
+			// 
+			this->delPrecArtifact->Location = System::Drawing::Point(464, 96);
+			this->delPrecArtifact->Name = L"delPrecArtifact";
+			this->delPrecArtifact->Size = System::Drawing::Size(75, 23);
+			this->delPrecArtifact->TabIndex = 9;
+			this->delPrecArtifact->Text = L"Del Artifact";
+			this->delPrecArtifact->UseVisualStyleBackColor = true;
+			this->delPrecArtifact->Click += gcnew System::EventHandler(this, &UseCaseWin::delPrecArtifact_Click);
+			// 
+			// addPrecArtifact
+			// 
+			this->addPrecArtifact->Location = System::Drawing::Point(364, 96);
+			this->addPrecArtifact->Name = L"addPrecArtifact";
+			this->addPrecArtifact->Size = System::Drawing::Size(75, 23);
+			this->addPrecArtifact->TabIndex = 8;
+			this->addPrecArtifact->Text = L"Add Artifact";
+			this->addPrecArtifact->UseVisualStyleBackColor = true;
+			this->addPrecArtifact->Click += gcnew System::EventHandler(this, &UseCaseWin::addPrecArtifact_Click);
+			// 
+			// precArtifact
+			// 
+			this->precArtifact->Location = System::Drawing::Point(364, 70);
+			this->precArtifact->Name = L"precArtifact";
+			this->precArtifact->Size = System::Drawing::Size(175, 20);
+			this->precArtifact->TabIndex = 7;
+			// 
 			// label13
 			// 
 			this->label13->AutoSize = true;
-			this->label13->Location = System::Drawing::Point(43, 92);
+			this->label13->Location = System::Drawing::Point(12, 92);
 			this->label13->Name = L"label13";
 			this->label13->Size = System::Drawing::Size(85, 13);
 			this->label13->TabIndex = 6;
 			this->label13->Text = L"Existent Artifacts";
 			// 
-			// listBox1
+			// precExistentArtifacts
 			// 
-			this->listBox1->FormattingEnabled = true;
-			this->listBox1->Location = System::Drawing::Point(134, 69);
-			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(254, 56);
-			this->listBox1->TabIndex = 5;
+			this->precExistentArtifacts->FormattingEnabled = true;
+			this->precExistentArtifacts->Location = System::Drawing::Point(103, 69);
+			this->precExistentArtifacts->Name = L"precExistentArtifacts";
+			this->precExistentArtifacts->Size = System::Drawing::Size(254, 56);
+			this->precExistentArtifacts->TabIndex = 5;
+			this->precExistentArtifacts->SelectedIndexChanged += gcnew System::EventHandler(this, &UseCaseWin::precExistentArtifacts_SelectedIndexChanged);
 			// 
-			// button1
+			// confirmPrec
 			// 
-			this->button1->Location = System::Drawing::Point(11, 124);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
-			this->button1->TabIndex = 4;
-			this->button1->Text = L"Confirm";
-			this->button1->UseVisualStyleBackColor = true;
-			// 
-			// textBox3
-			// 
-			this->textBox3->Location = System::Drawing::Point(15, 186);
-			this->textBox3->Multiline = true;
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(524, 263);
-			this->textBox3->TabIndex = 3;
+			this->confirmPrec->Location = System::Drawing::Point(11, 124);
+			this->confirmPrec->Name = L"confirmPrec";
+			this->confirmPrec->Size = System::Drawing::Size(75, 23);
+			this->confirmPrec->TabIndex = 4;
+			this->confirmPrec->Text = L"Confirm";
+			this->confirmPrec->UseVisualStyleBackColor = true;
+			this->confirmPrec->Click += gcnew System::EventHandler(this, &UseCaseWin::confirmPrec_Click);
 			// 
 			// label6
 			// 
@@ -319,12 +417,12 @@ namespace easycase {
 			this->label6->TabIndex = 2;
 			this->label6->Text = L"Pre-Conditions";
 			// 
-			// textBox2
+			// precDescription
 			// 
-			this->textBox2->Location = System::Drawing::Point(11, 43);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(528, 20);
-			this->textBox2->TabIndex = 1;
+			this->precDescription->Location = System::Drawing::Point(11, 43);
+			this->precDescription->Name = L"precDescription";
+			this->precDescription->Size = System::Drawing::Size(528, 20);
+			this->precDescription->TabIndex = 1;
 			// 
 			// label5
 			// 
@@ -337,12 +435,12 @@ namespace easycase {
 			// 
 			// tabPage3
 			// 
-			this->tabPage3->Controls->Add(this->radioButton2);
-			this->tabPage3->Controls->Add(this->radioButton1);
-			this->tabPage3->Controls->Add(this->button2);
-			this->tabPage3->Controls->Add(this->textBox4);
+			this->tabPage3->Controls->Add(this->flowList);
+			this->tabPage3->Controls->Add(this->fUserActor);
+			this->tabPage3->Controls->Add(this->fSystemActor);
+			this->tabPage3->Controls->Add(this->flowConfirm);
 			this->tabPage3->Controls->Add(this->label7);
-			this->tabPage3->Controls->Add(this->textBox5);
+			this->tabPage3->Controls->Add(this->flowDescription);
 			this->tabPage3->Controls->Add(this->label8);
 			this->tabPage3->Location = System::Drawing::Point(4, 22);
 			this->tabPage3->Name = L"tabPage3";
@@ -351,45 +449,50 @@ namespace easycase {
 			this->tabPage3->Text = L"Flow";
 			this->tabPage3->UseVisualStyleBackColor = true;
 			// 
-			// radioButton2
+			// flowList
 			// 
-			this->radioButton2->AutoSize = true;
-			this->radioButton2->Location = System::Drawing::Point(112, 87);
-			this->radioButton2->Name = L"radioButton2";
-			this->radioButton2->Size = System::Drawing::Size(75, 17);
-			this->radioButton2->TabIndex = 10;
-			this->radioButton2->TabStop = true;
-			this->radioButton2->Text = L"User Actor";
-			this->radioButton2->UseVisualStyleBackColor = true;
+			this->flowList->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawFixed;
+			this->flowList->FormattingEnabled = true;
+			this->flowList->ItemHeight = 60;
+			this->flowList->Location = System::Drawing::Point(15, 148);
+			this->flowList->Name = L"flowList";
+			this->flowList->Size = System::Drawing::Size(535, 304);
+			this->flowList->TabIndex = 11;
+			this->flowList->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &UseCaseWin::listBox_DrawItem);
 			// 
-			// radioButton1
+			// fUserActor
 			// 
-			this->radioButton1->AutoSize = true;
-			this->radioButton1->Location = System::Drawing::Point(19, 87);
-			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(87, 17);
-			this->radioButton1->TabIndex = 9;
-			this->radioButton1->TabStop = true;
-			this->radioButton1->Text = L"System Actor";
-			this->radioButton1->UseVisualStyleBackColor = true;
-			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &UseCaseWin::radioButton1_CheckedChanged);
+			this->fUserActor->AutoSize = true;
+			this->fUserActor->Location = System::Drawing::Point(112, 87);
+			this->fUserActor->Name = L"fUserActor";
+			this->fUserActor->Size = System::Drawing::Size(75, 17);
+			this->fUserActor->TabIndex = 10;
+			this->fUserActor->TabStop = true;
+			this->fUserActor->Text = L"User Actor";
+			this->fUserActor->UseVisualStyleBackColor = true;
+			this->fUserActor->CheckedChanged += gcnew System::EventHandler(this, &UseCaseWin::fUserActor_CheckedChanged);
 			// 
-			// button2
+			// fSystemActor
 			// 
-			this->button2->Location = System::Drawing::Point(467, 87);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
-			this->button2->TabIndex = 8;
-			this->button2->Text = L"Confirm";
-			this->button2->UseVisualStyleBackColor = true;
+			this->fSystemActor->AutoSize = true;
+			this->fSystemActor->Location = System::Drawing::Point(19, 87);
+			this->fSystemActor->Name = L"fSystemActor";
+			this->fSystemActor->Size = System::Drawing::Size(87, 17);
+			this->fSystemActor->TabIndex = 9;
+			this->fSystemActor->TabStop = true;
+			this->fSystemActor->Text = L"System Actor";
+			this->fSystemActor->UseVisualStyleBackColor = true;
+			this->fSystemActor->CheckedChanged += gcnew System::EventHandler(this, &UseCaseWin::fSystemActor_CheckedChanged);
 			// 
-			// textBox4
+			// flowConfirm
 			// 
-			this->textBox4->Location = System::Drawing::Point(19, 160);
-			this->textBox4->Multiline = true;
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(523, 293);
-			this->textBox4->TabIndex = 7;
+			this->flowConfirm->Location = System::Drawing::Point(467, 87);
+			this->flowConfirm->Name = L"flowConfirm";
+			this->flowConfirm->Size = System::Drawing::Size(75, 23);
+			this->flowConfirm->TabIndex = 8;
+			this->flowConfirm->Text = L"Confirm";
+			this->flowConfirm->UseVisualStyleBackColor = true;
+			this->flowConfirm->Click += gcnew System::EventHandler(this, &UseCaseWin::flowConfirm_Click);
 			// 
 			// label7
 			// 
@@ -400,12 +503,12 @@ namespace easycase {
 			this->label7->TabIndex = 6;
 			this->label7->Text = L"Flow";
 			// 
-			// textBox5
+			// flowDescription
 			// 
-			this->textBox5->Location = System::Drawing::Point(15, 47);
-			this->textBox5->Name = L"textBox5";
-			this->textBox5->Size = System::Drawing::Size(528, 20);
-			this->textBox5->TabIndex = 5;
+			this->flowDescription->Location = System::Drawing::Point(15, 47);
+			this->flowDescription->Name = L"flowDescription";
+			this->flowDescription->Size = System::Drawing::Size(528, 20);
+			this->flowDescription->TabIndex = 5;
 			// 
 			// label8
 			// 
@@ -418,12 +521,15 @@ namespace easycase {
 			// 
 			// tabPage4
 			// 
+			this->tabPage4->Controls->Add(this->poscList);
+			this->tabPage4->Controls->Add(this->delPoscArtifact);
+			this->tabPage4->Controls->Add(this->addPoscArtifact);
+			this->tabPage4->Controls->Add(this->poscArtifact);
 			this->tabPage4->Controls->Add(this->label14);
-			this->tabPage4->Controls->Add(this->listBox2);
-			this->tabPage4->Controls->Add(this->button3);
-			this->tabPage4->Controls->Add(this->textBox6);
+			this->tabPage4->Controls->Add(this->poscGeneratedArtifacts);
+			this->tabPage4->Controls->Add(this->poscConfirm);
 			this->tabPage4->Controls->Add(this->label9);
-			this->tabPage4->Controls->Add(this->textBox7);
+			this->tabPage4->Controls->Add(this->poscDescription);
 			this->tabPage4->Controls->Add(this->label10);
 			this->tabPage4->Location = System::Drawing::Point(4, 22);
 			this->tabPage4->Name = L"tabPage4";
@@ -432,39 +538,71 @@ namespace easycase {
 			this->tabPage4->Text = L"Pos-Conditions";
 			this->tabPage4->UseVisualStyleBackColor = true;
 			// 
+			// poscList
+			// 
+			this->poscList->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawFixed;
+			this->poscList->FormattingEnabled = true;
+			this->poscList->ItemHeight = 60;
+			this->poscList->Location = System::Drawing::Point(8, 208);
+			this->poscList->Name = L"poscList";
+			this->poscList->Size = System::Drawing::Size(549, 244);
+			this->poscList->TabIndex = 18;
+			this->poscList->SelectedIndexChanged += gcnew System::EventHandler(this, &UseCaseWin::poscList_SelectedIndexChanged);
+			// 
+			// delPoscArtifact
+			// 
+			this->delPoscArtifact->Location = System::Drawing::Point(468, 99);
+			this->delPoscArtifact->Name = L"delPoscArtifact";
+			this->delPoscArtifact->Size = System::Drawing::Size(75, 23);
+			this->delPoscArtifact->TabIndex = 17;
+			this->delPoscArtifact->Text = L"Del Artifact";
+			this->delPoscArtifact->UseVisualStyleBackColor = true;
+			this->delPoscArtifact->Click += gcnew System::EventHandler(this, &UseCaseWin::delPoscArtifact_Click);
+			// 
+			// addPoscArtifact
+			// 
+			this->addPoscArtifact->Location = System::Drawing::Point(379, 99);
+			this->addPoscArtifact->Name = L"addPoscArtifact";
+			this->addPoscArtifact->Size = System::Drawing::Size(75, 23);
+			this->addPoscArtifact->TabIndex = 16;
+			this->addPoscArtifact->Text = L"Add Artifact";
+			this->addPoscArtifact->UseVisualStyleBackColor = true;
+			this->addPoscArtifact->Click += gcnew System::EventHandler(this, &UseCaseWin::addPoscArtifact_Click);
+			// 
+			// poscArtifact
+			// 
+			this->poscArtifact->Location = System::Drawing::Point(375, 73);
+			this->poscArtifact->Name = L"poscArtifact";
+			this->poscArtifact->Size = System::Drawing::Size(168, 20);
+			this->poscArtifact->TabIndex = 15;
+			// 
 			// label14
 			// 
 			this->label14->AutoSize = true;
-			this->label14->Location = System::Drawing::Point(65, 96);
+			this->label14->Location = System::Drawing::Point(15, 94);
 			this->label14->Name = L"label14";
-			this->label14->Size = System::Drawing::Size(85, 13);
+			this->label14->Size = System::Drawing::Size(98, 13);
 			this->label14->TabIndex = 14;
-			this->label14->Text = L"Existent Artifacts";
+			this->label14->Text = L"Generated Artifacts";
 			// 
-			// listBox2
+			// poscGeneratedArtifacts
 			// 
-			this->listBox2->FormattingEnabled = true;
-			this->listBox2->Location = System::Drawing::Point(156, 73);
-			this->listBox2->Name = L"listBox2";
-			this->listBox2->Size = System::Drawing::Size(254, 56);
-			this->listBox2->TabIndex = 13;
+			this->poscGeneratedArtifacts->FormattingEnabled = true;
+			this->poscGeneratedArtifacts->Location = System::Drawing::Point(119, 73);
+			this->poscGeneratedArtifacts->Name = L"poscGeneratedArtifacts";
+			this->poscGeneratedArtifacts->Size = System::Drawing::Size(254, 56);
+			this->poscGeneratedArtifacts->TabIndex = 13;
+			this->poscGeneratedArtifacts->SelectedIndexChanged += gcnew System::EventHandler(this, &UseCaseWin::poscGeneratedArtifacts_SelectedIndexChanged);
 			// 
-			// button3
+			// poscConfirm
 			// 
-			this->button3->Location = System::Drawing::Point(18, 152);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(75, 23);
-			this->button3->TabIndex = 12;
-			this->button3->Text = L"Confirm";
-			this->button3->UseVisualStyleBackColor = true;
-			// 
-			// textBox6
-			// 
-			this->textBox6->Location = System::Drawing::Point(19, 214);
-			this->textBox6->Multiline = true;
-			this->textBox6->Name = L"textBox6";
-			this->textBox6->Size = System::Drawing::Size(523, 239);
-			this->textBox6->TabIndex = 11;
+			this->poscConfirm->Location = System::Drawing::Point(18, 152);
+			this->poscConfirm->Name = L"poscConfirm";
+			this->poscConfirm->Size = System::Drawing::Size(75, 23);
+			this->poscConfirm->TabIndex = 12;
+			this->poscConfirm->Text = L"Confirm";
+			this->poscConfirm->UseVisualStyleBackColor = true;
+			this->poscConfirm->Click += gcnew System::EventHandler(this, &UseCaseWin::poscConfirm_Click);
 			// 
 			// label9
 			// 
@@ -475,12 +613,12 @@ namespace easycase {
 			this->label9->TabIndex = 10;
 			this->label9->Text = L"Pos-Conditions";
 			// 
-			// textBox7
+			// poscDescription
 			// 
-			this->textBox7->Location = System::Drawing::Point(15, 47);
-			this->textBox7->Name = L"textBox7";
-			this->textBox7->Size = System::Drawing::Size(528, 20);
-			this->textBox7->TabIndex = 9;
+			this->poscDescription->Location = System::Drawing::Point(15, 47);
+			this->poscDescription->Name = L"poscDescription";
+			this->poscDescription->Size = System::Drawing::Size(528, 20);
+			this->poscDescription->TabIndex = 9;
 			// 
 			// label10
 			// 
@@ -493,12 +631,12 @@ namespace easycase {
 			// 
 			// tabPage5
 			// 
-			this->tabPage5->Controls->Add(this->radioButton3);
-			this->tabPage5->Controls->Add(this->radioButton4);
-			this->tabPage5->Controls->Add(this->button4);
-			this->tabPage5->Controls->Add(this->textBox8);
+			this->tabPage5->Controls->Add(this->afList);
+			this->tabPage5->Controls->Add(this->afUserActor);
+			this->tabPage5->Controls->Add(this->afSystemActor);
+			this->tabPage5->Controls->Add(this->afConfirm);
 			this->tabPage5->Controls->Add(this->label11);
-			this->tabPage5->Controls->Add(this->textBox9);
+			this->tabPage5->Controls->Add(this->afDescription);
 			this->tabPage5->Controls->Add(this->label12);
 			this->tabPage5->Location = System::Drawing::Point(4, 22);
 			this->tabPage5->Name = L"tabPage5";
@@ -507,44 +645,50 @@ namespace easycase {
 			this->tabPage5->Text = L"Alternate Flow";
 			this->tabPage5->UseVisualStyleBackColor = true;
 			// 
-			// radioButton3
+			// afList
 			// 
-			this->radioButton3->AutoSize = true;
-			this->radioButton3->Location = System::Drawing::Point(112, 90);
-			this->radioButton3->Name = L"radioButton3";
-			this->radioButton3->Size = System::Drawing::Size(75, 17);
-			this->radioButton3->TabIndex = 14;
-			this->radioButton3->TabStop = true;
-			this->radioButton3->Text = L"User Actor";
-			this->radioButton3->UseVisualStyleBackColor = true;
+			this->afList->DrawMode = System::Windows::Forms::DrawMode::OwnerDrawFixed;
+			this->afList->FormattingEnabled = true;
+			this->afList->ItemHeight = 60;
+			this->afList->Location = System::Drawing::Point(11, 161);
+			this->afList->Name = L"afList";
+			this->afList->Size = System::Drawing::Size(532, 304);
+			this->afList->TabIndex = 15;
+			this->afList->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &UseCaseWin::listBox_DrawItem);
 			// 
-			// radioButton4
+			// afUserActor
 			// 
-			this->radioButton4->AutoSize = true;
-			this->radioButton4->Location = System::Drawing::Point(19, 90);
-			this->radioButton4->Name = L"radioButton4";
-			this->radioButton4->Size = System::Drawing::Size(87, 17);
-			this->radioButton4->TabIndex = 13;
-			this->radioButton4->TabStop = true;
-			this->radioButton4->Text = L"System Actor";
-			this->radioButton4->UseVisualStyleBackColor = true;
+			this->afUserActor->AutoSize = true;
+			this->afUserActor->Location = System::Drawing::Point(112, 90);
+			this->afUserActor->Name = L"afUserActor";
+			this->afUserActor->Size = System::Drawing::Size(75, 17);
+			this->afUserActor->TabIndex = 14;
+			this->afUserActor->TabStop = true;
+			this->afUserActor->Text = L"User Actor";
+			this->afUserActor->UseVisualStyleBackColor = true;
+			this->afUserActor->CheckedChanged += gcnew System::EventHandler(this, &UseCaseWin::afUserActor_CheckedChanged);
 			// 
-			// button4
+			// afSystemActor
 			// 
-			this->button4->Location = System::Drawing::Point(468, 84);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(75, 23);
-			this->button4->TabIndex = 12;
-			this->button4->Text = L"Confirm";
-			this->button4->UseVisualStyleBackColor = true;
+			this->afSystemActor->AutoSize = true;
+			this->afSystemActor->Location = System::Drawing::Point(19, 90);
+			this->afSystemActor->Name = L"afSystemActor";
+			this->afSystemActor->Size = System::Drawing::Size(87, 17);
+			this->afSystemActor->TabIndex = 13;
+			this->afSystemActor->TabStop = true;
+			this->afSystemActor->Text = L"System Actor";
+			this->afSystemActor->UseVisualStyleBackColor = true;
+			this->afSystemActor->CheckedChanged += gcnew System::EventHandler(this, &UseCaseWin::afSystemActor_CheckedChanged);
 			// 
-			// textBox8
+			// afConfirm
 			// 
-			this->textBox8->Location = System::Drawing::Point(19, 167);
-			this->textBox8->Multiline = true;
-			this->textBox8->Name = L"textBox8";
-			this->textBox8->Size = System::Drawing::Size(523, 286);
-			this->textBox8->TabIndex = 11;
+			this->afConfirm->Location = System::Drawing::Point(468, 84);
+			this->afConfirm->Name = L"afConfirm";
+			this->afConfirm->Size = System::Drawing::Size(75, 23);
+			this->afConfirm->TabIndex = 12;
+			this->afConfirm->Text = L"Confirm";
+			this->afConfirm->UseVisualStyleBackColor = true;
+			this->afConfirm->Click += gcnew System::EventHandler(this, &UseCaseWin::afConfirm_Click);
 			// 
 			// label11
 			// 
@@ -555,12 +699,12 @@ namespace easycase {
 			this->label11->TabIndex = 10;
 			this->label11->Text = L"Alternate Flow";
 			// 
-			// textBox9
+			// afDescription
 			// 
-			this->textBox9->Location = System::Drawing::Point(15, 47);
-			this->textBox9->Name = L"textBox9";
-			this->textBox9->Size = System::Drawing::Size(528, 20);
-			this->textBox9->TabIndex = 9;
+			this->afDescription->Location = System::Drawing::Point(15, 47);
+			this->afDescription->Name = L"afDescription";
+			this->afDescription->Size = System::Drawing::Size(528, 20);
+			this->afDescription->TabIndex = 9;
 			// 
 			// label12
 			// 
@@ -576,10 +720,10 @@ namespace easycase {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(566, 531);
-			this->Controls->Add(this->tabControl1);
+			this->Controls->Add(this->useCasePanel);
 			this->Name = L"UseCaseWin";
 			this->Text = L"UseCaseWin";
-			this->tabControl1->ResumeLayout(false);
+			this->useCasePanel->ResumeLayout(false);
 			this->tabPage1->ResumeLayout(false);
 			this->tabPage1->PerformLayout();
 			this->tabPage2->ResumeLayout(false);
@@ -595,7 +739,112 @@ namespace easycase {
 		}
 #pragma endregion
 
-private: System::Void radioButton1_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void addPrecArtifact_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->precExistentArtifacts->Items->Add(this->precArtifact->Text);
+	this->precArtifact->Text = "";
+}
+private: System::Void doneUc_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->SuspendLayout();
+	System::Object^ control = this->parentWin->Controls->Find(L"contentWinPanel", false)->GetValue(0);
+	(cli::safe_cast<System::Windows::Forms::TabControl^>(control))->BringToFront();
+	this->useCasePanel->SendToBack();
+	this->ResumeLayout(false);
+	this->PerformLayout();
+}
+private: System::Void delPrecArtifact_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (this->precExistentArtifacts->Items->Contains(this->precArtifact->Text)){
+		this->precExistentArtifacts->Items->Remove(this->precArtifact->Text);
+	}
+}
+private: System::Void precExistentArtifacts_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->precArtifact->Text = cli::safe_cast<System::String^>(this->precExistentArtifacts->SelectedItem);
+}
+private: System::Void addPoscArtifact_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->poscGeneratedArtifacts->Items->Add(this->poscArtifact->Text);
+	this->poscArtifact->Text = "";
+}
+private: System::Void delPoscArtifact_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (this->poscGeneratedArtifacts->Items->Contains(this->poscArtifact->Text)){
+		this->poscGeneratedArtifacts->Items->Remove(this->poscArtifact->Text);
+	}
+}
+private: System::Void poscGeneratedArtifacts_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+	this->poscArtifact->Text = cli::safe_cast<System::String^>(this->poscGeneratedArtifacts->SelectedItem);
+}
+private: System::Void confirmPrec_Click(System::Object^  sender, System::EventArgs^  e) {
+	System::Collections::ArrayList^ al = gcnew System::Collections::ArrayList(this->precExistentArtifacts->Items);
+	System::String^ precItems = gcnew System::String("PRE-CONDITIONS:(");
+	for each (String^ var in al)
+	{
+		precItems = precItems->Concat(precItems, var, ", ");
+	}
+	precItems = precItems->Substring(0, precItems->Length - 2);
+	precItems = precItems->Concat(precItems, ")");
+	this->precList->Items->Add(
+		this->precDescription->Text->Concat(precItems, ". DESCRIPTION: ", this->precDescription->Text)
+	);
+}
+private: System::Void poscList_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+}
+private: System::Void poscConfirm_Click(System::Object^  sender, System::EventArgs^  e) {
+	System::Collections::ArrayList^ al = gcnew System::Collections::ArrayList(this->poscGeneratedArtifacts->Items);
+	System::String^ poscItems = gcnew System::String("POS-CONDITIONS:(");
+	for each (String^ var in al)
+	{
+		poscItems = poscItems->Concat(poscItems, var, ", ");
+	}
+	poscItems = poscItems->Substring(0, poscItems->Length - 2);
+	poscItems = poscItems->Concat(poscItems, ")");
+	this->poscList->Items->Add(
+		this->poscDescription->Text->Concat(poscItems, ". DESCRIPTION: ", this->poscDescription->Text)
+		);
+}
+private: System::Void flowConfirm_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->flowList->Items->Add(
+		this->fSystemActor->Checked ? "Sistema: " : this->fUserActor->Checked ? "Usuário: " : "" +
+		this->flowDescription->Text
+	);
+}
+private: System::Void fSystemActor_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	if (this->fSystemActor->Checked){
+		this->fUserActor->Checked = false;
+	}
+}
+private: System::Void fUserActor_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	if (this->fUserActor->Checked){
+		this->fSystemActor->Checked = false;
+	}
+}
+private: System::Void afConfirm_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->afList->Items->Add(
+		this->afSystemActor->Checked ? "Sistema: " : this->afUserActor->Checked ? "Usuário: " : "" +
+		this->afDescription->Text
+	);
+}
+private: System::Void afSystemActor_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	if (this->afSystemActor->Checked){
+		this->afUserActor->Checked = false;
+	}
+}
+private: System::Void afUserActor_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	if (this->afUserActor->Checked){
+		this->afSystemActor->Checked = false;
+	}
+}
+private: System::Void customListItem(System::Object^  sender, System::Windows::Forms::DrawItemEventArgs^  e){
+	e->DrawBackground();
+	Brush^ myBrush = Brushes::Black;
+	System::Windows::Forms::ListBox^ list = cli::safe_cast<System::Windows::Forms::ListBox^>(sender);
+	e->Graphics->DrawString(list->Items[e->Index]->ToString(),
+		e->Font, myBrush, e->Bounds, StringFormat::GenericDefault);
+	Pen^ p = gcnew Pen(Brushes::Gainsboro, 1);
+	e->Graphics->DrawLine(p, Point(e->Bounds.Left, e->Bounds.Bottom - 1), Point(e->Bounds.Right, e->Bounds.Bottom - 1));
+	delete p;
+	e->DrawFocusRectangle();
+}
+
+private: System::Void listBox_DrawItem(System::Object^  sender, System::Windows::Forms::DrawItemEventArgs^  e) {
+	customListItem(sender, e);
 }
 };
 }
