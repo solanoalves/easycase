@@ -6,19 +6,18 @@ namespace std{
 		template <class T2> class EasyElement;
 		EasyElement<T> * headElement;
 		EasyElement<T> * currentElement;
-
 		template <class T2>	class EasyElement{
 		private:
-			T2 * pInfo;
+			T2 pInfo;
 			EasyElement<T2> * pPrevious;
 			EasyElement<T2> * pNext;
-		protected:
+		public:
 			EasyElement();
 			~EasyElement();
-			void setInfo(T2*);
+			void setInfo(T2);
 			void setPrevious(EasyElement<T2>*);
 			void setNext(EasyElement<T2>*);
-			T2* getInfo();
+			T2 getInfo();
 			EasyElement<T2>* getPrevious();
 			EasyElement<T2>* getNext();
 		};
@@ -26,9 +25,9 @@ namespace std{
 	public:
 		EasyList();
 		~EasyList();
-		void add(T*);
-		void remove(T*);
-		T* get(int);
+		void add(T);
+		void remove(T);
+		T get(int);
 	};
 };
 
@@ -44,7 +43,7 @@ template <class T> template <class T2> std::EasyList<T>::EasyElement<T2>::~EasyE
 	pNext = nullptr;
 };
 
-template <class T> template <class T2> void std::EasyList<T>::EasyElement<T2>::setInfo(T2* info){
+template <class T> template <class T2> void std::EasyList<T>::EasyElement<T2>::setInfo(T2 info){
 	pInfo = info;
 };
 
@@ -56,7 +55,7 @@ template <class T> template <class T2> void std::EasyList<T>::EasyElement<T2>::s
 	pNext = next;
 };
 
-template <class T> template <class T2> T2* std::EasyList<T>::EasyElement<T2>::getInfo(){
+template <class T> template <class T2> T2 std::EasyList<T>::EasyElement<T2>::getInfo(){
 	return pInfo;
 };
 
@@ -84,7 +83,7 @@ template <class T> std::EasyList<T>::~EasyList(){
 	currentElement = nullptr;
 };
 
-template <class T> void std::EasyList<T>::add(T* item){
+template <class T> void std::EasyList<T>::add(T item){
 	std::EasyList<T>::EasyElement<T>* newElement = new std::EasyList<T>::EasyElement<T>();
 	newElement->setInfo(item);
 	if (headElement == nullptr){		
@@ -98,7 +97,7 @@ template <class T> void std::EasyList<T>::add(T* item){
 	}
 };
 
-template <class T> void std::EasyList<T>::remove(T* item){
+template <class T> void std::EasyList<T>::remove(T item){
 	std::EasyList<T>::EasyElement<T>* pAux = headElement;
 	while (pAux != nullptr){
 		if (pAux->getInfo() == item){
@@ -117,7 +116,7 @@ template <class T> void std::EasyList<T>::remove(T* item){
 	}
 };
 
-template <class T> T* std::EasyList<T>::get(int index){
+template <class T> T std::EasyList<T>::get(int index){
 	std::EasyList<T>::EasyElement<T>* pAux = headElement;
 	int count = 0;
 	while (count < index || pAux == nullptr){

@@ -14,6 +14,10 @@ void ConditionList::addFlowCondition(const FlowCondition* flowCondition){
 	conditions.push_back(flowCondition);
 }
 
-vector<const FlowCondition*> ConditionList::getConditions(){
+vector<const FlowCondition*> ConditionList::getConditions() const{
 	return conditions;
+}
+
+unsigned int ConditionList::size() const{
+	return conditions.size();
 }

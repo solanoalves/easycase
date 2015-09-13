@@ -57,6 +57,7 @@ namespace easycase {
 				delete parentWin;
 			}
 		}
+	private: static unsigned int lastReq = -1;
 	private: System::Windows::Forms::Form^ parentWin;
 	private: UseCaseWin^ useCaseWin;
 	private: System::Windows::Forms::TabControl^  contentWinPanel;
@@ -182,6 +183,7 @@ namespace easycase {
 			this->endDate->Name = L"endDate";
 			this->endDate->Size = System::Drawing::Size(200, 20);
 			this->endDate->TabIndex = 9;
+			this->endDate->Leave += gcnew System::EventHandler(this, &ContentWin::endDate_Leave);
 			// 
 			// label8
 			// 
@@ -207,6 +209,7 @@ namespace easycase {
 			this->initialDate->Name = L"initialDate";
 			this->initialDate->Size = System::Drawing::Size(200, 20);
 			this->initialDate->TabIndex = 6;
+			this->initialDate->Leave += gcnew System::EventHandler(this, &ContentWin::initialDate_Leave);
 			// 
 			// projectLeader
 			// 
@@ -214,6 +217,7 @@ namespace easycase {
 			this->projectLeader->Name = L"projectLeader";
 			this->projectLeader->Size = System::Drawing::Size(229, 20);
 			this->projectLeader->TabIndex = 5;
+			this->projectLeader->Leave += gcnew System::EventHandler(this, &ContentWin::projectLeader_Leave);
 			// 
 			// label6
 			// 
@@ -231,6 +235,7 @@ namespace easycase {
 			this->projectDescription->Name = L"projectDescription";
 			this->projectDescription->Size = System::Drawing::Size(528, 115);
 			this->projectDescription->TabIndex = 3;
+			this->projectDescription->Leave += gcnew System::EventHandler(this, &ContentWin::projectDescription_Leave);
 			// 
 			// label2
 			// 
@@ -247,6 +252,7 @@ namespace easycase {
 			this->projectName->Name = L"projectName";
 			this->projectName->Size = System::Drawing::Size(229, 20);
 			this->projectName->TabIndex = 1;
+			this->projectName->Leave += gcnew System::EventHandler(this, &ContentWin::projectName_Leave);
 			// 
 			// label1
 			// 
@@ -291,6 +297,7 @@ namespace easycase {
 			this->requirementListBox->Size = System::Drawing::Size(525, 244);
 			this->requirementListBox->TabIndex = 3;
 			this->requirementListBox->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &ContentWin::listBox1_DrawItem);
+			this->requirementListBox->SelectedIndexChanged += gcnew System::EventHandler(this, &ContentWin::requirementListBox_SelectedIndexChanged);
 			// 
 			// button1
 			// 
@@ -335,6 +342,7 @@ namespace easycase {
 			this->tabPage3->TabIndex = 2;
 			this->tabPage3->Text = L"Use Cases";
 			this->tabPage3->UseVisualStyleBackColor = true;
+			this->tabPage3->Leave += gcnew System::EventHandler(this, &ContentWin::tabPage3_Leave);
 			// 
 			// button6
 			// 
@@ -344,6 +352,7 @@ namespace easycase {
 			this->button6->TabIndex = 7;
 			this->button6->Text = L"Delete";
 			this->button6->UseVisualStyleBackColor = true;
+			this->button6->Click += gcnew System::EventHandler(this, &ContentWin::button6_Click);
 			// 
 			// button5
 			// 
@@ -374,6 +383,7 @@ namespace easycase {
 			this->useCaseListBox->Size = System::Drawing::Size(535, 244);
 			this->useCaseListBox->TabIndex = 4;
 			this->useCaseListBox->DrawItem += gcnew System::Windows::Forms::DrawItemEventHandler(this, &ContentWin::useCaseListBox_DrawItem);
+			this->useCaseListBox->SelectedIndexChanged += gcnew System::EventHandler(this, &ContentWin::useCaseListBox_SelectedIndexChanged);
 			// 
 			// addUseCase
 			// 
@@ -450,7 +460,7 @@ namespace easycase {
 	private: System::Void customListItem(System::Object^  sender, System::Windows::Forms::DrawItemEventArgs^  e){
 		e->DrawBackground();
 		Brush^ myBrush = Brushes::Black;
-		e->Graphics->DrawString("R" + (e->Index).ToString("D3") + ": " + requirementListBox->Items[e->Index]->ToString(),
+		e->Graphics->DrawString("R" + (e->Index+1).ToString("D3") + ": " + requirementListBox->Items[e->Index]->ToString(),
 			e->Font, myBrush, e->Bounds, StringFormat::GenericDefault);
 		Pen^ p = gcnew Pen(Brushes::Gainsboro, 1);
 		e->Graphics->DrawLine(p, Point(e->Bounds.Left, e->Bounds.Bottom - 1), Point(e->Bounds.Right, e->Bounds.Bottom - 1));
@@ -470,7 +480,10 @@ namespace easycase {
 		System::Windows::Forms::ComboBox^ cb = cli::safe_cast<System::Windows::Forms::ComboBox^>(sender);
 		System::Object^ obj = cb->SelectedItem;
 		if (obj == nullptr) return;
-		this->comboRequirement->Text = "R" + (cb->SelectedIndex).ToString("D3") + ": " + (cli::safe_cast<System::String^>(obj));
+
+		EasyCaseFacade::loadRequirement(cb->SelectedIndex + 1);
+
+		this->comboRequirement->Text = "R" + (cb->SelectedIndex+1).ToString("D3") + ": " + (cli::safe_cast<System::String^>(obj));
 	}
 private: System::Void addUseCase_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (String::IsNullOrEmpty(this->comboRequirement->Text)){
@@ -496,28 +509,79 @@ private: System::Void useCaseListBox_DrawItem(System::Object^  sender, System::W
 	this->customUCListItem(sender, e);
 }
 private: System::Void button5_Click(System::Object^  sender, System::EventArgs^  e) {
-	if (this->useCaseListBox->SelectedItem != nullptr){
-		String^ str = cli::safe_cast<String^>(this->useCaseListBox->SelectedItem);
-		int idx = str->IndexOf(" ");
-		idx = std::stoi(marshal_as<std::string>(str->Substring(2, idx - 2)));
+	if (this->useCaseListBox->SelectedIndex >= 0){
 		this->SuspendLayout();
 		if (this->useCaseWin == nullptr){
 			this->useCaseWin = gcnew UseCaseWin(this->parentWin);
-			this->parentWin->Controls->Add(this->useCaseWin->GetContent(idx));
+			this->parentWin->Controls->Add(this->useCaseWin->GetContent());
 		}
 		System::Object^ control = this->parentWin->Controls->Find(L"contentWinPanel", false)->GetValue(0);
 		(cli::safe_cast<System::Windows::Forms::TabControl^>(control))->SendToBack();
-		this->useCaseWin->GetContent(idx)->BringToFront();
+		this->useCaseWin->GetContent()->BringToFront();
 		this->ResumeLayout(false);
 		this->PerformLayout();
 	}
 }
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	this->requirementListBox->Items->Add(this->requirement->Text);
+
+	EasyCaseFacade::commitRequirement(marshal_as<std::string>(this->requirement->Text));
+	vector<string> reqs = EasyCaseFacade::getRequirements();
+	this->requirementListBox->Items->Clear();
+	for (vector<string>::iterator it = reqs.begin(); it != reqs.end(); it++){
+		this->requirementListBox->Items->Add(marshal_as<System::String^>(*it));
+	}
 	this->requirementHide->Items->Clear();
 	for (int i = 0; i < this->requirementListBox->Items->Count; i++){
 		this->requirementHide->Items->Add(this->requirementListBox->Items[i]);
 	}
+	this->requirement->Text = "";
+}
+private: System::Void projectName_Leave(System::Object^  sender, System::EventArgs^  e) {
+	EasyCaseFacade::setProjectName(marshal_as<std::string>(this->projectName->Text));
+}
+private: System::Void projectLeader_Leave(System::Object^  sender, System::EventArgs^  e) {
+	EasyCaseFacade::setProjectLeaderName(marshal_as<std::string>(this->projectLeader->Text));
+}
+private: System::Void initialDate_Leave(System::Object^  sender, System::EventArgs^  e) {
+	EasyCaseFacade::setProjectInitialDate(marshal_as<std::string>(this->initialDate->Text));
+}
+private: System::Void endDate_Leave(System::Object^  sender, System::EventArgs^  e) {
+	EasyCaseFacade::setProjectEndDate(marshal_as<std::string>(this->endDate->Text));
+}
+private: System::Void projectDescription_Leave(System::Object^  sender, System::EventArgs^  e) {
+	EasyCaseFacade::setProjectDescription(marshal_as<std::string>(this->projectDescription->Text));
+}
+private: System::Void requirementListBox_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+
+	if (lastReq == this->requirementListBox->SelectedIndex || this->requirementListBox->SelectedIndex < 0){
+		lastReq = -1;
+		this->requirementListBox->SelectedIndex = -1;
+		EasyCaseFacade::unloadRequirement();
+		this->requirement->Text = "";
+	}
+	else{
+		this->requirement->Text = this->requirementListBox->SelectedItem->ToString();
+		lastReq = this->requirementListBox->SelectedIndex;
+		EasyCaseFacade::loadRequirement(this->requirementListBox->SelectedIndex+1);
+	}
+}
+private: System::Void tabPage3_Leave(System::Object^  sender, System::EventArgs^  e) {
+	EasyCaseFacade::unloadRequirement();
+
+	this->comboRequirement->Text = "";
+	this->requirementHide->SelectedIndex = -1;
+	this->useCaseListBox->Items->Clear();
+}
+private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
+	EasyCaseFacade::deleteUseCase();
+	this->useCaseListBox->Items->Clear();
+	for each (string var in EasyCaseFacade::getUseCases())
+	{
+		this->useCaseListBox->Items->Add(marshal_as<String^>(var));
+	}
+}
+private: System::Void useCaseListBox_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+	EasyCaseFacade::loadUseCase(this->useCaseListBox->SelectedIndex + 1);
 }
 };
 }

@@ -12,7 +12,8 @@ namespace std{
 	public:
 		ConditionList();
 		~ConditionList();
+		vector<const FlowCondition*> getConditions() const;
+		unsigned int size() const;
 		void addFlowCondition(const FlowCondition*);
-		vector<const FlowCondition*> getConditions();
 	};
 };

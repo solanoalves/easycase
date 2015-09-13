@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ContentWin.h"
+#include "easycase_facade.h"
+using std::EasyCaseFacade;
 
 namespace easycase {
 
@@ -44,6 +46,11 @@ namespace easycase {
 	private: System::Windows::Forms::Panel^  initialPanel;
 	//Custom
 	private: ContentWin^ contentWin;
+	private: System::Windows::Forms::ToolStripMenuItem^  abrirToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  salvarToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  importarToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  exportarToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  buscarToolStripMenuItem;
 
 
 	private:
@@ -72,6 +79,11 @@ namespace easycase {
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->initialPanel = (gcnew System::Windows::Forms::Panel());
+			this->abrirToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->salvarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->importarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->exportarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->buscarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->initialPanel->SuspendLayout();
@@ -88,7 +100,11 @@ namespace easycase {
 			// 
 			// projetoToolStripMenuItem
 			// 
-			this->projetoToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->novoToolStripMenuItem });
+			this->projetoToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
+				this->novoToolStripMenuItem,
+					this->abrirToolStripMenuItem, this->salvarToolStripMenuItem, this->importarToolStripMenuItem, this->exportarToolStripMenuItem,
+					this->buscarToolStripMenuItem
+			});
 			this->projetoToolStripMenuItem->Name = L"projetoToolStripMenuItem";
 			this->projetoToolStripMenuItem->Size = System::Drawing::Size(57, 20);
 			this->projetoToolStripMenuItem->Text = L"Projeto";
@@ -147,6 +163,36 @@ namespace easycase {
 			this->initialPanel->Size = System::Drawing::Size(566, 506);
 			this->initialPanel->TabIndex = 4;
 			// 
+			// abrirToolStripMenuItem
+			// 
+			this->abrirToolStripMenuItem->Name = L"abrirToolStripMenuItem";
+			this->abrirToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->abrirToolStripMenuItem->Text = L"Abrir";
+			// 
+			// salvarToolStripMenuItem
+			// 
+			this->salvarToolStripMenuItem->Name = L"salvarToolStripMenuItem";
+			this->salvarToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->salvarToolStripMenuItem->Text = L"Salvar";
+			// 
+			// importarToolStripMenuItem
+			// 
+			this->importarToolStripMenuItem->Name = L"importarToolStripMenuItem";
+			this->importarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->importarToolStripMenuItem->Text = L"Importar Remoto";
+			// 
+			// exportarToolStripMenuItem
+			// 
+			this->exportarToolStripMenuItem->Name = L"exportarToolStripMenuItem";
+			this->exportarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->exportarToolStripMenuItem->Text = L"Exportar Remoto";
+			// 
+			// buscarToolStripMenuItem
+			// 
+			this->buscarToolStripMenuItem->Name = L"buscarToolStripMenuItem";
+			this->buscarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->buscarToolStripMenuItem->Text = L"Buscar";
+			// 
 			// MainWin
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -170,6 +216,9 @@ namespace easycase {
 		}
 #pragma endregion
 	private: System::Void novoToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		EasyCaseFacade::createProject();
+
 		this->SuspendLayout();
 		if (this->contentWin == nullptr){
 			this->contentWin = gcnew ContentWin(this);

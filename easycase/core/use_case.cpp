@@ -2,43 +2,55 @@
 using std::UseCase;
 
 UseCase::UseCase(){
-	flowActionList = new FlowActionList;
-	preConditionList = new ConditionList;
-	posConditionList = new ConditionList;
+	delete &flowActionList;
+	delete &preConditionList;
+	delete &posConditionList;
 }
 
 UseCase::~UseCase(){
 
 }
 
-void UseCase::addFlowAction(const FlowAction* fAction){
-	flowActionList->addFlowAction(fAction);
+unsigned int UseCase::getNextPreConditionID() const{
+	return preConditionList.size() + 1;
 }
 
-void UseCase::addPreCondition(const FlowCondition* fCond){
-	preConditionList->addFlowCondition(fCond);
+unsigned int UseCase::getNextPosConditionID() const{
+	return posConditionList.size() + 1;
 }
 
-void UseCase::addPosCondition(const FlowCondition* fCond){
-	posConditionList->addFlowCondition(fCond);
-}
-
-void UseCase::setStatus(const Status::StatusType stat){
-	status = stat;
+unsigned int UseCase::getNextFlowActionID() const{
+	return flowActionList.size() + 1;
 }
 
 Status::StatusType UseCase::getStatus() const{
 	return status;
 }
 
-ConditionList* UseCase::getPreConditionList() const{
+const ConditionList& UseCase::getPreConditionList() const{
 	return preConditionList;
 }
 
-ConditionList* UseCase::getPosConditionList() const{
+const ConditionList& UseCase::getPosConditionList() const{
 	return posConditionList;
 }
 
-FlowActionList* UseCase::getFlowActionList() const{
+const FlowActionList& UseCase::getFlowActionList() const{
 	return flowActionList;
+}
+
+void UseCase::addFlowAction(const FlowAction* fAction){
+	flowActionList.addFlowAction(fAction);
+}
+
+void UseCase::addPreCondition(const FlowCondition* fCond){
+	preConditionList.addFlowCondition(fCond);
+}
+
+void UseCase::addPosCondition(const FlowCondition* fCond){
+	posConditionList.addFlowCondition(fCond);
+}
+
+void UseCase::setStatus(const Status::StatusType stat){
+	status = stat;
 }

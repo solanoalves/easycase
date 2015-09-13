@@ -5,6 +5,9 @@ FlowActionList::FlowActionList(){
 }
 
 FlowActionList::~FlowActionList(){
+	for (vector<const FlowAction*>::iterator it = actions.begin(); it != actions.end(); it++){
+		delete *it;
+	}
 }
 
 void FlowActionList::addFlowAction(const FlowAction* fAction){
@@ -13,4 +16,8 @@ void FlowActionList::addFlowAction(const FlowAction* fAction){
 
 vector<const FlowAction*> FlowActionList::getFlowActionList() const{
 	return actions;
+}
+
+unsigned int FlowActionList::size() const{
+	return actions.size();
 }

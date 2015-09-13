@@ -16,21 +16,24 @@ using std::string;
 namespace std{
 	class UseCase : public BasicInfo{
 	private:
-		FlowActionList* flowActionList;
-		ConditionList* preConditionList;
-		ConditionList* posConditionList;
+		FlowActionList flowActionList;
+		ConditionList preConditionList;
+		ConditionList posConditionList;
 		Status::StatusType status;
 	public:
 		UseCase();
 		~UseCase();
+		unsigned int getNextPreConditionID() const;
+		unsigned int getNextPosConditionID() const;
+		unsigned int getNextFlowActionID() const;
+		const ConditionList& getPreConditionList() const;
+		const ConditionList& getPosConditionList() const;
+		const FlowActionList& getFlowActionList() const;
+		Status::StatusType getStatus() const;
 		void addFlowAction(const FlowAction*);
 		void addPreCondition(const FlowCondition*);
 		void addPosCondition(const FlowCondition*);
 		void setStatus(const Status::StatusType);
-		ConditionList* getPreConditionList() const;
-		ConditionList* getPosConditionList() const;
-		FlowActionList* getFlowActionList() const;
-		Status::StatusType getStatus() const;
 	};
 };
 

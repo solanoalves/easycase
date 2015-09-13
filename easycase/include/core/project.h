@@ -14,12 +14,26 @@ using std::string;
 namespace std{
 	class Project : public BasicInfo{
 	private:
-		RequirementList* requirementList;
-		BasicInfoList* infoList;
+		string projectLeader;
+		string initialDate;
+		string endDate;
+		RequirementList requirementList;
+		BasicInfoList infoList;
 	public:
 		Project();
 		~Project();
-		void setRequirementList(RequirementList*);
-		void setBasicInfoList(BasicInfoList*);
+		string getProjectLeader() const;
+		string getInitialDate() const;
+		string getEndDate() const;
+		vector<Requirement*>::iterator getFirstRequirement();
+		vector<Requirement*>::iterator getLastRequirement();
+		Requirement* getRequirementByID(const unsigned int id);
+		unsigned int getNextRequirementID() const;
+		void setProjectLeader(const string projectLeader);
+		void setInitialDate(const string initialDate);
+		void setEndDate(const string endDate);
+		void addRequirement(Requirement* requirement);
+		void addInfo(const BasicInfo* basicInfo);
+		void deleteInfo(const unsigned int id);
 	};
 };

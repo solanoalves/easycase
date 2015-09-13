@@ -12,10 +12,14 @@ using std::vector;
 namespace std{
 	class Requirement : public BasicInfo{
 	private:
-		UseCaseList* useCaseList;
+		UseCaseList useCaseList;
 	public:
 		Requirement();
 		~Requirement();
-		void setUseCaseList(UseCaseList*);
+		unsigned int getNextUseCaseID() const;
+		vector<UseCase*>::iterator firstUseCase();
+		vector<UseCase*>::iterator lastUseCase();
+		void addUseCase(UseCase* useCase);
+		void deleteUseCase(const unsigned int id);
 	};
 };

@@ -31,7 +31,6 @@ namespace easycase {
 		}
 
 		System::Windows::Forms::TabControl^ GetContent();
-		System::Windows::Forms::TabControl^ GetContent(int useCaseId);
 
 	protected:
 		/// <summary>
@@ -52,9 +51,9 @@ namespace easycase {
 	private: System::Windows::Forms::Form^ parentWin;
 	
 	private: System::Windows::Forms::TextBox^  ucName;
-	private: System::Windows::Forms::TextBox^  ucId;
+
 	private: System::Windows::Forms::Label^  label3;
-	private: System::Windows::Forms::Label^  label2;
+
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::TextBox^  ucDescription;
 
@@ -159,9 +158,7 @@ private: System::Windows::Forms::ListBox^  afList;
 		void InitializeComponent(void)
 		{
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->ucId = (gcnew System::Windows::Forms::TextBox());
 			this->ucName = (gcnew System::Windows::Forms::TextBox());
 			this->ucDescription = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
@@ -224,15 +221,6 @@ private: System::Windows::Forms::ListBox^  afList;
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Name";
 			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(8, 3);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(18, 13);
-			this->label2->TabIndex = 1;
-			this->label2->Text = L"ID";
-			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
@@ -241,13 +229,6 @@ private: System::Windows::Forms::ListBox^  afList;
 			this->label3->Size = System::Drawing::Size(60, 13);
 			this->label3->TabIndex = 2;
 			this->label3->Text = L"Description";
-			// 
-			// ucId
-			// 
-			this->ucId->Location = System::Drawing::Point(11, 19);
-			this->ucId->Name = L"ucId";
-			this->ucId->Size = System::Drawing::Size(127, 20);
-			this->ucId->TabIndex = 3;
 			// 
 			// ucName
 			// 
@@ -268,7 +249,7 @@ private: System::Windows::Forms::ListBox^  afList;
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(171, 3);
+			this->label4->Location = System::Drawing::Point(8, 3);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(37, 13);
 			this->label4->TabIndex = 6;
@@ -295,10 +276,8 @@ private: System::Windows::Forms::ListBox^  afList;
 			this->tabPage1->Controls->Add(this->ucDescription);
 			this->tabPage1->Controls->Add(this->label3);
 			this->tabPage1->Controls->Add(this->ucName);
-			this->tabPage1->Controls->Add(this->label2);
 			this->tabPage1->Controls->Add(this->label4);
 			this->tabPage1->Controls->Add(this->label1);
-			this->tabPage1->Controls->Add(this->ucId);
 			this->tabPage1->Location = System::Drawing::Point(4, 22);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
@@ -314,7 +293,7 @@ private: System::Windows::Forms::ListBox^  afList;
 				L"Incomplete", L"Created", L"Working", L"Revision",
 					L"Done"
 			});
-			this->ucStatus->Location = System::Drawing::Point(174, 20);
+			this->ucStatus->Location = System::Drawing::Point(11, 23);
 			this->ucStatus->Name = L"ucStatus";
 			this->ucStatus->Size = System::Drawing::Size(142, 21);
 			this->ucStatus->TabIndex = 9;
@@ -862,18 +841,7 @@ private: int setFlowParameters(System::Windows::Forms::ListBox::ObjectCollection
 }
 
 private: int makeMyUseCase(){
-	unsigned int id = -1;
 	std::string status, nome, descricao;
-	if (String::IsNullOrEmpty(this->ucId->Text)){
-		MessageBox::Show(
-			"Preencha o ID do UseCase",
-			"Atenção", MessageBoxButtons::OK,
-			MessageBoxIcon::Warning);
-		return 1;
-	}
-	else{
-		id = std::stoi(marshal_as<std::string>(this->ucId->Text));
-	}
 	if (String::IsNullOrEmpty(this->ucStatus->SelectedItem->ToString())){
 		MessageBox::Show(
 			"Preencha o Status do UseCase",
@@ -904,7 +872,7 @@ private: int makeMyUseCase(){
 	else{
 		descricao = marshal_as<std::string>(this->ucDescription->Text);
 	}
-	EasyCaseFacade::createUseCase(id, status, nome, descricao);
+	EasyCaseFacade::createUseCase(status, nome, descricao);
 	return 0;
 }
 

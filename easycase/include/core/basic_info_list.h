@@ -8,9 +8,11 @@ using std::BasicInfo;
 namespace std{
 	class BasicInfoList{
 	private:
-		EasyList<BasicInfo*>* infoList;
+		EasyList<const BasicInfo*> infoList;
 	public:
 		BasicInfoList();
 		~BasicInfoList();
+		void addInfo(const BasicInfo* info);
+		void deleteInfo(const unsigned int id);
 	};
 };
