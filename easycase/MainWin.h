@@ -51,6 +51,7 @@ namespace easycase {
 	private: System::Windows::Forms::ToolStripMenuItem^  importarToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  exportarToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  buscarToolStripMenuItem;
+	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
 
 
 	private:
@@ -75,15 +76,16 @@ namespace easycase {
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->projetoToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->novoToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->initialPanel = (gcnew System::Windows::Forms::Panel());
 			this->abrirToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->salvarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->importarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->exportarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->buscarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->initialPanel = (gcnew System::Windows::Forms::Panel());
+			this->saveFileDialog1 = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->menuStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->initialPanel->SuspendLayout();
@@ -112,9 +114,40 @@ namespace easycase {
 			// novoToolStripMenuItem
 			// 
 			this->novoToolStripMenuItem->Name = L"novoToolStripMenuItem";
-			this->novoToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->novoToolStripMenuItem->Size = System::Drawing::Size(165, 22);
 			this->novoToolStripMenuItem->Text = L"Novo";
 			this->novoToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainWin::novoToolStripMenuItem_Click);
+			// 
+			// abrirToolStripMenuItem
+			// 
+			this->abrirToolStripMenuItem->Name = L"abrirToolStripMenuItem";
+			this->abrirToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->abrirToolStripMenuItem->Text = L"Abrir";
+			// 
+			// salvarToolStripMenuItem
+			// 
+			this->salvarToolStripMenuItem->Name = L"salvarToolStripMenuItem";
+			this->salvarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->salvarToolStripMenuItem->Text = L"Salvar";
+			this->salvarToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainWin::salvarToolStripMenuItem_Click);
+			// 
+			// importarToolStripMenuItem
+			// 
+			this->importarToolStripMenuItem->Name = L"importarToolStripMenuItem";
+			this->importarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->importarToolStripMenuItem->Text = L"Importar Remoto";
+			// 
+			// exportarToolStripMenuItem
+			// 
+			this->exportarToolStripMenuItem->Name = L"exportarToolStripMenuItem";
+			this->exportarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->exportarToolStripMenuItem->Text = L"Exportar Remoto";
+			// 
+			// buscarToolStripMenuItem
+			// 
+			this->buscarToolStripMenuItem->Name = L"buscarToolStripMenuItem";
+			this->buscarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->buscarToolStripMenuItem->Text = L"Buscar";
 			// 
 			// label1
 			// 
@@ -163,36 +196,6 @@ namespace easycase {
 			this->initialPanel->Size = System::Drawing::Size(566, 506);
 			this->initialPanel->TabIndex = 4;
 			// 
-			// abrirToolStripMenuItem
-			// 
-			this->abrirToolStripMenuItem->Name = L"abrirToolStripMenuItem";
-			this->abrirToolStripMenuItem->Size = System::Drawing::Size(152, 22);
-			this->abrirToolStripMenuItem->Text = L"Abrir";
-			// 
-			// salvarToolStripMenuItem
-			// 
-			this->salvarToolStripMenuItem->Name = L"salvarToolStripMenuItem";
-			this->salvarToolStripMenuItem->Size = System::Drawing::Size(152, 22);
-			this->salvarToolStripMenuItem->Text = L"Salvar";
-			// 
-			// importarToolStripMenuItem
-			// 
-			this->importarToolStripMenuItem->Name = L"importarToolStripMenuItem";
-			this->importarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
-			this->importarToolStripMenuItem->Text = L"Importar Remoto";
-			// 
-			// exportarToolStripMenuItem
-			// 
-			this->exportarToolStripMenuItem->Name = L"exportarToolStripMenuItem";
-			this->exportarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
-			this->exportarToolStripMenuItem->Text = L"Exportar Remoto";
-			// 
-			// buscarToolStripMenuItem
-			// 
-			this->buscarToolStripMenuItem->Name = L"buscarToolStripMenuItem";
-			this->buscarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
-			this->buscarToolStripMenuItem->Text = L"Buscar";
-			// 
 			// MainWin
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -230,5 +233,25 @@ namespace easycase {
 		this->ResumeLayout(false);
 		this->PerformLayout();
 	}
+private: System::Void salvarToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	string toSave = EasyCaseFacade::saveProject();
+	if (toSave.empty()) return;
+	System::IO::Stream^ myStream;
+	SaveFileDialog^ saveFileDialog1 = gcnew SaveFileDialog;
+	saveFileDialog1->Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+	saveFileDialog1->FilterIndex = 2;
+	saveFileDialog1->RestoreDirectory = true;
+	if (saveFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+	{
+		if ((myStream = saveFileDialog1->OpenFile()) != nullptr)
+		{			
+			for (string::iterator it = toSave.begin(); it != toSave.end(); it++)
+			{
+				myStream->WriteByte(*it);
+			}
+			myStream->Close();
+		}
+	}
+}
 };
 }

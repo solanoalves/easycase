@@ -14,8 +14,11 @@ void FlowActionList::addFlowAction(const FlowAction* fAction){
 	actions.push_back(fAction);
 }
 
-vector<const FlowAction*> FlowActionList::getFlowActionList() const{
-	return actions;
+vector<const FlowAction*>::const_iterator FlowActionList::getFirstFlowAction() const{
+	return actions.begin();
+}
+vector<const FlowAction*>::const_iterator FlowActionList::getLastFlowAction() const{
+	return actions.end();
 }
 
 unsigned int FlowActionList::size() const{

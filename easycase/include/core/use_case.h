@@ -1,5 +1,9 @@
 #pragma once
 
+#include "pre_condition.h"
+using std::PreCondition;
+#include "pos_condition.h"
+using std::PosCondition;
 #include "basic_info.h"
 using std::BasicInfo;
 #include "flow_condition.h"
@@ -26,9 +30,12 @@ namespace std{
 		unsigned int getNextPreConditionID() const;
 		unsigned int getNextPosConditionID() const;
 		unsigned int getNextFlowActionID() const;
-		const ConditionList& getPreConditionList() const;
-		const ConditionList& getPosConditionList() const;
-		const FlowActionList& getFlowActionList() const;
+		vector<const FlowCondition*>::const_iterator  getFirstPreCondition() const;
+		vector<const FlowCondition*>::const_iterator  getLastPreCondition() const;
+		vector<const FlowCondition*>::const_iterator  getFirstPosCondition() const;
+		vector<const FlowCondition*>::const_iterator  getLastPosCondition() const;
+		vector<const FlowAction*>::const_iterator getFirstFlowAction() const;
+		vector<const FlowAction*>::const_iterator getLastFlowAction() const;
 		Status::StatusType getStatus() const;
 		void addFlowAction(const FlowAction*);
 		void addPreCondition(const FlowCondition*);

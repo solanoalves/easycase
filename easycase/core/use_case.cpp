@@ -2,13 +2,13 @@
 using std::UseCase;
 
 UseCase::UseCase(){
-	delete &flowActionList;
-	delete &preConditionList;
-	delete &posConditionList;
+
 }
 
 UseCase::~UseCase(){
-
+	delete &flowActionList;
+	delete &preConditionList;
+	delete &posConditionList;
 }
 
 unsigned int UseCase::getNextPreConditionID() const{
@@ -27,16 +27,23 @@ Status::StatusType UseCase::getStatus() const{
 	return status;
 }
 
-const ConditionList& UseCase::getPreConditionList() const{
-	return preConditionList;
+vector<const FlowCondition*>::const_iterator UseCase::getFirstPreCondition() const{
+	return preConditionList.getFirstCondition();
 }
-
-const ConditionList& UseCase::getPosConditionList() const{
-	return posConditionList;
+vector<const FlowCondition*>::const_iterator  UseCase::getLastPreCondition() const{
+	return preConditionList.getLastCondition();
 }
-
-const FlowActionList& UseCase::getFlowActionList() const{
-	return flowActionList;
+vector<const FlowCondition*>::const_iterator UseCase::getFirstPosCondition() const{
+	return posConditionList.getFirstCondition();
+}
+vector<const FlowCondition*>::const_iterator  UseCase::getLastPosCondition() const{
+	return posConditionList.getLastCondition();
+}
+vector<const FlowAction*>::const_iterator UseCase::getFirstFlowAction() const{
+	return flowActionList.getFirstFlowAction();
+}
+vector<const FlowAction*>::const_iterator UseCase::getLastFlowAction() const{
+	return flowActionList.getLastFlowAction();
 }
 
 void UseCase::addFlowAction(const FlowAction* fAction){

@@ -12,7 +12,8 @@ namespace std{
 	public:
 		FlowActionList();
 		~FlowActionList();
-		vector<const FlowAction*> getFlowActionList() const;
+		vector<const FlowAction*>::const_iterator getFirstFlowAction() const;
+		vector<const FlowAction*>::const_iterator getLastFlowAction() const;
 		unsigned int size() const;
 		void addFlowAction(const FlowAction*);
 	};

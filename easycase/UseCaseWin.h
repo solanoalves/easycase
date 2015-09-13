@@ -872,7 +872,9 @@ private: int makeMyUseCase(){
 	else{
 		descricao = marshal_as<std::string>(this->ucDescription->Text);
 	}
-	EasyCaseFacade::createUseCase(status, nome, descricao);
+	EasyCaseFacade::setUseCaseStatus(status);
+	EasyCaseFacade::setUseCaseName(nome);
+	EasyCaseFacade::setUseCaseDescription(descricao);
 	return 0;
 }
 

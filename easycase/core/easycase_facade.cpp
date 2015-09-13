@@ -78,9 +78,15 @@ void EasyCaseFacade::unloadRequirement(){
 	selectedReq = nullptr;
 }
 
-void EasyCaseFacade::createUseCase(const string status, const string name, const string description){
+void EasyCaseFacade::createUseCase(){
 	UseCase* useCase = new UseCase;
 	useCase->setId(selectedReq->getNextUseCaseID());
+	selectedReq->addUseCase(useCase);
+	project->addInfo(useCase);
+	selectedUC = useCase;
+}
+
+void EasyCaseFacade::setUseCaseStatus(const string status){
 	Status stat;
 	Status::StatusType statType;
 	if (status.compare(stat.isIncomplete)){
@@ -98,12 +104,15 @@ void EasyCaseFacade::createUseCase(const string status, const string name, const
 	else if (status.compare(stat.isDone)){
 		statType = Status::Done;
 	}
-	useCase->setStatus(statType);
-	useCase->setName(name);
-	useCase->setDescription(description);
-	selectedReq->addUseCase(useCase);
-	project->addInfo(useCase);
-	selectedUC = useCase;
+	selectedUC->setStatus(statType);
+}
+
+void EasyCaseFacade::setUseCaseName(const string name){
+	selectedUC->setName(name);
+}
+
+void EasyCaseFacade::setUseCaseDescription(const string description){
+	selectedUC->setDescription(description);
 }
 
 void EasyCaseFacade::deleteUseCase(){
@@ -198,6 +207,7 @@ unsigned int EasyCaseFacade::ucId(){
 }
 
 string EasyCaseFacade::ucStatus(){
+	if (selectedUC == nullptr) return "";
 	Status stat;
 	if (selectedUC->getStatus() == Status::Incomplete){
 		return stat.isIncomplete;
@@ -218,54 +228,53 @@ string EasyCaseFacade::ucStatus(){
 }
 
 string EasyCaseFacade::ucName(){
+	if (selectedUC == nullptr) return "";
 	return selectedUC->getName();
 }
 
 string EasyCaseFacade::ucDescription(){
+	if (selectedUC == nullptr) return "";
 	return selectedUC->getDescription();
 }
 
 vector<string> EasyCaseFacade::ucPreCondition(){
-	const ConditionList& conditionList = selectedUC->getPreConditionList();
 	vector<string> ret;
 	string entry;
-	for each (const PreCondition* var in conditionList.getConditions())
+	for (vector<const FlowCondition*>::const_iterator it = selectedUC->getFirstPreCondition(); it < selectedUC->getLastPreCondition(); it++)
 	{
 		entry = "PRE-CONDITIONS:(";
-		for (vector<string>::const_iterator it = var->firstArtifact(); it != var->lastArtifact(); ++it){
-			entry = entry + *it + ", ";
+		for (vector<string>::const_iterator art = (*it)->firstArtifact(); art != (*it)->lastArtifact(); ++art){
+			entry = entry + *art + ", ";
 		}
 		entry.substr(0, entry.size() - 2);
-		entry = "). DESCRIPTION: " + var->getDescription();
+		entry = "). DESCRIPTION: " + (*it)->getDescription();
 		ret.push_back(entry);
 	}
 	return ret;
 }
 
 vector<string> EasyCaseFacade::ucPosCondition(){
-	const ConditionList& conditionList = selectedUC->getPosConditionList();
 	vector<string> ret;
 	string entry;
-	for each (const PosCondition* var in conditionList.getConditions())
+	for (vector<const FlowCondition*>::const_iterator it = selectedUC->getFirstPosCondition(); it < selectedUC->getLastPosCondition(); it++)
 	{
 		entry = "POS-CONDITIONS:(";
-		for (vector<string>::const_iterator it = var->firstArtifact(); it != var->lastArtifact(); ++it){
-			entry = entry + *it + ", ";
+		for (vector<string>::const_iterator art = (*it)->firstArtifact(); art != (*it)->lastArtifact(); ++art){
+			entry = entry + *art + ", ";
 		}
 		entry.substr(0, entry.size() - 2);
-		entry = "). DESCRIPTION: " + var->getDescription();
+		entry = "). DESCRIPTION: " + (*it)->getDescription();
 		ret.push_back(entry);
 	}
 	return ret;
 }
 
 vector<string> EasyCaseFacade::ucMainFlow(){
-	const FlowActionList& flowActionList = selectedUC->getFlowActionList();
 	vector<string> ret;
 	string entry;
-	for each(const FlowAction* var in flowActionList.getFlowActionList()){
-		if (var->getFlowType() == Flow::MainFlow){
-			entry = (var->getActorType() == Actor::System ? "SYSTEM: " : "USER: ") + var->getDescription();
+	for (vector<const FlowAction*>::const_iterator it = selectedUC->getFirstFlowAction(); it < selectedUC->getLastFlowAction(); it++){
+		if ((*it)->getFlowType() == Flow::MainFlow){
+			entry = ((*it)->getActorType() == Actor::System ? "SYSTEM: " : "USER: ") + (*it)->getDescription();
 			ret.push_back(entry);
 		}
 	}
@@ -273,14 +282,145 @@ vector<string> EasyCaseFacade::ucMainFlow(){
 }
 
 vector<string> EasyCaseFacade::ucAlternativeFlow(){
-	const FlowActionList& flowActionList = selectedUC->getFlowActionList();
 	vector<string> ret;
 	string entry;
-	for each(const FlowAction* var in flowActionList.getFlowActionList()){
-		if (var->getFlowType() == Flow::AlternativeFlow){
-			entry = (var->getActorType() == Actor::System ? "SYSTEM: " : "USER: ") + var->getDescription();
+	for (vector<const FlowAction*>::const_iterator it = selectedUC->getFirstFlowAction(); it < selectedUC->getLastFlowAction(); it++){
+		if ((*it)->getFlowType() == Flow::AlternativeFlow){
+			entry = ((*it)->getActorType() == Actor::System ? "SYSTEM: " : "USER: ") + (*it)->getDescription();
 			ret.push_back(entry);
 		}
 	}
 	return ret;
+}
+
+string EasyCaseFacade::saveProject(){
+	if (project == nullptr) return "";
+	Status stat;
+	string status;
+	string* retorno = new string;
+	retorno->append("<project>");
+	retorno->append("<name>");
+	retorno->append(project->getName());
+	retorno->append("</name>");
+	retorno->append("<leader>");
+	retorno->append(project->getProjectLeader());
+	retorno->append("</leader>");
+	retorno->append("<initialDate>");
+	retorno->append(project->getInitialDate());
+	retorno->append("</initialDate>");
+	retorno->append("<endDate>");
+	retorno->append(project->getEndDate());
+	retorno->append("</endDate>");
+	retorno->append("<description>");
+	retorno->append(project->getDescription());
+	retorno->append("</description>");
+	retorno->append("<requirements>");
+	for (vector<Requirement*>::iterator r = project->getFirstRequirement(); r != project->getLastRequirement(); r++){
+		retorno->append("<requirement>");
+		retorno->append("<id>");
+		retorno->append(""+(*r)->getId());
+		retorno->append("</id>");
+		retorno->append("<description>");
+		retorno->append((*r)->getDescription());
+		retorno->append("</description>");
+		retorno->append("<usecases>");
+		for (vector<UseCase*>::iterator u = (*r)->firstUseCase(); u != (*r)->lastUseCase(); u++){
+			retorno->append("<usecase>");
+			retorno->append("<id>");
+			retorno->append(""+(*u)->getId());
+			retorno->append("</id>");
+			retorno->append("<status>");
+			if ((*u)->getStatus() == Status::Incomplete){
+				status = stat.isIncomplete;
+			}
+			else if ((*u)->getStatus() == Status::Created){
+				status = stat.isCreated;
+			}
+			else if ((*u)->getStatus() == Status::Working){
+				status = stat.isWorking;
+			}
+			else if ((*u)->getStatus() == Status::Revision){
+				status = stat.isRevision;
+			}
+			else if ((*u)->getStatus() == Status::Done){
+				status = stat.isDone;
+			}
+			retorno->append(status);
+			retorno->append("</status>");
+			retorno->append("<name>");
+			retorno->append("" + (*u)->getName());
+			retorno->append("</name>");
+			retorno->append("<description>");
+			retorno->append("" + (*u)->getDescription());
+			retorno->append("</description>");
+			retorno->append("<preconditions>");
+			for (vector<const FlowCondition*>::const_iterator prc = (*u)->getFirstPreCondition(); prc != (*u)->getLastPreCondition(); prc++){
+				retorno->append("<precondition>");
+				retorno->append("<id>");
+				retorno->append(""+(*prc)->getId());
+				retorno->append("</id>");
+				retorno->append("<description>");
+				retorno->append("" + (*prc)->getDescription());
+				retorno->append("</description>");
+				retorno->append("<artifacts>");
+				for (vector<string>::const_iterator art = (*prc)->firstArtifact(); art != (*prc)->lastArtifact(); art++){
+					retorno->append("<artifact>");
+					retorno->append((*art));
+					retorno->append("</artifact>");
+				}
+				retorno->append("</artifacts>");
+				retorno->append("</precondition>");
+			}
+			retorno->append("</preconditions>");
+			retorno->append("<posconditions>");
+			for (vector<const FlowCondition*>::const_iterator poc = (*u)->getFirstPosCondition(); poc != (*u)->getLastPosCondition(); poc++){
+				retorno->append("<poscondition>");
+				retorno->append("<id>");
+				retorno->append("" + (*poc)->getId());
+				retorno->append("</id>");
+				retorno->append("<description>");
+				retorno->append("" + (*poc)->getDescription());
+				retorno->append("</description>");
+				retorno->append("<artifacts>");
+				for (vector<string>::const_iterator art = (*poc)->firstArtifact(); art != (*poc)->lastArtifact(); art++){
+					retorno->append("<artifact>");
+					retorno->append((*art));
+					retorno->append("</artifact>");
+				}
+				retorno->append("</artifacts>");
+				retorno->append("</poscondition>");
+			}
+			retorno->append("</posconditions>");
+			retorno->append("<flows>");
+			vector<string> ret;
+			string entry;
+			for (vector<const FlowAction*>::const_iterator it = (*u)->getFirstFlowAction(); it != (*u)->getLastFlowAction(); it++){
+				if ((*it)->getFlowType() == Flow::MainFlow){
+					retorno->append("<mainflow>");
+				}
+				else if ((*it)->getFlowType() == Flow::AlternativeFlow){
+					retorno->append("<alternativeflow>");
+				}
+				retorno->append("<actor>");
+				retorno->append(((*it)->getActorType() == Actor::System ? "system" : "user"));
+				retorno->append("</actor>");
+				retorno->append("<description>");
+				retorno->append((*it)->getDescription());
+				retorno->append("</description>");
+				if ((*it)->getFlowType() == Flow::MainFlow){
+					retorno->append("</mainflow>");
+				}
+				else if ((*it)->getFlowType() == Flow::AlternativeFlow){
+					retorno->append("</alternativeflow>");
+				}
+			}
+			retorno->append("</flows>");
+			retorno->append("</usecase>");
+		}
+		retorno->append("</usecases>");
+		retorno->append("</requirement>");
+	}
+	retorno->append("</requirements>");
+	retorno->append("</project>");
+	return *retorno;
 }

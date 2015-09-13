@@ -176,13 +176,14 @@ namespace easycase {
 			this->tabPage1->TabIndex = 0;
 			this->tabPage1->Text = L"Project Info";
 			this->tabPage1->UseVisualStyleBackColor = true;
+			this->tabPage1->Enter += gcnew System::EventHandler(this, &ContentWin::tabPage1_Enter);
 			// 
 			// endDate
 			// 
 			this->endDate->Location = System::Drawing::Point(18, 210);
 			this->endDate->Name = L"endDate";
 			this->endDate->Size = System::Drawing::Size(200, 20);
-			this->endDate->TabIndex = 9;
+			this->endDate->TabIndex = 4;
 			this->endDate->Leave += gcnew System::EventHandler(this, &ContentWin::endDate_Leave);
 			// 
 			// label8
@@ -208,7 +209,7 @@ namespace easycase {
 			this->initialDate->Location = System::Drawing::Point(15, 154);
 			this->initialDate->Name = L"initialDate";
 			this->initialDate->Size = System::Drawing::Size(200, 20);
-			this->initialDate->TabIndex = 6;
+			this->initialDate->TabIndex = 3;
 			this->initialDate->Leave += gcnew System::EventHandler(this, &ContentWin::initialDate_Leave);
 			// 
 			// projectLeader
@@ -216,7 +217,7 @@ namespace easycase {
 			this->projectLeader->Location = System::Drawing::Point(15, 93);
 			this->projectLeader->Name = L"projectLeader";
 			this->projectLeader->Size = System::Drawing::Size(229, 20);
-			this->projectLeader->TabIndex = 5;
+			this->projectLeader->TabIndex = 2;
 			this->projectLeader->Leave += gcnew System::EventHandler(this, &ContentWin::projectLeader_Leave);
 			// 
 			// label6
@@ -234,7 +235,7 @@ namespace easycase {
 			this->projectDescription->Multiline = true;
 			this->projectDescription->Name = L"projectDescription";
 			this->projectDescription->Size = System::Drawing::Size(528, 115);
-			this->projectDescription->TabIndex = 3;
+			this->projectDescription->TabIndex = 5;
 			this->projectDescription->Leave += gcnew System::EventHandler(this, &ContentWin::projectDescription_Leave);
 			// 
 			// label2
@@ -277,6 +278,7 @@ namespace easycase {
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Requirements";
 			this->tabPage2->UseVisualStyleBackColor = true;
+			this->tabPage2->Enter += gcnew System::EventHandler(this, &ContentWin::tabPage2_Enter);
 			// 
 			// label4
 			// 
@@ -486,6 +488,8 @@ namespace easycase {
 		this->comboRequirement->Text = "R" + (cb->SelectedIndex+1).ToString("D3") + ": " + (cli::safe_cast<System::String^>(obj));
 	}
 private: System::Void addUseCase_Click(System::Object^  sender, System::EventArgs^  e) {
+	EasyCaseFacade::createUseCase();
+
 	if (String::IsNullOrEmpty(this->comboRequirement->Text)){
 		MessageBox::Show(
 			"Selecione um requisito",
@@ -566,11 +570,6 @@ private: System::Void requirementListBox_SelectedIndexChanged(System::Object^  s
 	}
 }
 private: System::Void tabPage3_Leave(System::Object^  sender, System::EventArgs^  e) {
-	EasyCaseFacade::unloadRequirement();
-
-	this->comboRequirement->Text = "";
-	this->requirementHide->SelectedIndex = -1;
-	this->useCaseListBox->Items->Clear();
 }
 private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
 	EasyCaseFacade::deleteUseCase();
@@ -582,6 +581,16 @@ private: System::Void button6_Click(System::Object^  sender, System::EventArgs^ 
 }
 private: System::Void useCaseListBox_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
 	EasyCaseFacade::loadUseCase(this->useCaseListBox->SelectedIndex + 1);
+}
+private: System::Void tabPage2_Enter(System::Object^  sender, System::EventArgs^  e) {
+	EasyCaseFacade::unloadRequirement();
+
+	this->comboRequirement->Text = "";
+	this->requirementHide->SelectedIndex = -1;
+	this->useCaseListBox->Items->Clear();
+}
+private: System::Void tabPage1_Enter(System::Object^  sender, System::EventArgs^  e) {
+	tabPage2_Enter(sender, e);
 }
 };
 }

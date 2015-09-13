@@ -20,11 +20,15 @@ namespace std{
 		static void commitRequirement(const string requirementDescription);
 		static void loadRequirement(const unsigned int id);
 		static void unloadRequirement();
-		static void createUseCase(const string status, const string name, const string description);
+		static void createUseCase();
+		static void setUseCaseStatus(const string status);
+		static void setUseCaseName(const string name);
+		static void setUseCaseDescription(const string description);
 		static void deleteUseCase();
 		static void createPreCondition(const string description, const vector<string> artifacts);
 		static void createPosCondition(const string description, const vector<string> artifacts);
 		static void createFlowAction(const string description, const int actor, const int flow);
+		static string saveProject();
 		
 		static vector<string> getRequirements();
 		static vector<string> getUseCases();
