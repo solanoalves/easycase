@@ -35,5 +35,6 @@ namespace std{
 		void addRequirement(Requirement* requirement);
 		void addInfo(const BasicInfo* basicInfo);
 		void deleteInfo(const unsigned int id);
+		vector<string> search(const string text);		
 	};
 };

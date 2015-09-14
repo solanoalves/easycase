@@ -35,6 +35,7 @@ namespace std{
 		static void createPosCondition(const string description, const vector<string> artifacts, const unsigned int id = 0);
 		static void createFlowAction(const string description, const int actor, const int flow);
 		static string saveProject();
+		static vector<string> search(const string text);
 		
 		static string projectName();
 		static string projectLeaderName();

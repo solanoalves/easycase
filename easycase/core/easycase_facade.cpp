@@ -483,3 +483,11 @@ string EasyCaseFacade::saveProject(){
 	retorno->append("</project>");
 	return *retorno;
 }
+
+vector<string> EasyCaseFacade::search(const string text){
+	vector<string> retorno;
+	if (project != nullptr){
+		retorno = project->search(text);
+	}
+	return retorno;
+}

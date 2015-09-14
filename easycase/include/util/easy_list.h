@@ -119,7 +119,7 @@ template <class T> void std::EasyList<T>::remove(T item){
 template <class T> T std::EasyList<T>::get(int index){
 	std::EasyList<T>::EasyElement<T>* pAux = headElement;
 	int count = 0;
-	while (count < index || pAux == nullptr){
+	while (count < index && pAux != nullptr){
 		count++;
 		pAux = pAux->getNext();
 	}

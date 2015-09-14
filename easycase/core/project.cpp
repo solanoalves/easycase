@@ -61,3 +61,7 @@ void Project::addInfo(const BasicInfo* info){
 void Project::deleteInfo(const unsigned int id){
 	infoList.deleteInfo(id);
 }
+
+vector<string> Project::search(const string text){
+	return infoList.search(text);
+}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ContentWin.h"
+#include "search.h"
 #include "easycase_facade.h"
 using std::EasyCaseFacade;
 
@@ -46,10 +47,11 @@ namespace easycase {
 	private: System::Windows::Forms::Panel^  initialPanel;
 	//Custom
 	private: ContentWin^ contentWin;
+	private: search^ searchWin;
 	private: System::Windows::Forms::ToolStripMenuItem^  abrirToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  salvarToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^  importarToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^  exportarToolStripMenuItem;
+
+
 	private: System::Windows::Forms::ToolStripMenuItem^  buscarToolStripMenuItem;
 	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog1;
 
@@ -78,8 +80,6 @@ namespace easycase {
 			this->novoToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->abrirToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->salvarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->importarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->exportarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->buscarToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
@@ -102,10 +102,9 @@ namespace easycase {
 			// 
 			// projetoToolStripMenuItem
 			// 
-			this->projetoToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
+			this->projetoToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
 				this->novoToolStripMenuItem,
-					this->abrirToolStripMenuItem, this->salvarToolStripMenuItem, this->importarToolStripMenuItem, this->exportarToolStripMenuItem,
-					this->buscarToolStripMenuItem
+					this->abrirToolStripMenuItem, this->salvarToolStripMenuItem, this->buscarToolStripMenuItem
 			});
 			this->projetoToolStripMenuItem->Name = L"projetoToolStripMenuItem";
 			this->projetoToolStripMenuItem->Size = System::Drawing::Size(57, 20);
@@ -114,41 +113,30 @@ namespace easycase {
 			// novoToolStripMenuItem
 			// 
 			this->novoToolStripMenuItem->Name = L"novoToolStripMenuItem";
-			this->novoToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->novoToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->novoToolStripMenuItem->Text = L"Novo";
 			this->novoToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainWin::novoToolStripMenuItem_Click);
 			// 
 			// abrirToolStripMenuItem
 			// 
 			this->abrirToolStripMenuItem->Name = L"abrirToolStripMenuItem";
-			this->abrirToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->abrirToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->abrirToolStripMenuItem->Text = L"Abrir";
 			this->abrirToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainWin::abrirToolStripMenuItem_Click);
 			// 
 			// salvarToolStripMenuItem
 			// 
 			this->salvarToolStripMenuItem->Name = L"salvarToolStripMenuItem";
-			this->salvarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->salvarToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->salvarToolStripMenuItem->Text = L"Salvar";
 			this->salvarToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainWin::salvarToolStripMenuItem_Click);
-			// 
-			// importarToolStripMenuItem
-			// 
-			this->importarToolStripMenuItem->Name = L"importarToolStripMenuItem";
-			this->importarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
-			this->importarToolStripMenuItem->Text = L"Importar Remoto";
-			// 
-			// exportarToolStripMenuItem
-			// 
-			this->exportarToolStripMenuItem->Name = L"exportarToolStripMenuItem";
-			this->exportarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
-			this->exportarToolStripMenuItem->Text = L"Exportar Remoto";
 			// 
 			// buscarToolStripMenuItem
 			// 
 			this->buscarToolStripMenuItem->Name = L"buscarToolStripMenuItem";
-			this->buscarToolStripMenuItem->Size = System::Drawing::Size(165, 22);
+			this->buscarToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->buscarToolStripMenuItem->Text = L"Buscar";
+			this->buscarToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainWin::buscarToolStripMenuItem_Click);
 			// 
 			// label1
 			// 
@@ -332,10 +320,8 @@ private: System::Void abrirToolStripMenuItem_Click(System::Object^  sender, Syst
 														}
 														else if (precNode->Name == "preconditionartifacts"){
 															for each(System::Xml::XmlNode^ art in precNode->ChildNodes){
-																for each(System::Xml::XmlNode^ artNode in precNode->ChildNodes){
-																	if (artNode->Name == "artifact"){
-																		artefacts.push_back(marshal_as<std::string>(artNode->InnerText));
-																	}
+																if (art->Name == "artifact"){
+																	artefacts.push_back(marshal_as<std::string>(art->InnerText));
 																}
 															}
 														}
@@ -358,10 +344,8 @@ private: System::Void abrirToolStripMenuItem_Click(System::Object^  sender, Syst
 														}
 														else if (poscNode->Name == "posconditionartifacts"){
 															for each(System::Xml::XmlNode^ art in poscNode->ChildNodes){
-																for each(System::Xml::XmlNode^ artNode in poscNode->ChildNodes){
-																	if (artNode->Name == "artifact"){
-																		artefacts.push_back(marshal_as<std::string>(artNode->InnerText));
-																	}
+																if (art->Name == "artifact"){
+																	artefacts.push_back(marshal_as<std::string>(art->InnerText));
 																}
 															}
 														}
@@ -419,6 +403,18 @@ private: System::Void abrirToolStripMenuItem_Click(System::Object^  sender, Syst
 		this->ResumeLayout(false);
 		this->PerformLayout();
 	}
+}
+private: System::Void buscarToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->SuspendLayout();
+	if (this->searchWin == nullptr){
+		this->searchWin = gcnew search(this);
+		this->Controls->Add(this->searchWin->GetContent());
+	}
+	System::Object^ control = this->Controls->Find(L"initialPanel", false)->GetValue(0);
+	(cli::safe_cast<System::Windows::Forms::Panel^>(control))->SendToBack();
+	this->searchWin->GetContent()->BringToFront();
+	this->ResumeLayout(false);
+	this->PerformLayout();
 }
 };
 }
