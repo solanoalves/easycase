@@ -354,7 +354,7 @@ private: System::Windows::Forms::ListBox^  afList;
 			this->addPrecArtifact->Location = System::Drawing::Point(364, 96);
 			this->addPrecArtifact->Name = L"addPrecArtifact";
 			this->addPrecArtifact->Size = System::Drawing::Size(75, 23);
-			this->addPrecArtifact->TabIndex = 8;
+			this->addPrecArtifact->TabIndex = 3;
 			this->addPrecArtifact->Text = L"Add Artifact";
 			this->addPrecArtifact->UseVisualStyleBackColor = true;
 			this->addPrecArtifact->Click += gcnew System::EventHandler(this, &UseCaseWin::addPrecArtifact_Click);
@@ -364,7 +364,7 @@ private: System::Windows::Forms::ListBox^  afList;
 			this->precArtifact->Location = System::Drawing::Point(364, 70);
 			this->precArtifact->Name = L"precArtifact";
 			this->precArtifact->Size = System::Drawing::Size(175, 20);
-			this->precArtifact->TabIndex = 7;
+			this->precArtifact->TabIndex = 2;
 			// 
 			// label13
 			// 
@@ -550,7 +550,7 @@ private: System::Windows::Forms::ListBox^  afList;
 			this->addPoscArtifact->Location = System::Drawing::Point(379, 99);
 			this->addPoscArtifact->Name = L"addPoscArtifact";
 			this->addPoscArtifact->Size = System::Drawing::Size(75, 23);
-			this->addPoscArtifact->TabIndex = 16;
+			this->addPoscArtifact->TabIndex = 3;
 			this->addPoscArtifact->Text = L"Add Artifact";
 			this->addPoscArtifact->UseVisualStyleBackColor = true;
 			this->addPoscArtifact->Click += gcnew System::EventHandler(this, &UseCaseWin::addPoscArtifact_Click);
@@ -560,7 +560,7 @@ private: System::Windows::Forms::ListBox^  afList;
 			this->poscArtifact->Location = System::Drawing::Point(375, 73);
 			this->poscArtifact->Name = L"poscArtifact";
 			this->poscArtifact->Size = System::Drawing::Size(168, 20);
-			this->poscArtifact->TabIndex = 15;
+			this->poscArtifact->TabIndex = 2;
 			// 
 			// label14
 			// 
@@ -585,7 +585,7 @@ private: System::Windows::Forms::ListBox^  afList;
 			this->poscConfirm->Location = System::Drawing::Point(18, 152);
 			this->poscConfirm->Name = L"poscConfirm";
 			this->poscConfirm->Size = System::Drawing::Size(75, 23);
-			this->poscConfirm->TabIndex = 12;
+			this->poscConfirm->TabIndex = 4;
 			this->poscConfirm->Text = L"Confirm";
 			this->poscConfirm->UseVisualStyleBackColor = true;
 			this->poscConfirm->Click += gcnew System::EventHandler(this, &UseCaseWin::poscConfirm_Click);
@@ -604,7 +604,7 @@ private: System::Windows::Forms::ListBox^  afList;
 			this->poscDescription->Location = System::Drawing::Point(15, 47);
 			this->poscDescription->Name = L"poscDescription";
 			this->poscDescription->Size = System::Drawing::Size(528, 20);
-			this->poscDescription->TabIndex = 9;
+			this->poscDescription->TabIndex = 1;
 			// 
 			// label10
 			// 

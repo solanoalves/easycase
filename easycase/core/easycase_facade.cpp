@@ -53,6 +53,22 @@ void EasyCaseFacade::setProjectDescription(const string projectDescription){
 	project->setDescription(projectDescription);
 }
 
+void EasyCaseFacade::createRequirement(){
+	Requirement* req = new Requirement;
+	req->setId(project->getNextRequirementID());
+	project->addRequirement(req);
+	project->addInfo(req);
+	selectedReq = req;
+}
+
+void EasyCaseFacade::setRequirementID(const unsigned int id){
+	selectedReq->setId(id);
+}
+
+void EasyCaseFacade::setRequirementDescription(const string description){
+	selectedReq->setDescription(description);
+}
+
 void EasyCaseFacade::commitRequirement(const string description){
 	Requirement* req;
 
@@ -78,12 +94,18 @@ void EasyCaseFacade::unloadRequirement(){
 	selectedReq = nullptr;
 }
 
-void EasyCaseFacade::createUseCase(){
+void EasyCaseFacade::createUseCase(const bool noId){
 	UseCase* useCase = new UseCase;
-	useCase->setId(selectedReq->getNextUseCaseID());
+	if (!noId){
+		useCase->setId(selectedReq->getNextUseCaseID());
+	}
 	selectedReq->addUseCase(useCase);
 	project->addInfo(useCase);
 	selectedUC = useCase;
+}
+
+void EasyCaseFacade::setUseCaseID(const unsigned int id){
+	selectedUC->setId(id);
 }
 
 void EasyCaseFacade::setUseCaseStatus(const string status){
@@ -121,9 +143,14 @@ void EasyCaseFacade::deleteUseCase(){
 	selectedUC = nullptr;
 }
 
-void EasyCaseFacade::createPreCondition(const string description, const vector<string> artifacts){
+void EasyCaseFacade::createPreCondition(const string description, const vector<string> artifacts, const unsigned int id){
 	PreCondition* pc = new PreCondition;
-	pc->setId(selectedUC->getNextPreConditionID());
+	if (id == 0){
+		pc->setId(selectedUC->getNextPreConditionID());
+	}
+	else{
+		pc->setId(id);
+	}
 	pc->setDescription(description);
 	for (vector<string>::const_iterator it = artifacts.begin(); it != artifacts.end(); ++it){
 		pc->addExistentArtifact(*it);
@@ -132,9 +159,14 @@ void EasyCaseFacade::createPreCondition(const string description, const vector<s
 	project->addInfo(pc);
 }
 
-void EasyCaseFacade::createPosCondition(const string description, const vector<string> artifacts){
+void EasyCaseFacade::createPosCondition(const string description, const vector<string> artifacts, const unsigned int id){
 	PosCondition* pc = new PosCondition;
-	pc->setId(selectedUC->getNextPosConditionID());
+	if (id == 0){
+		pc->setId(selectedUC->getNextPosConditionID());
+	}
+	else{
+		pc->setId(id);
+	}
 	pc->setDescription(description);
 	for (vector<string>::const_iterator it = artifacts.begin(); it != artifacts.end(); ++it){
 		pc->addGeneratedArtifact(*it);
@@ -174,6 +206,23 @@ void EasyCaseFacade::createFlowAction(const string description, const int actor,
 	selectedUC->addFlowAction(fa);
 	project->addInfo(fa);
 }
+
+string EasyCaseFacade::projectName(){
+	return project->getName();
+}
+string EasyCaseFacade::projectLeaderName(){
+	return project->getProjectLeader();
+}
+string EasyCaseFacade::projectInitialDate(){
+	return project->getInitialDate();
+}
+string EasyCaseFacade::projectEndDate(){
+	return project->getEndDate();
+}
+string EasyCaseFacade::projectDescription(){
+	return project->getDescription();
+}
+
 
 vector<string> EasyCaseFacade::getRequirements(){
 	vector<string> retorno;
@@ -299,37 +348,37 @@ string EasyCaseFacade::saveProject(){
 	string status;
 	string* retorno = new string;
 	retorno->append("<project>");
-	retorno->append("<name>");
+	retorno->append("<projectname>");
 	retorno->append(project->getName());
-	retorno->append("</name>");
-	retorno->append("<leader>");
+	retorno->append("</projectname>");
+	retorno->append("<projectleader>");
 	retorno->append(project->getProjectLeader());
-	retorno->append("</leader>");
-	retorno->append("<initialDate>");
+	retorno->append("</projectleader>");
+	retorno->append("<projectinitialdate>");
 	retorno->append(project->getInitialDate());
-	retorno->append("</initialDate>");
-	retorno->append("<endDate>");
+	retorno->append("</projectinitialdate>");
+	retorno->append("<projectenddate>");
 	retorno->append(project->getEndDate());
-	retorno->append("</endDate>");
-	retorno->append("<description>");
+	retorno->append("</projectenddate>");
+	retorno->append("<projectdescription>");
 	retorno->append(project->getDescription());
-	retorno->append("</description>");
-	retorno->append("<requirements>");
+	retorno->append("</projectdescription>");
+	retorno->append("<projectrequirements>");
 	for (vector<Requirement*>::iterator r = project->getFirstRequirement(); r != project->getLastRequirement(); r++){
 		retorno->append("<requirement>");
-		retorno->append("<id>");
-		retorno->append(""+(*r)->getId());
-		retorno->append("</id>");
-		retorno->append("<description>");
+		retorno->append("<requirementid>");
+		retorno->append(std::to_string((*r)->getId()));
+		retorno->append("</requirementid>");
+		retorno->append("<requirementdescription>");
 		retorno->append((*r)->getDescription());
-		retorno->append("</description>");
-		retorno->append("<usecases>");
+		retorno->append("</requirementdescription>");
+		retorno->append("<requirementusecases>");
 		for (vector<UseCase*>::iterator u = (*r)->firstUseCase(); u != (*r)->lastUseCase(); u++){
 			retorno->append("<usecase>");
-			retorno->append("<id>");
-			retorno->append(""+(*u)->getId());
-			retorno->append("</id>");
-			retorno->append("<status>");
+			retorno->append("<usecaseid>");
+			retorno->append(std::to_string((*u)->getId()));
+			retorno->append("</usecaseid>");
+			retorno->append("<usecasestatus>");
 			if ((*u)->getStatus() == Status::Incomplete){
 				status = stat.isIncomplete;
 			}
@@ -346,81 +395,83 @@ string EasyCaseFacade::saveProject(){
 				status = stat.isDone;
 			}
 			retorno->append(status);
-			retorno->append("</status>");
-			retorno->append("<name>");
-			retorno->append("" + (*u)->getName());
-			retorno->append("</name>");
-			retorno->append("<description>");
-			retorno->append("" + (*u)->getDescription());
-			retorno->append("</description>");
-			retorno->append("<preconditions>");
+			retorno->append("</usecasestatus>");
+			retorno->append("<usecasename>");
+			retorno->append((*u)->getName());
+			retorno->append("</usecasename>");
+			retorno->append("<usecasedescription>");
+			retorno->append((*u)->getDescription());
+			retorno->append("</usecasedescription>");
+			retorno->append("<usecasepreconditions>");
 			for (vector<const FlowCondition*>::const_iterator prc = (*u)->getFirstPreCondition(); prc != (*u)->getLastPreCondition(); prc++){
 				retorno->append("<precondition>");
-				retorno->append("<id>");
-				retorno->append(""+(*prc)->getId());
-				retorno->append("</id>");
-				retorno->append("<description>");
-				retorno->append("" + (*prc)->getDescription());
-				retorno->append("</description>");
-				retorno->append("<artifacts>");
+				retorno->append("<preconditionid>");
+				retorno->append(std::to_string((*prc)->getId()));
+				retorno->append("</preconditionid>");
+				retorno->append("<preconditiondescription>");
+				retorno->append((*prc)->getDescription());
+				retorno->append("</preconditiondescription>");
+				retorno->append("<preconditionartifacts>");
 				for (vector<string>::const_iterator art = (*prc)->firstArtifact(); art != (*prc)->lastArtifact(); art++){
 					retorno->append("<artifact>");
 					retorno->append((*art));
 					retorno->append("</artifact>");
 				}
-				retorno->append("</artifacts>");
+				retorno->append("</preconditionartifacts>");
 				retorno->append("</precondition>");
 			}
-			retorno->append("</preconditions>");
-			retorno->append("<posconditions>");
+			retorno->append("</usecasepreconditions>");
+			retorno->append("<usecaseposconditions>");
 			for (vector<const FlowCondition*>::const_iterator poc = (*u)->getFirstPosCondition(); poc != (*u)->getLastPosCondition(); poc++){
 				retorno->append("<poscondition>");
-				retorno->append("<id>");
-				retorno->append("" + (*poc)->getId());
-				retorno->append("</id>");
-				retorno->append("<description>");
-				retorno->append("" + (*poc)->getDescription());
-				retorno->append("</description>");
-				retorno->append("<artifacts>");
+				retorno->append("<posconditionid>");
+				retorno->append(std::to_string((*poc)->getId()));
+				retorno->append("</posconditionid>");
+				retorno->append("<posconditiondescription>");
+				retorno->append((*poc)->getDescription());
+				retorno->append("</posconditiondescription>");
+				retorno->append("<posconditionartifacts>");
 				for (vector<string>::const_iterator art = (*poc)->firstArtifact(); art != (*poc)->lastArtifact(); art++){
 					retorno->append("<artifact>");
 					retorno->append((*art));
 					retorno->append("</artifact>");
 				}
-				retorno->append("</artifacts>");
+				retorno->append("</posconditionartifacts>");
 				retorno->append("</poscondition>");
 			}
-			retorno->append("</posconditions>");
-			retorno->append("<flows>");
+			retorno->append("</usecaseposconditions>");
+			retorno->append("<usecaseflows>");
 			vector<string> ret;
 			string entry;
 			for (vector<const FlowAction*>::const_iterator it = (*u)->getFirstFlowAction(); it != (*u)->getLastFlowAction(); it++){
 				if ((*it)->getFlowType() == Flow::MainFlow){
 					retorno->append("<mainflow>");
-				}
-				else if ((*it)->getFlowType() == Flow::AlternativeFlow){
-					retorno->append("<alternativeflow>");
-				}
-				retorno->append("<actor>");
-				retorno->append(((*it)->getActorType() == Actor::System ? "system" : "user"));
-				retorno->append("</actor>");
-				retorno->append("<description>");
-				retorno->append((*it)->getDescription());
-				retorno->append("</description>");
-				if ((*it)->getFlowType() == Flow::MainFlow){
+					retorno->append("<mainflowactor>");
+					retorno->append(((*it)->getActorType() == Actor::System ? "system" : "user"));
+					retorno->append("</mainflowactor>");
+					retorno->append("<mainflowdescription>");
+					retorno->append((*it)->getDescription());
+					retorno->append("</mainflowdescription>");
 					retorno->append("</mainflow>");
 				}
 				else if ((*it)->getFlowType() == Flow::AlternativeFlow){
+					retorno->append("<alternativeflow>");
+					retorno->append("<alternativeflowactor>");
+					retorno->append(((*it)->getActorType() == Actor::System ? "system" : "user"));
+					retorno->append("</alternativeflowactor>");
+					retorno->append("<alternativeflowdescription>");
+					retorno->append((*it)->getDescription());
+					retorno->append("</alternativeflowdescription>");
 					retorno->append("</alternativeflow>");
 				}
 			}
-			retorno->append("</flows>");
+			retorno->append("</usecaseflows>");
 			retorno->append("</usecase>");
 		}
-		retorno->append("</usecases>");
+		retorno->append("</requirementusecases>");
 		retorno->append("</requirement>");
 	}
-	retorno->append("</requirements>");
+	retorno->append("</projectrequirements>");
 	retorno->append("</project>");
 	return *retorno;
 }

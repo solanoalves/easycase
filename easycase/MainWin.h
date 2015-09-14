@@ -123,6 +123,7 @@ namespace easycase {
 			this->abrirToolStripMenuItem->Name = L"abrirToolStripMenuItem";
 			this->abrirToolStripMenuItem->Size = System::Drawing::Size(165, 22);
 			this->abrirToolStripMenuItem->Text = L"Abrir";
+			this->abrirToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainWin::abrirToolStripMenuItem_Click);
 			// 
 			// salvarToolStripMenuItem
 			// 
@@ -238,8 +239,10 @@ private: System::Void salvarToolStripMenuItem_Click(System::Object^  sender, Sys
 	if (toSave.empty()) return;
 	System::IO::Stream^ myStream;
 	SaveFileDialog^ saveFileDialog1 = gcnew SaveFileDialog;
-	saveFileDialog1->Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-	saveFileDialog1->FilterIndex = 2;
+	saveFileDialog1->Filter = "easycase (*.ec)|*.ec";
+	saveFileDialog1->FilterIndex = 0;
+	saveFileDialog1->DefaultExt = "ec";
+	saveFileDialog1->AddExtension = true;
 	saveFileDialog1->RestoreDirectory = true;
 	if (saveFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 	{
@@ -251,6 +254,170 @@ private: System::Void salvarToolStripMenuItem_Click(System::Object^  sender, Sys
 			}
 			myStream->Close();
 		}
+	}
+}
+private: System::Void abrirToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	OpenFileDialog^ openFileDialog = gcnew OpenFileDialog;
+	openFileDialog->Filter = "easycase (*.ec)|*.ec";
+	openFileDialog->FilterIndex = 0;
+	openFileDialog->Multiselect = false;
+	if (openFileDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+	{
+		System::IO::Stream^ myStream;
+		if ((myStream = openFileDialog->OpenFile()) != nullptr)
+		{
+			System::IO::StreamReader^ reader = gcnew System::IO::StreamReader(myStream, System::Text::Encoding::GetEncoding("ISO-8859-1"), true);
+			System::String^ lido = reader->ReadToEnd();
+			if (lido != nullptr && lido != ""){
+				System::Xml::XmlDocument^ xmlDoc = gcnew System::Xml::XmlDocument;
+				xmlDoc->LoadXml(lido);
+				System::Xml::XmlNodeList^ items = xmlDoc->ChildNodes;
+				System::Xml::XmlNode^ root = items->Item(0);
+				EasyCaseFacade::createProject();
+				for each (System::Xml::XmlNode^ node in root->ChildNodes)
+				{
+					if (node->Name == "projectname"){
+						EasyCaseFacade::setProjectName(marshal_as<std::string>(node->InnerText));
+					}
+					else if (node->Name == "projectleader"){
+						EasyCaseFacade::setProjectLeaderName(marshal_as<std::string>(node->InnerText));
+					}
+					else if (node->Name == "projectinitialdate"){
+						EasyCaseFacade::setProjectInitialDate(marshal_as<std::string>(node->InnerText));
+					}
+					else if (node->Name == "projectenddate"){
+						EasyCaseFacade::setProjectEndDate(marshal_as<std::string>(node->InnerText));
+					}
+					else if (node->Name == "projectdescription"){
+						EasyCaseFacade::setProjectDescription(marshal_as<std::string>(node->InnerText));
+					}
+					else if (node->Name == "projectrequirements"){
+						for each (System::Xml::XmlNode^ req in node->ChildNodes){
+							EasyCaseFacade::createRequirement();
+							for each (System::Xml::XmlNode^ reqNode in req->ChildNodes){
+								if (reqNode->Name == "requirementid"){
+									EasyCaseFacade::setRequirementID(int::Parse(reqNode->InnerText));
+								}
+								else if (reqNode->Name == "requirementdescription"){
+									EasyCaseFacade::setRequirementDescription(marshal_as<std::string>(reqNode->InnerText));
+								}
+								else if (reqNode->Name == "requirementusecases"){
+									for each (System::Xml::XmlNode^ uc in reqNode->ChildNodes){
+										EasyCaseFacade::createUseCase(true);
+										for each(System::Xml::XmlNode^ ucNode in uc->ChildNodes){
+											if (ucNode->Name == "usecaseid"){
+												EasyCaseFacade::setUseCaseID(int::Parse(ucNode->InnerText));
+											}
+											else if (ucNode->Name == "usecasestatus"){
+												EasyCaseFacade::setUseCaseStatus(marshal_as<std::string>(ucNode->InnerText));
+											}
+											else if (ucNode->Name == "usecasename"){
+												EasyCaseFacade::setUseCaseName(marshal_as<std::string>(ucNode->InnerText));
+											}
+											else if (ucNode->Name == "usecasedescription"){
+												EasyCaseFacade::setUseCaseDescription(marshal_as<std::string>(ucNode->InnerText));
+											}
+											else if (ucNode->Name == "usecasepreconditions"){
+												unsigned int id;
+												string description;
+												vector<string> artefacts;
+												for each(System::Xml::XmlNode^ prec in ucNode->ChildNodes){
+													artefacts.clear();
+													for each(System::Xml::XmlNode^ precNode in prec->ChildNodes){
+														if (precNode->Name == "preconditionid"){
+															id = int::Parse(precNode->InnerText);
+														}
+														else if (precNode->Name == "preconditiondescription"){
+															description = marshal_as<std::string>(precNode->InnerText);
+														}
+														else if (precNode->Name == "preconditionartifacts"){
+															for each(System::Xml::XmlNode^ art in precNode->ChildNodes){
+																for each(System::Xml::XmlNode^ artNode in precNode->ChildNodes){
+																	if (artNode->Name == "artifact"){
+																		artefacts.push_back(marshal_as<std::string>(artNode->InnerText));
+																	}
+																}
+															}
+														}
+													}
+													EasyCaseFacade::createPreCondition(description, artefacts, id);
+												}
+											}
+											else if (ucNode->Name == "usecaseposconditions"){
+												unsigned int id;
+												string description;
+												vector<string> artefacts;
+												for each(System::Xml::XmlNode^ posc in ucNode->ChildNodes){
+													artefacts.clear();
+													for each(System::Xml::XmlNode^ poscNode in posc->ChildNodes){
+														if (poscNode->Name == "posconditionid"){
+															id = int::Parse(poscNode->InnerText);
+														}
+														else if (poscNode->Name == "posconditiondescription"){
+															description = marshal_as<std::string>(poscNode->InnerText);
+														}
+														else if (poscNode->Name == "posconditionartifacts"){
+															for each(System::Xml::XmlNode^ art in poscNode->ChildNodes){
+																for each(System::Xml::XmlNode^ artNode in poscNode->ChildNodes){
+																	if (artNode->Name == "artifact"){
+																		artefacts.push_back(marshal_as<std::string>(artNode->InnerText));
+																	}
+																}
+															}
+														}
+													}
+													EasyCaseFacade::createPosCondition(description, artefacts, id);
+												}
+											}
+											else if (ucNode->Name == "usecaseflows"){
+												string actor;
+												string description;
+												for each(System::Xml::XmlNode^ flow in ucNode->ChildNodes){
+													if (flow->Name == "mainflow"){
+														for each(System::Xml::XmlNode^ mfNode in flow->ChildNodes){
+															if (mfNode->Name == "mainflowactor"){
+																actor = marshal_as<std::string>(mfNode->InnerText);
+															}
+															else if (mfNode->Name == "mainflowdescription"){
+																description = marshal_as<std::string>(mfNode->InnerText);
+															}
+														}
+														EasyCaseFacade::createFlowAction(description, actor == "system" ? 0 : 1, 0);
+													} 
+													else if (flow->Name == "alternativeflow"){
+														for each(System::Xml::XmlNode^ afNode in flow->ChildNodes){
+															if (afNode->Name == "alternativeflowactor"){
+																actor = marshal_as<std::string>(afNode->InnerText);
+															}
+															else if (afNode->Name == "alternativeflowdescription"){
+																description = marshal_as<std::string>(afNode->InnerText);
+															}
+														}
+														EasyCaseFacade::createFlowAction(description, actor == "system" ? 0 : 1, 1);
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		myStream->Close();
+
+		this->SuspendLayout();
+		if (this->contentWin == nullptr){
+			this->contentWin = gcnew ContentWin(this);
+			this->Controls->Add(this->contentWin->GetContent());
+		}
+		System::Object^ control = this->Controls->Find(L"initialPanel", false)->GetValue(0);
+		(cli::safe_cast<System::Windows::Forms::Panel^>(control))->SendToBack();
+		this->contentWin->GetContent()->BringToFront();
+		this->ResumeLayout(false);
+		this->PerformLayout();
 	}
 }
 };
