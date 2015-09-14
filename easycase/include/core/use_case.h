@@ -37,6 +37,7 @@ namespace std{
 		vector<const FlowAction*>::const_iterator getFirstFlowAction() const;
 		vector<const FlowAction*>::const_iterator getLastFlowAction() const;
 		Status::StatusType getStatus() const;
+		void deleteUseCaseLists();
 		void addFlowAction(const FlowAction*);
 		void addPreCondition(const FlowCondition*);
 		void addPosCondition(const FlowCondition*);

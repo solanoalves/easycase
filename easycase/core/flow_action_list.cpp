@@ -24,3 +24,7 @@ vector<const FlowAction*>::const_iterator FlowActionList::getLastFlowAction() co
 unsigned int FlowActionList::size() const{
 	return actions.size();
 }
+
+void FlowActionList::clear(){
+	actions.clear();
+}

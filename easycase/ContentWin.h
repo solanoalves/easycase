@@ -486,6 +486,11 @@ namespace easycase {
 		EasyCaseFacade::loadRequirement(cb->SelectedIndex + 1);
 
 		this->comboRequirement->Text = "R" + (cb->SelectedIndex+1).ToString("D3") + ": " + (cli::safe_cast<System::String^>(obj));
+
+		this->useCaseListBox->Items->Clear();
+		for each(std::string var in EasyCaseFacade::getUseCases()){
+			this->useCaseListBox->Items->Add(marshal_as<String^>(var));
+		}
 	}
 private: System::Void addUseCase_Click(System::Object^  sender, System::EventArgs^  e) {
 	EasyCaseFacade::createUseCase();

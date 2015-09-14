@@ -33,6 +33,10 @@ void EasyCaseFacade::createProject(){
 	project->addInfo(project);
 }
 
+bool EasyCaseFacade::projectLoaded(){
+	return project != nullptr;
+}
+
 void EasyCaseFacade::setProjectName(const string projectName){
 	project->setName(projectName);
 }
@@ -141,6 +145,10 @@ void EasyCaseFacade::deleteUseCase(){
 	project->deleteInfo(selectedUC->getId());
 	selectedReq->deleteUseCase(selectedUC->getId());
 	selectedUC = nullptr;
+}
+
+void EasyCaseFacade::deleteUseCaseLists(){
+	selectedUC->deleteUseCaseLists();
 }
 
 void EasyCaseFacade::createPreCondition(const string description, const vector<string> artifacts, const unsigned int id){
@@ -295,8 +303,8 @@ vector<string> EasyCaseFacade::ucPreCondition(){
 		for (vector<string>::const_iterator art = (*it)->firstArtifact(); art != (*it)->lastArtifact(); ++art){
 			entry = entry + *art + ", ";
 		}
-		entry.substr(0, entry.size() - 2);
-		entry = "). DESCRIPTION: " + (*it)->getDescription();
+		entry = entry.substr(0, entry.size() - 2);
+		entry = entry + "). DESCRIPTION: " + (*it)->getDescription();
 		ret.push_back(entry);
 	}
 	return ret;
@@ -311,8 +319,8 @@ vector<string> EasyCaseFacade::ucPosCondition(){
 		for (vector<string>::const_iterator art = (*it)->firstArtifact(); art != (*it)->lastArtifact(); ++art){
 			entry = entry + *art + ", ";
 		}
-		entry.substr(0, entry.size() - 2);
-		entry = "). DESCRIPTION: " + (*it)->getDescription();
+		entry = entry.substr(0, entry.size() - 2);
+		entry = entry + "). DESCRIPTION: " + (*it)->getDescription();
 		ret.push_back(entry);
 	}
 	return ret;

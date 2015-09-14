@@ -24,3 +24,7 @@ vector<const FlowCondition*>::const_iterator ConditionList::getLastCondition() c
 unsigned int ConditionList::size() const{
 	return conditions.size();
 }
+
+void ConditionList::clear(){
+	conditions.clear();
+}

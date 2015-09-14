@@ -11,6 +11,7 @@ namespace std{
 		EasyCaseFacade();
 	public:
 		~EasyCaseFacade();
+		static bool projectLoaded();
 		static void createProject();
 		static void setProjectName(const string projectName);
 		static void setProjectLeaderName(const string projectLeaderName);
@@ -29,6 +30,7 @@ namespace std{
 		static void setUseCaseName(const string name);
 		static void setUseCaseDescription(const string description);
 		static void deleteUseCase();
+		static void deleteUseCaseLists();
 		static void createPreCondition(const string description, const vector<string> artifacts, const unsigned int id = 0);
 		static void createPosCondition(const string description, const vector<string> artifacts, const unsigned int id = 0);
 		static void createFlowAction(const string description, const int actor, const int flow);

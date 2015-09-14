@@ -8,6 +8,8 @@ System::Windows::Forms::TabControl^ ContentWin::GetContent(){
 	this->endDate->Text = marshal_as<String^>(EasyCaseFacade::projectEndDate());
 	this->projectDescription->Text = marshal_as<String^>(EasyCaseFacade::projectDescription());
 
+	this->requirementListBox->Items->Clear();
+	this->requirementHide->Items->Clear();
 	for each (std::string var in EasyCaseFacade::getRequirements()){
 		this->requirementListBox->Items->Add(marshal_as<String^>(var));
 		this->requirementHide->Items->Add(marshal_as<String^>(var));

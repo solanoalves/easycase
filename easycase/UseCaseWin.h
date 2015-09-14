@@ -759,6 +759,7 @@ private: int setPreConditionData(System::Windows::Forms::ListBox::ObjectCollecti
 		}
 		desc = str.substr(fim + 15, str.size() - (fim + 15));
 		EasyCaseFacade::createPreCondition(desc, tokens);
+		tokens.clear();
 	}
 	if (cont == 0){
 		MessageBox::Show(
@@ -797,6 +798,7 @@ private: int setPosConditionData(System::Windows::Forms::ListBox::ObjectCollecti
 		}
 		desc = str.substr(fim + 15, str.size() - (fim + 15));
 		EasyCaseFacade::createPosCondition(desc, tokens);
+		tokens.clear();
 	}
 	if (cont == 0){
 		MessageBox::Show(
@@ -819,13 +821,13 @@ private: int setFlowParameters(System::Windows::Forms::ListBox::ObjectCollection
 		tk = str.find("SYSTEM: ");
 		if (tk != string::npos && tk == 0){
 			actor = 0;
-			description = str.substr(9, str.size() - 9);
+			description = str.substr(8, str.size() - 8);
 		}
 		else{
 			tk = str.find("USER: ");
 			if (tk != string::npos && tk == 0){
 				actor = 1;
-				description = str.substr(7, str.size() - 7);
+				description = str.substr(6, str.size() - 6);
 			}
 		}
 		EasyCaseFacade::createFlowAction(description, actor, type);
@@ -879,6 +881,7 @@ private: int makeMyUseCase(){
 }
 
 private: int pleaseDoTheInterfaceJob(){
+	EasyCaseFacade::deleteUseCaseLists();
 	if (this->setPreConditionData(this->precList->Items) == 0){
 		if (this->setPosConditionData(this->poscList->Items) == 0){
 			if (this->setFlowParameters(this->flowList->Items, 0) == 0){

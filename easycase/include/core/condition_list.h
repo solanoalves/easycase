@@ -16,5 +16,6 @@ namespace std{
 		vector<const FlowCondition*>::const_iterator getLastCondition() const;
 		unsigned int size() const;
 		void addFlowCondition(const FlowCondition*);
+		void clear();
 	};
 };

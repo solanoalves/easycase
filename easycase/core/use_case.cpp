@@ -27,6 +27,12 @@ Status::StatusType UseCase::getStatus() const{
 	return status;
 }
 
+void UseCase::deleteUseCaseLists(){
+	preConditionList.clear();
+	posConditionList.clear();
+	flowActionList.clear();
+}
+
 vector<const FlowCondition*>::const_iterator UseCase::getFirstPreCondition() const{
 	return preConditionList.getFirstCondition();
 }

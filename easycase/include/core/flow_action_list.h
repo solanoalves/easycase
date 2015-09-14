@@ -16,5 +16,6 @@ namespace std{
 		vector<const FlowAction*>::const_iterator getLastFlowAction() const;
 		unsigned int size() const;
 		void addFlowAction(const FlowAction*);
+		void clear();
 	};
 };
